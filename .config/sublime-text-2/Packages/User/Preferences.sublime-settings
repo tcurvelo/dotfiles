@@ -1,22 +1,20 @@
-// Settings in here override those in "Default/Preferences.sublime-settings", and
-// are overridden in turn by file type specific settings.
 {
-    "color_scheme": "Packages/Color Scheme - Default/Solarized (Light).tmTheme",
-    // "color_scheme": "Packages/User/Tomorrow-Night.tmTheme"
+	"color_scheme": "Packages/Color Scheme - Default/Solarized (Light).tmTheme",
 
-    "font_face": "Ubuntu Mono",
-    "font_size": 15,
-    "font_options": [
-        "subpixel_antialias"
-    ],
+	"font_face": "Ubuntu Mono",
+	"font_size": 14.0,
+	"font_options": [
+		"subpixel_antialias"
+	],
 
-    "draw_white_space": "all",
-    "translate_tabs_to_spaces": true,
-    "trim_trailing_white_space_on_save": true,
+	"highlight_line": true,
+	"rulers": [ 79],
 
-    "highlight_line": true,
-    "rulers":
-    [
-        79
-    ]
+	"tab_size": 4,
+	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": true,
+	"trim_trailing_white_space_on_save": true,
+	"draw_white_space": "all",
+
+	"detect_slow_plugins": false
 }

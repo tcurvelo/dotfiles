@@ -1,0 +1,7 @@
+[ui]
+username = Thiago Curvelo <tcurvelo@gmail.com>
+editor = subl -w
+
+[auth]
+bb.prefix = https://bitbucket.org/
+bb.username = tcurvelo
