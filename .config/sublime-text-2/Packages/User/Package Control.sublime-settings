@@ -1,0 +1,20 @@
+{
+	"auto_upgrade_last_run": null,
+	"installed_packages":
+	[
+		"Emmet",
+		"FileDiffs",
+		"Git",
+		"hg4subl",
+		"INI",
+		"Meld diff",
+		"Package Control",
+		"PlainTasks",
+		"Prefixr",
+		"Pretty JSON",
+		"RstPreview",
+		"SideBarEnhancements",
+		"SublimeCodeIntel",
+		"SublimeLinter"
+	]
+}
