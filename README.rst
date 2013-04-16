@@ -1,5 +1,12 @@
+========
+dotfiles
+========
 
-TODO:
-[  ] create a nice bootstrap.sh
-[  ] include sublime snippets
-[  ] fix buildout/default.cfg
+
+Todo
+====
+
+  * create a nice bootstrap.sh
+  * Will it uses rsync or ln -s?
+  * fix buildout/default.cfg
+
