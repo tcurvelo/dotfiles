@@ -35,3 +35,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/bin/
+
+function dist-upgrade {
+    sudo apt-get update && sudo apt-get -y dist-upgrade && sudo apt-get autoremove && sudo apt-get clean;
+}
