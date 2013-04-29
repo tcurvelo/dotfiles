@@ -8,4 +8,8 @@ lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan
 lg = !"git lg1"
 
 [core]
-editor = vim               
+editor = subl -w -n
+
+[push]
+default = simple
+
