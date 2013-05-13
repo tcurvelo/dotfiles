@@ -1,7 +1,4 @@
 
-alert('it works!?');
-
-
 $(function(){
     $("head").append(
         '<!-- .js style -->\n<style>\n\
