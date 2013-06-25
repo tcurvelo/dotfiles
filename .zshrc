@@ -7,9 +7,7 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias l="ls --color=auto"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
