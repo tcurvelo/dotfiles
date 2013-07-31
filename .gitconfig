@@ -9,6 +9,7 @@ lg = !"git lg1"
 
 [core]
 editor = subl -w -n
+excludesfile = /home/tcurvelo/.gitignore_global
 
 [push]
 default = simple
