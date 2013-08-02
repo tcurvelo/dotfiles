@@ -8,7 +8,7 @@
     ],
 
     "highlight_line": true,
-    "rulers": [ 79],
+    "rulers": [ 72, 79, 99],
 
     "tab_size": 4,
     "translate_tabs_to_spaces": true,

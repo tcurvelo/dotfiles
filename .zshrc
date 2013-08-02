@@ -13,9 +13,6 @@ alias l="ls --color=auto"
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
-
 plugins=(git git-extras)
 
 source $ZSH/oh-my-zsh.sh
