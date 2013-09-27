@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/synapse
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[pt_BR]=Synapse
+Name=Synapse
+Comment[pt_BR]=Synapse 
+Comment=Synapse 
