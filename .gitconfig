@@ -15,8 +15,8 @@ excludesfile = /home/tcurvelo/.gitignore_global
 default = simple
 
 [credential]
-    helper = cache
+helper = cache
 
 [http]
-    verifySSL = false
+verifySSL = false
 
