@@ -1,5 +1,6 @@
 #!/bin/bash
 
+git submodule init
 git submodule update
 
 rsync -av \
@@ -8,4 +9,6 @@ rsync -av \
   --exclude 'install.sh' \
   --exclude 'README.rst' \
   $(dirname "$0")  ~/
+
+vim +BundleInstall +qall
 
