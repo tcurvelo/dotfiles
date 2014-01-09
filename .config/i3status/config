@@ -7,40 +7,13 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
-        interval = 5
+    colors = true
+    interval = 5
 }
 
-order += "volume master"
-order += "disk /"
-order += "wireless wlan0"
-order += "battery 0"
 order += "tztime local"
 
-wireless wlan0 {
-        format_up = "W: (%quality at %essid) %ip"
-        format_down = "W: down"
-}
-
-battery 0 {
-        format = "%status %percentage %remaining"
-}
-
 tztime local {
-        format = "%H:%M - %a %d/%m/%Y"
+   format = "%a %d/%m/%Y  %H:%M"
 }
 
-load {
-        format = "%1min"
-}
-
-volume master {
-        format = "♪: %volume"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
-}
-
-disk "/" {
-        format = "%free"
-}
