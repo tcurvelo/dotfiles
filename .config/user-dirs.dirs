@@ -1,5 +1,5 @@
 XDG_DESKTOP_DIR="$HOME/Desktop"
-XDG_DOCUMENTS_DIR="$HOME/Dropbox/documents"
+XDG_DOCUMENTS_DIR="$HOME/Dropbox/docs"
 XDG_DOWNLOAD_DIR="$HOME/Desktop"
 XDG_MUSIC_DIR="$HOME/Dropbox/media/audio"
 XDG_PICTURES_DIR="$HOME/Dropbox/media/fotos"
