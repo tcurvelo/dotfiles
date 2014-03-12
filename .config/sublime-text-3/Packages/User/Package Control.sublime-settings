@@ -2,16 +2,16 @@
 	"auto_upgrade_last_run": null,
 	"installed_packages":
 	[
+		"Anaconda",
 		"ApacheConf.tmLanguage",
+		"Djaneiro",
 		"Emmet",
-		"Git",
 		"INI",
 		"nginx",
 		"Package Control",
 		"Robot Framework Assistant",
 		"RstPreview",
 		"SideBarEnhancements",
-		"SublimeCodeIntel",
 		"SublimeLinter"
 	]
 }

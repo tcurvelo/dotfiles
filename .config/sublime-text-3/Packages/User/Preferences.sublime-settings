@@ -1,29 +1,31 @@
 {
-    "color_scheme": "Packages/Color Scheme - Default/Solarized (Light).tmTheme",
+    "color_scheme": "Packages/User/Solarized (Light) (SL).tmTheme",
     "detect_slow_plugins": false,
     "draw_white_space": "all",
     "folder_exclude_patterns": [
-        ".svn",
         ".git",
         ".hg",
-        "CVS",
+        ".svn",
         "_build",
-        "dist",
         "build",
+        "CVS",
+        "dist",
         "site"
     ],
     "font_face": "Ubuntu Mono",
-    "font_options":
-    [
+    "font_options": [
         "subpixel_antialias"
     ],
     "font_size": 14.0,
     "highlight_line": true,
     "hot_exit": false,
-    "ignored_packages": [ "Vintage" ],
+    "ignored_packages": [
+      "Vintage"
+    ],
     "remember_open_files": false,
-    "rulers":
-    [ 72, 80 ],
+    "rulers": [
+      72, 80
+    ],
     "tab_size": 4,
     "translate_tabs_to_spaces": true,
     "trim_automatic_white_space": true,
