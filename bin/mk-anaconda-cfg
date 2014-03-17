@@ -1,0 +1,16 @@
+#!/bin/bash
+
+[[ $# -eq 0 ]] && path="." || path=$1
+path=$(readlink -f $path)
+
+cat > $path/.anaconda <<EOF
+{
+    "python_interpreter": "$(which python)",
+    "extra_paths": [
+      "$path"
+    ]
+}
+EOF
+
+echo "Created $path/.anaconda"
+
