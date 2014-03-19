@@ -8,7 +8,7 @@ lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan
 lg = !"git lg1"
 
 [core]
-editor = subl -w -n
+editor = vim
 excludesfile = /home/tcurvelo/.gitignore_global
 
 [push]
