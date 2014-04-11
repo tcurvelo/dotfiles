@@ -3,14 +3,11 @@
 	"installed_packages":
 	[
 		"Anaconda",
-		"ApacheConf.tmLanguage",
 		"Djaneiro",
 		"Emmet",
 		"INI",
 		"nginx",
 		"Package Control",
-		"Robot Framework Assistant",
-		"RstPreview",
 		"SideBarEnhancements",
 		"SublimeLinter"
 	]
