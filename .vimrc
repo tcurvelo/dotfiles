@@ -9,6 +9,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles 
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'nginx.vim'
 Bundle 'Pydiction'
 Bundle 'https://github.com/pld-linux/vim-syntax-vcl.git'
@@ -24,4 +25,9 @@ set expandtab
 
 " Code completion
 let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
+
+" Color scheme
+syntax enable
+set background=light
+colorscheme solarized
 
