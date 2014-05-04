@@ -9,7 +9,6 @@
     background_image = None
     cursor_color = "#002b36"
     foreground_color = "#002b36"
-    copy_on_selection = True
     background_color = "#eee8d5"
 [layouts]
   [[default]]

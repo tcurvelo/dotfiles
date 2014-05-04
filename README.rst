@@ -1,10 +1,9 @@
 tcurvelo's dotfiles
 *******************
 
-Usage
-=====
+Usage::
 
     ./install.sh
 
-It will rsync ./ on ~/
+(It will rsync ./ on ~/)
 
