@@ -8,7 +8,7 @@ rsync -av \
   --exclude '.gitignore' \
   --exclude 'install.sh' \
   --exclude 'README.rst' \
-  $(dirname "$0")  ~/
+  $(dirname $(readlink -f "$0"))/  ~/
 
 vim +BundleInstall +qall
 
