@@ -15,7 +15,8 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'nginx.vim'
 Bundle 'pld-linux/vim-syntax-vcl'
-Bundle 'Pydiction'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'scrooloose/syntastic'
 
 " Show line numbers
 set number
@@ -30,8 +31,6 @@ set autoindent    " align the new line indent with the previous line
 set textwidth=79  " lines longer than 79 columns will be broken
 set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
 
-" Code completion
-let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
 
 " Color scheme
 syntax enable
