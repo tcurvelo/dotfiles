@@ -31,6 +31,8 @@ set autoindent    " align the new line indent with the previous line
 set textwidth=79  " lines longer than 79 columns will be broken
 set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
 
+set cursorline " have a line indicate the cursor location
+set ruler " show the cursor position all the time
 
 " Color scheme
 syntax enable
@@ -40,8 +42,10 @@ if has('gui_running')
   set guifont=Ubuntu\ Mono\ 14
 endif
 
+" sudo write this
+cmap W! w !sudo tee % >/dev/null
+
 " Aliases
-cab W! w!
 cab Q! q!
 cab Wq wq
 cab Wa wa
