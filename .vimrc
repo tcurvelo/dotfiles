@@ -9,14 +9,14 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles 
-Bundle 'kien/ctrlp.vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'scrooloose/nerdtree'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'kien/ctrlp.vim'
 Bundle 'nginx.vim'
 Bundle 'pld-linux/vim-syntax-vcl'
-Bundle 'Valloric/YouCompleteMe'
+Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-fugitive'
 
 " Show line numbers
 set number
@@ -44,6 +44,9 @@ endif
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
+
+" sort lines
+vmap <F9> :sort<CR>
 
 " Aliases
 cab Q! q!
