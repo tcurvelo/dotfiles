@@ -2,6 +2,7 @@
 *.class
 *.dll
 *.exe
+*.mo
 *.o
 *.so
 *.swp
@@ -36,4 +37,6 @@ py26/
 py27/
 py2.6/
 py2.7/
+*.egg/
+*.egg-info/
 
