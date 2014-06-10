@@ -48,6 +48,9 @@ cmap W! w !sudo tee % >/dev/null
 " sort lines
 vmap <F9> :sort<CR>
 
+" remove trailing spaces
+autocmd BufWritePre * :%s/\s\+$//e
+
 " Aliases
 cab Q! q!
 cab Wq wq
