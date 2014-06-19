@@ -16,19 +16,27 @@ Bundle 'pld-linux/vim-syntax-vcl'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-fugitive'
+Bundle 'mattn/emmet-vim'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
+
 
 " Show line numbers
 set number
 
 " Indent
 set cindent
-set tabstop=4     " an hard TAB displays as 4 columns
+set tabstop=2     " an hard TAB displays as 2 columns
 set expandtab     " insert spaces when hitting TABs
-set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
+set softtabstop=2 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 set textwidth=79  " lines longer than 79 columns will be broken
-set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
+set shiftwidth=2  " operation >> indents 2 columns; << unindents 2 columns
+
+" Indent in *.py is 4 columns long
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
+
 
 set cursorline " have a line indicate the cursor location
 set ruler " show the cursor position all the time
