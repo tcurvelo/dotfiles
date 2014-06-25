@@ -12,5 +12,6 @@ rsync -av \
   --exclude 'README.rst' \
   "$context"/ ~/
 
+fc-cache -vf ~/.fonts
 vim +BundleInstall +qall
 

@@ -19,6 +19,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'mattn/emmet-vim'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
+Bundle 'bling/vim-airline'
 
 " Indent
 set cindent
@@ -45,7 +46,7 @@ syntax enable
 set background=light
 colorscheme solarized
 if has('gui_running')
-  set guifont=Ubuntu\ Mono\ 14
+  set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
 endif
 
 " sudo write this
@@ -65,4 +66,10 @@ cab wQ wq
 cab WQ wq
 cab W w
 cab Q q
+
+" airline bar settings
+let g:airline_powerline_fonts = 1
+set laststatus=2
+set t_Co=256
+set noshowmode
 
