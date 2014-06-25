@@ -20,10 +20,6 @@ Bundle 'mattn/emmet-vim'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
 
-
-" Show line numbers
-set number
-
 " Indent
 set cindent
 set tabstop=2     " an hard TAB displays as 2 columns
@@ -37,9 +33,12 @@ set shiftwidth=2  " operation >> indents 2 columns; << unindents 2 columns
 " Indent in *.py is 4 columns long
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
-
-set cursorline " have a line indicate the cursor location
-set ruler " show the cursor position all the time
+set number      " show line numbers
+set cursorline  " have a line indicate the cursor location
+set ruler       " show the cursor position all the time
+set wildmenu    " visual autocomplete for command menu
+set incsearch   " search as characters are entered
+set hlsearch    " highlight matches
 
 " Color scheme
 syntax enable
