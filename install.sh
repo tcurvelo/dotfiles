@@ -3,14 +3,13 @@
 git submodule init
 git submodule update
 
-context=$(dirname $(readlink -f "$0"))
-
+context=
 rsync -av \
   --exclude '.git/' \
   --exclude '.gitignore' \
   --exclude 'install.sh' \
   --exclude 'README.rst' \
-  "$context"/ ~/
+  "$(dirname "$(readlink -f "$0")")/" ~/
 
 fc-cache -vf ~/.fonts
 vim +BundleInstall +qall

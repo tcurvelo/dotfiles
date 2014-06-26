@@ -46,8 +46,13 @@ syntax enable
 set background=light
 colorscheme solarized
 if has('gui_running')
-  set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
+  if has('gui_gtk2')
+    set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
+  elseif has('gui_win32')
+    set guifont=Ubuntu_Mono_Derivative_powerlin:h13:cANSI
+  endif
 endif
+set encoding=utf-8
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
