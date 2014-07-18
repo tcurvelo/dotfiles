@@ -1,13 +1,13 @@
-*.com
 *.class
+*.com
 *.dll
 *.exe
 *.mo
 *.o
-*.so
-*.swp
 *.pyc
 *.pyo
+*.so
+*.swp
 
 *.7z
 *.dmg
