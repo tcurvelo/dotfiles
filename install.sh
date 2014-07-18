@@ -1,15 +1,19 @@
 #!/bin/bash
 
+context="$(dirname "$(readlink -f "$0")")"
+
+cd "$context"
 git submodule init
 git submodule update
+cd -
 
-context=
 rsync -av \
   --exclude '.git/' \
   --exclude '.gitignore' \
+  --exclude '*.swp' \
   --exclude 'install.sh' \
   --exclude 'README.rst' \
-  "$(dirname "$(readlink -f "$0")")/" ~/
+  "$context/" ~/
 
 fc-cache -vf ~/.fonts
 vim +BundleInstall +qall
