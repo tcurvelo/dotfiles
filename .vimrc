@@ -20,6 +20,7 @@ Bundle 'mattn/emmet-vim'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
 Bundle 'bling/vim-airline'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 " Indent
 set cindent
@@ -29,11 +30,11 @@ set softtabstop=2 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 set shiftwidth=2  " operation >> indents 2 columns; << unindents 2 columns
+let g:indent_guides_enable_on_vim_startup = 1
 
 " Indent in *.py is 4 columns long
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4 textwidth=79
 autocmd FileType rst setlocal noautoindent nocindent nosmartindent indentexpr=
-
 
 set number      " show line numbers
 set cursorline  " have a line indicate the cursor location
