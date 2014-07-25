@@ -43,6 +43,7 @@ set ruler       " show the cursor position all the time
 set wildmenu    " visual autocomplete for command menu
 set incsearch   " search as characters are entered
 set hlsearch    " highlight matches
+set colorcolumn=80 " vertical line at column 80
 
 " Color scheme
 syntax enable
