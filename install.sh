@@ -5,6 +5,7 @@ context="$(dirname "$(readlink -f "$0")")"
 cd "$context"
 git submodule init
 git submodule update
+git submodule foreach git pull origin master
 cd -
 
 rsync -av \
