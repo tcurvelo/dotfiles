@@ -22,6 +22,8 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'bling/vim-airline'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/MatchTagAlways'
+Bundle 'majutsushi/tagbar'
 
 " Indent
 set cindent
