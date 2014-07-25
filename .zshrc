@@ -11,13 +11,12 @@ alias l="ls --color=auto"
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 plugins=(git git-extras)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.profile
 
-# Customize to your needs...
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/bin
 
