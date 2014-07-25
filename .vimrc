@@ -37,7 +37,8 @@ let g:indent_guides_enable_on_vim_startup = 1
 
 " Indent in *.py is 4 columns long
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4 textwidth=79
-autocmd FileType rst setlocal noautoindent nocindent nosmartindent indentexpr=
+autocmd FileType rst,txt setlocal noautoindent nocindent nosmartindent indentexpr=
+autocmd FileType rst,txt,mo setlocal spell spelllang=en,pt
 
 set number      " show line numbers
 set cursorline  " have a line indicate the cursor location
