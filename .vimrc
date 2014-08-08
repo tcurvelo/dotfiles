@@ -24,6 +24,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'Valloric/MatchTagAlways'
 Bundle 'majutsushi/tagbar'
+Bundle 'terryma/vim-multiple-cursors'
 
 " Indent
 set cindent
