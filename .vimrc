@@ -50,6 +50,8 @@ set incsearch   " search as characters are entered
 set hlsearch    " highlight matches
 set colorcolumn=80 " vertical line at column 80
 
+set wildignore+=*/tmp/*,*/data/*,*/py27/*,*/log/*,*/data/*,*.so,*.swp,*.zip
+
 " Color scheme
 syntax enable
 set background=light
