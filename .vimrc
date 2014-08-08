@@ -34,6 +34,8 @@ set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 set shiftwidth=2  " operation >> indents 2 columns; << unindents 2 columns
 let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+
 
 " Indent in *.py is 4 columns long
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4 textwidth=79
