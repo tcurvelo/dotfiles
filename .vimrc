@@ -66,6 +66,9 @@ if has('gui_running')
 endif
 set encoding=utf-8
 
+" shortcut for <esc>
+imap jk <Esc>
+
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
 
