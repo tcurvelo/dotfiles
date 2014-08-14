@@ -25,6 +25,7 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'Valloric/MatchTagAlways'
 Bundle 'majutsushi/tagbar'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'szw/vim-ctrlspace'
 
 " Indent
 set cindent
