@@ -31,12 +31,14 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
+*.egg-info/
+*.egg/
 .anaconda
 .codeintel/
-py26/
-py27/
+bower_components
+node_modules/
 py2.6/
 py2.7/
-*.egg/
-*.egg-info/
+py26/
+py27/
 
