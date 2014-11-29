@@ -26,6 +26,7 @@ Bundle 'Valloric/MatchTagAlways'
 Bundle 'majutsushi/tagbar'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'szw/vim-ctrlspace'
+Bundle 'morhetz/gruvbox'
 
 " Indent
 set cindent
@@ -58,8 +59,8 @@ set wildignore+=*/node_modules/*,*/bower_components/*
 
 " Color scheme
 syntax enable
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme gruvbox
 if has('gui_running')
   if has('gui_gtk2')
     set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
