@@ -6,6 +6,7 @@ setopt nocheckjobs
 setopt nohup
 
 alias l="ls --color=auto"
+alias gstb="git-status-bulk"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
