@@ -21,12 +21,14 @@ Bundle 'mattn/emmet-vim'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
 Bundle 'bling/vim-airline'
+Bundle 'edkolev/tmuxline.vim'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'Valloric/MatchTagAlways'
 Bundle 'majutsushi/tagbar'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'szw/vim-ctrlspace'
+Bundle 'morhetz/gruvbox'
 
 " Indent
 set cindent
