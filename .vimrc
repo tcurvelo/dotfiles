@@ -9,6 +9,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Bundles
+Bundle 'morhetz/gruvbox'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'kien/ctrlp.vim'
 Bundle 'nginx.vim'
@@ -58,8 +59,8 @@ set wildignore+=*/node_modules/*,*/bower_components/*
 
 " Color scheme
 syntax enable
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme gruvbox
 if has('gui_running')
   if has('gui_gtk2')
     set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
