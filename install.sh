@@ -19,3 +19,8 @@ rsync -av \
 fc-cache -vf ~/.fonts
 vim +BundleInstall +qall
 
+if [ "$(find ~/.vim/bundle/YouCompleteMe -name 'ycm_client_support.so')" == "" ]
+then
+  cd ~/.vim/bundle/YouCompleteMe && ./install.sh && cd -
+fi
+
