@@ -7,6 +7,7 @@ setopt nohup
 
 alias l="ls --color=auto"
 alias gstb="git-status-bulk"
+alias tmux="tmux -2"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"

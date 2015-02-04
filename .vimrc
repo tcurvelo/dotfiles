@@ -82,7 +82,7 @@ endif
 " ------------------------------------------------------------------------------
 
 " shortcut for <esc>
-imap jk <Esc>
+imap jj <Esc>
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
@@ -115,7 +115,13 @@ cab Q q
 " ------------------------------------------------------------------------------
 
 " airline bar settings
-let g:airline_powerline_fonts = 1
+if !empty($DISPLAY)
+  let g:airline_powerline_fonts = 1
+else
+  let g:airline_powerline_fonts = 0
+  let g:tmuxline_powerline_separators = 0
+endif
+
 set laststatus=2
 set t_Co=256
 set noshowmode
