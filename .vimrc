@@ -101,6 +101,11 @@ nnoremap <silent> <S-t> :tabnew<CR>
 " remove trailing spaces
 autocmd BufWritePre * :%s/\s\+$//e
 
+" clipboard's copy/cut/paste
+noremap YY "+y<CR>
+noremap P "+gP<CR>
+noremap XX "+x<CR>
+
 " Aliases
 cab Q! q!
 cab Wq wq
