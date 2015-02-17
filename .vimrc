@@ -18,7 +18,6 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-fugitive'
 Bundle 'mattn/emmet-vim'
-Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
 Bundle 'bling/vim-airline'
 Bundle 'edkolev/tmuxline.vim'
@@ -77,6 +76,8 @@ if has('gui_running')
   endif
 endif
 
+au BufRead,BufNewFile *.zcml setfiletype xml
+au BufRead,BufNewFile *.conf setfiletype nginx
 
 " Mappings
 " ------------------------------------------------------------------------------
