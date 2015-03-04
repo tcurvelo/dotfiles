@@ -148,3 +148,8 @@ let g:indentLine_char = '┆'
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 
+" ultisnips (avoiding conflicts with YouCompleteMe)
+let g:UltiSnipsExpandTrigger = "<c-b>"
+let g:UltiSnipsJumpForwardTrigger = "<c-b>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
+
