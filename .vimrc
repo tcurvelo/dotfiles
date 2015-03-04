@@ -30,6 +30,7 @@ Bundle 'szw/vim-ctrlspace'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
+Bundle 'scrooloose/nerdcommenter'
 
 " Basic settings
 " -----------------------------------------------------------------------------
