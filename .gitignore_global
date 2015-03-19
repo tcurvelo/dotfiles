@@ -36,6 +36,7 @@ Thumbs.db
 .anaconda
 .codeintel/
 bower_components
+env-*/
 node_modules/
 py2.6/
 py2.7/
