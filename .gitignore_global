@@ -37,8 +37,8 @@ Thumbs.db
 .codeintel/
 bower_components
 node_modules/
+env-*/
 py2.6/
 py2.7/
 py26/
 py27/
-
