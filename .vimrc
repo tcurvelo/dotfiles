@@ -31,6 +31,7 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'mfukar/robotframework-vim'
 
 " Basic settings
 " -----------------------------------------------------------------------------
@@ -79,6 +80,7 @@ endif
 
 au BufRead,BufNewFile *.zcml set filetype=xml
 au BufRead,BufNewFile *.conf set filetype=nginx
+au BufRead,BufNewFile *.robot set filetype=robot
 
 " Mappings
 " ------------------------------------------------------------------------------
