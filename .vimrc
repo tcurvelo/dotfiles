@@ -77,8 +77,8 @@ if has('gui_running')
   endif
 endif
 
-au BufRead,BufNewFile *.zcml setfiletype xml
-au BufRead,BufNewFile *.conf setfiletype nginx
+au BufRead,BufNewFile *.zcml set filetype=xml
+au BufRead,BufNewFile *.conf set filetype=nginx
 
 " Mappings
 " ------------------------------------------------------------------------------
