@@ -32,6 +32,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'mfukar/robotframework-vim'
+Bundle 'rking/ag.vim'
 
 " Basic settings
 " -----------------------------------------------------------------------------
@@ -156,3 +157,5 @@ let g:UltiSnipsExpandTrigger = "<c-b>"
 let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
+" ctrlp
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
