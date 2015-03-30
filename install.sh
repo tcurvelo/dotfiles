@@ -17,7 +17,7 @@ rsync -av \
   "$context/" ~/
 
 fc-cache -vf ~/.fonts
-vim +BundleInstall +qall
+vim +NeoBundleInstall +qall
 
 if [ "$(find ~/.vim/bundle/YouCompleteMe -name 'ycm_client_support.so')" == "" ]
 then

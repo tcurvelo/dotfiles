@@ -1,36 +1,51 @@
 set nocompatible
 filetype off
 filetype plugin on
-filetype plugin indent on
 
 " Bundle management
 " ------------------------------------------------------------------------------
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
+if !1 | finish | endif
+
+if has('vim_starting')
+  if &compatible
+    set nocompatible               " Be iMproved
+  endif
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
 
 " Bundles
-Bundle 'morhetz/gruvbox'
-Bundle 'kien/ctrlp.vim'
-Bundle 'sheerun/vim-polyglot'
-Bundle 'pld-linux/vim-syntax-vcl'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-fugitive'
-Bundle 'mattn/emmet-vim'
-Bundle 'pangloss/vim-javascript'
-Bundle 'bling/vim-airline'
-Bundle 'edkolev/tmuxline.vim'
-Bundle 'Yggdroot/indentLine'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'Valloric/MatchTagAlways'
-Bundle 'majutsushi/tagbar'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'szw/vim-ctrlspace'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
-Bundle 'scrooloose/nerdcommenter'
+NeoBundle 'morhetz/gruvbox'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'sheerun/vim-polyglot'
+NeoBundle 'pld-linux/vim-syntax-vcl'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'edkolev/tmuxline.vim'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Valloric/MatchTagAlways'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'szw/vim-ctrlspace'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'mfukar/robotframework-vim'
+NeoBundle 'rking/ag.vim'
+
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
+
 
 " Basic settings
 " -----------------------------------------------------------------------------
@@ -77,8 +92,9 @@ if has('gui_running')
   endif
 endif
 
-au BufRead,BufNewFile *.zcml setfiletype xml
-au BufRead,BufNewFile *.conf setfiletype nginx
+au BufRead,BufNewFile *.zcml set filetype=xml
+au BufRead,BufNewFile *.conf set filetype=nginx
+au BufRead,BufNewFile *.robot set filetype=robot
 
 " Mappings
 " ------------------------------------------------------------------------------
@@ -154,3 +170,5 @@ let g:UltiSnipsExpandTrigger = "<c-b>"
 let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
+" ctrlp
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'

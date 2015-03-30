@@ -1,0 +1,12 @@
+*.pyo
+*.pyc
+*.so
+*.swp
+*.zip
+bower_components/
+.git/
+data/
+env-*/
+log/
+node_modules/
+tmp/
