@@ -17,6 +17,7 @@ DISABLE_AUTO_UPDATE="true"
 
 plugins=(git git-extras)
 
+HISTFILE=~/.history
 source $ZSH/oh-my-zsh.sh
 source ~/.profile
 
