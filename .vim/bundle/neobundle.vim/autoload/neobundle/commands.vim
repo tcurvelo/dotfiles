@@ -476,21 +476,43 @@ function! neobundle#commands#save_cache() "{{{
     let bundle.hooks = {}
   endfor
 
-  call writefile([s:get_cache_version(), string(bundles)], cache)
+  redir => current_vim
+  silent! version
+  redir END
+
+  call writefile( [s:get_cache_version(),
+        \ v:progname, current_vim, string(bundles)], cache)
 endfunction"}}}
-function! neobundle#commands#load_cache() "{{{
+function! neobundle#commands#load_cache(...) "{{{
+  let vimrc = get(a:000, 0, $MYVIMRC)
   let cache = neobundle#commands#get_cache_file()
-  if !filereadable(cache)
-    return
+  if !filereadable(cache) || getftime(cache) < getftime(vimrc)
+    return 1
   endif
+
+  redir => current_vim
+  silent! version
+  redir END
 
   try
     let list = readfile(cache)
     let ver = list[0]
-    sandbox let bundles = eval(list[1])
-    if ver !=# s:get_cache_version()
-          \ || type(bundles) != type([])
-      return
+    let prog = get(list, 1, '')
+    let vim = get(list, 2, '')
+
+    if len(list) != 4
+          \ || ver !=# s:get_cache_version()
+          \ || v:progname !=# prog
+          \ || current_vim !=# vim
+      call neobundle#commands#clear_cache()
+      return 1
+    endif
+
+    sandbox let bundles = eval(list[3])
+
+    if type(bundles) != type([])
+      call neobundle#commands#clear_cache()
+      return 1
     endif
 
     for bundle in bundles
@@ -499,6 +521,8 @@ function! neobundle#commands#load_cache() "{{{
   catch
     call neobundle#util#print_error(
           \ '[neobundle] Error occurred while loading cache : ' . v:errmsg)
+    call neobundle#commands#clear_cache()
+    return 1
   endtry
 endfunction"}}}
 function! neobundle#commands#clear_cache() "{{{
@@ -609,7 +633,7 @@ endfunction "}}}
 function! s:check_update_process(context, process, is_unite) "{{{
   if neobundle#util#has_vimproc() && has_key(a:process, 'proc')
     let is_timeout = (localtime() - a:process.start_time)
-          \             >= g:neobundle#install_process_timeout
+          \             >= a:process.bundle.install_process_timeout
     let a:process.output .= vimproc#util#iconv(
           \ a:process.proc.stdout.read(-1, 300), 'char', &encoding)
     if !a:process.proc.stdout.eof && !is_timeout
@@ -688,7 +712,7 @@ function! s:cmp_vimproc(a, b) "{{{
 endfunction"}}}
 
 function! s:get_cache_version()"{{{
-  return str2nr(printf('%02d%02d', 1, 0))
+  return str2nr(printf('%02d%02d', 2, 0))
 endfunction "}}}
 
 let &cpo = s:save_cpo

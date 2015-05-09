@@ -21,7 +21,7 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 3.0, for Vim 7.2
+" Version: 3.1, for Vim 7.2
 "=============================================================================
 
 let s:save_cpo = &cpo
@@ -147,6 +147,12 @@ command! -bar NeoBundleCount
 command! -bar NeoBundleSaveCache
       \ call neobundle#commands#save_cache()
 command! -bar NeoBundleLoadCache
+      \ call neobundle#util#print_error(
+      \ '[neobundle] NeoBundleLoadCache is deprecated command.') |
+      \ call neobundle#util#print_error(
+      \ '[neobundle] It will be removed in the next version.') |
+      \ call neobundle#util#print_error(
+      \ '[neobundle] Please use neobundle#load_cache() instead.') |
       \ call neobundle#commands#load_cache()
 command! -bar NeoBundleClearCache
       \ call neobundle#commands#clear_cache()
@@ -161,21 +167,16 @@ command! -nargs=+ NeoBundleLock
 
 function! neobundle#rc(...) "{{{
   call neobundle#util#print_error(
-        \ '[neobundle] neobundle#rc() is deprecated function.')
-  call neobundle#util#print_error(
-        \ '[neobundle] It will be removed in the next version.')
+        \ '[neobundle] neobundle#rc() is removed function.')
   call neobundle#util#print_error(
         \ '[neobundle] Please use neobundle#begin()/neobundle#end() instead.')
-  let path = (a:0 > 0) ? a:1 :
-        \ get(filter(split(globpath(&runtimepath, 'bundle', 1), '\n'),
-        \ 'isdirectory(v:val)'), 0, '~/.vim/bundle')
-  return neobundle#init#_rc(path, 0)
 endfunction"}}}
+
 function! neobundle#begin(...) "{{{
   let path = (a:0 > 0) ? a:1 :
         \ get(filter(split(globpath(&runtimepath, 'bundle', 1), '\n'),
         \ 'isdirectory(v:val)'), 0, '~/.vim/bundle')
-  return neobundle#init#_rc(path, 1)
+  return neobundle#init#_rc(path)
 endfunction"}}}
 function! neobundle#end() "{{{
   call neobundle#config#final()
@@ -219,7 +220,7 @@ endfunction
 
 function! neobundle#local(localdir, ...)
   return neobundle#parser#local(
-        \ a:localdir, get(a:000, 0, {}), get(a:000, 1, []))
+        \ a:localdir, get(a:000, 0, {}), get(a:000, 1, ['*']))
 endfunction
 
 function! neobundle#exists_not_installed_bundles()
@@ -237,10 +238,29 @@ function! neobundle#is_sourced(name)
 endfunction
 
 function! neobundle#has_cache()
+  call neobundle#util#print_error(
+        \ '[neobundle] neobundle#has_cache() is deprecated function.')
+  call neobundle#util#print_error(
+        \ '[neobundle] It will be removed in the next version.')
+  call neobundle#util#print_error(
+        \ '[neobundle] Please use neobundle#load_cache() instead.')
+
   return filereadable(neobundle#commands#get_cache_file())
 endfunction
 
+function! neobundle#load_cache(...)
+  let vimrc = get(a:000, 0, $MYVIMRC)
+  return neobundle#commands#load_cache(vimrc)
+endfunction
+
 function! neobundle#has_fresh_cache(...)
+  call neobundle#util#print_error(
+        \ '[neobundle] neobundle#has_fresh_cache() is deprecated function.')
+  call neobundle#util#print_error(
+        \ '[neobundle] It will be removed in the next version.')
+  call neobundle#util#print_error(
+        \ '[neobundle] Please use neobundle#load_cache() instead.')
+
   " Check if the cache file is newer than the vimrc file.
   let vimrc = get(a:000, 0, $MYVIMRC)
   let cache = neobundle#commands#get_cache_file()

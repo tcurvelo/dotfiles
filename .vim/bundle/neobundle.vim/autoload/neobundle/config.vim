@@ -27,14 +27,22 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 if !exists('s:neobundles')
-  let s:is_block = 0
+  let s:within_block = 0
   let s:lazy_rtp_bundles = []
   let s:neobundles = {}
   let s:sourced_neobundles = {}
   let neobundle#tapped = {}
 endif
 
-function! neobundle#config#init(is_block) "{{{
+function! neobundle#config#init() "{{{
+  if neobundle#config#within_block()
+    call neobundle#util#print_error(
+          \ '[neobundle] neobundle#begin()/neobundle#end() usage is invalid.')
+    call neobundle#util#print_error(
+          \ '[neobundle] Please check your .vimrc.')
+    return
+  endif
+
   call s:filetype_off()
 
   for bundle in values(s:neobundles)
@@ -57,10 +65,18 @@ function! neobundle#config#init(is_block) "{{{
     autocmd VimEnter * call s:on_vim_enter()
   augroup END
 
-  let s:is_block = a:is_block
+  let s:within_block = 1
   let s:lazy_rtp_bundles = []
 endfunction"}}}
 function! neobundle#config#final() "{{{
+  if !neobundle#config#within_block()
+    call neobundle#util#print_error(
+          \ '[neobundle] neobundle#begin()/neobundle#end() usage is invalid.')
+    call neobundle#util#print_error(
+          \ '[neobundle] Please check your .vimrc.')
+    return
+  endif
+
   " Join to the tail in runtimepath.
   let rtps = neobundle#util#split_rtp(&runtimepath)
   let index = index(rtps, neobundle#get_rtp_dir())
@@ -77,8 +93,11 @@ function! neobundle#config#final() "{{{
 
   call neobundle#call_hook('on_source', s:lazy_rtp_bundles)
 
-  let s:is_block = 0
+  let s:within_block = 0
   let s:lazy_rtp_bundles = []
+endfunction"}}}
+function! neobundle#config#within_block() "{{{
+  return s:within_block
 endfunction"}}}
 
 function! neobundle#config#get(name) "{{{
@@ -91,7 +110,7 @@ endfunction"}}}
 
 function! neobundle#config#get_autoload_bundles() "{{{
   return filter(values(s:neobundles),
-        \ "!v:val.sourced && v:val.lazy")
+        \ "!v:val.sourced && v:val.lazy && !v:val.disabled")
 endfunction"}}}
 
 function! neobundle#config#source_bundles(bundles) "{{{
@@ -131,9 +150,9 @@ function! neobundle#config#source(names, ...) "{{{
         \ neobundle#util#convert2list(a:names))
 
   let rtps = neobundle#util#split_rtp(&runtimepath)
-  let bundles = filter(bundles,
-        \ "!neobundle#config#is_sourced(v:val.name) ||
-        \ (v:val.rtp != '' && index(rtps, v:val.rtp) < 0)")
+  let bundles = filter(bundles, "!v:val.disabled
+        \ && (!neobundle#config#is_sourced(v:val.name)
+        \ || (v:val.rtp != '' && index(rtps, v:val.rtp) < 0))")
   if empty(bundles)
     return
   endif
@@ -264,7 +283,7 @@ function! neobundle#config#rtp_add(bundle) abort "{{{
     call neobundle#config#rtp_rm(s:neobundles[a:bundle.name])
   endif
 
-  if s:is_block && !a:bundle.force
+  if s:within_block && !a:bundle.force
     " Add rtp lazily.
     call add(s:lazy_rtp_bundles, a:bundle)
     return
