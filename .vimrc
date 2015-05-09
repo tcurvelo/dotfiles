@@ -85,6 +85,10 @@ syntax enable
 set background=dark
 colorscheme gruvbox
 if has('gui_running')
+  set guioptions-=T " remove toolbar
+  set guioptions-=m " remove menubar
+  set guioptions-=r " remove right-hand scrollbar
+  set guioptions-=L " remove left-hand scrollbar
   if has('gui_gtk2')
     set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
   elseif has('gui_win32')
