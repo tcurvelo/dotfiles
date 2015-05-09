@@ -27,7 +27,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neobundle#init#_rc(path, is_block) "{{{
+function! neobundle#init#_rc(path) "{{{
   let path =
         \ neobundle#util#substitute_path_separator(
         \ neobundle#util#expand(a:path))
@@ -48,7 +48,7 @@ function! neobundle#init#_rc(path, is_block) "{{{
     autocmd!
   augroup END
 
-  call neobundle#config#init(a:is_block)
+  call neobundle#config#init()
   call neobundle#autoload#init()
 endfunction"}}}
 
@@ -95,6 +95,8 @@ function! neobundle#init#_bundle(bundle) "{{{
           \ 'recipe' : '',
           \ 'base' : neobundle#get_neobundle_dir(),
           \ 'install_rev' : '',
+          \ 'install_process_timeout'
+          \    : g:neobundle#install_process_timeout,
           \ }
   call extend(bundle, a:bundle)
 

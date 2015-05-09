@@ -32,6 +32,13 @@ function! neobundle#parser#bundle(arg, ...) "{{{
   let is_parse_only = get(a:000, 0, 0)
   if !is_parse_only
     call neobundle#config#add(bundle)
+
+    if !neobundle#config#within_block()
+          \ && !bundle.lazy && has('vim_starting')
+      call neobundle#util#print_error(
+            \ '[neobundle] `NeoBundle` commands must be executed within' .
+            \ ' a neobundle#begin/end block.  Please check your usage.')
+    endif
   endif
 
   return bundle
@@ -168,13 +175,16 @@ function! neobundle#parser#_init_bundle(name, opts) "{{{
   return bundle
 endfunction"}}}
 
-function! neobundle#parser#local(localdir, options, names) "{{{
+function! neobundle#parser#local(localdir, options, includes) "{{{
   let base = fnamemodify(neobundle#util#expand(a:localdir), ':p')
-  for dir in filter(map(filter(split(glob(
-        \ base . '*'), '\n'), "isdirectory(v:val)"),
-        \ "substitute(neobundle#util#substitute_path_separator(
-        \   fnamemodify(v:val, ':p')), '/$', '', '')"),
-        \ "empty(a:names) || index(a:names, fnamemodify(v:val, ':t')) >= 0")
+  let directories = []
+  for glob in a:includes
+    let directories += map(filter(split(glob(base . glob), '\n'),
+          \ "isdirectory(v:val)"), "
+          \ substitute(neobundle#util#substitute_path_separator(
+          \   fnamemodify(v:val, ':p')), '/$', '', '')")
+  endfor
+  for dir in neobundle#util#uniq(directories)
     let options = extend({ 'local' : 1, 'base' : base }, a:options)
     let name = fnamemodify(dir, ':t')
     let bundle = neobundle#get(name)
@@ -269,7 +279,7 @@ endfunction"}}}
 function! neobundle#parser#_function_prefix(name) "{{{
   let function_prefix = tolower(fnamemodify(a:name, ':r'))
   let function_prefix = substitute(function_prefix,
-        \'^vim-', '','')
+        \'^vim-\|-vim$', '','')
   let function_prefix = substitute(function_prefix,
         \'^unite-', 'unite#sources#','')
   let function_prefix = tr(function_prefix, '-', '_')
