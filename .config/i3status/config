@@ -16,4 +16,3 @@ order += "tztime local"
 tztime local {
    format = "%a %d/%m/%Y  %H:%M"
 }
-
