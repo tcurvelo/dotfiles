@@ -13,7 +13,7 @@ set $mod Mod4
 font pango:Ubuntu 11
 
 # background image
-exec --no-startup-id feh --bg-scale ~/docs/wallpaper.jpg
+exec --no-startup-id feh --bg-center ~/docs/wallpaper.jpg
 
 # applets
 exec --no-startup-id nm-applet
@@ -97,6 +97,9 @@ bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
+bindsym $mod+Tab workspace next
+bindsym $mod+Shit+Tab workspace previous
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -114,7 +117,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-msg exit"
+bindsym $mod+Escape exec "i3-msg exit"
 bindsym $mod+Shift+Escape exec "shutdown -h now"
 
 # resize window (you can also use the mouse for that)
