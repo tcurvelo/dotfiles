@@ -71,6 +71,7 @@ function! neobundle#parser#fetch(arg) "{{{
   endif
 
   " Clear runtimepath.
+  let bundle.fetch = 1
   let bundle.rtp = ''
 
   call neobundle#config#add(bundle)
@@ -224,6 +225,27 @@ function! neobundle#parser#load_toml(filename, default) "{{{
       call neobundle#util#print_error(
             \ '[neobundle] No repository plugin data: ' . a:filename)
       return 1
+    endif
+
+    if has_key(plugin, 'depends')
+      let _ = []
+      for depend in neobundle#util#convert2list(plugin.depends)
+        if type(depend) == type('') || type(depend) == type([])
+          call add(_, depend)
+        elseif type(depend) == type({})
+          if !has_key(depend, 'repository')
+            call neobundle#util#print_error(
+                  \ '[neobundle] No repository plugin data: ' . a:filename)
+            return 1
+          endif
+
+          call add(_, [depend.repository, depend])
+        endif
+
+        unlet depend
+      endfor
+
+      let plugin.depends = _
     endif
 
     let options = extend(plugin, a:default, 'keep')

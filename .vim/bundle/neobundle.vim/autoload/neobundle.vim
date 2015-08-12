@@ -175,8 +175,12 @@ endfunction"}}}
 function! neobundle#begin(...) "{{{
   let path = (a:0 > 0) ? a:1 :
         \ get(filter(split(globpath(&runtimepath, 'bundle', 1), '\n'),
-        \ 'isdirectory(v:val)'), 0, '~/.vim/bundle')
+        \ 'isdirectory(v:val)'), 0,
+        \ (has('nvim') ? '~/.nvim/bundle' : '~/.vim/bundle'))
   return neobundle#init#_rc(path)
+endfunction"}}}
+function! neobundle#append() "{{{
+  call neobundle#config#append()
 endfunction"}}}
 function! neobundle#end() "{{{
   call neobundle#config#final()
@@ -187,6 +191,12 @@ function! neobundle#set_neobundle_dir(path)
 endfunction
 
 function! neobundle#get_neobundle_dir()
+  if s:neobundle_dir == ''
+    call neobundle#util#print_error(
+          \ '[neobundle] neobundle directory is empty.')
+    return ''
+  endif
+
   let dir = s:neobundle_dir
   if !isdirectory(dir)
     call mkdir(dir, 'p')
@@ -199,7 +209,11 @@ function! neobundle#get_runtime_dir()
 endfunction
 
 function! neobundle#get_tags_dir() "{{{
-  let dir = neobundle#get_neobundle_dir() . '/.neobundle/doc'
+  if s:neobundle_dir == ''
+    return ''
+  endif
+
+  let dir = s:neobundle_dir . '/.neobundle/doc'
   if !isdirectory(dir)
     call mkdir(dir, 'p')
   endif
@@ -207,6 +221,10 @@ function! neobundle#get_tags_dir() "{{{
 endfunction"}}}
 
 function! neobundle#get_rtp_dir()
+  if s:neobundle_dir == ''
+    return ''
+  endif
+
   let dir = s:neobundle_dir . '/.neobundle'
   if !isdirectory(dir)
     call mkdir(dir, 'p')

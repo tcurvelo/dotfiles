@@ -141,15 +141,19 @@ INTERFACE					*neobundle-interface*
 FUNCTIONS 					*neobundle-functions*
 
 neobundle#begin([{base-path}])			*neobundle#begin()*
-		Initializes neobundle.vim. {base-path} is where your
-		downloaded plugins will be placed.
+		Initializes neobundle.vim and start neobundle bundles
+		configuration block.
+		{base-path} is where your downloaded plugins will be placed.
 		If {base-path} is omitted, neobundle looks for a "bundle"
 		directory in the default 'runtimepath'.
-		Note: It executes ":filetype off" automatically.
-		Note: You must execute |:NeoBundle| commands in
-		|neobundle#begin()| block.
 		Note: You must not call the function inside a
 		"has('vim_starting')" block.
+		Note: You can use |neobundle#begin()| / |neobundle#end()| block
+		only once in your .vimrc.
+
+		Note: It executes ":filetype off" automatically.
+		Note: You must execute |:NeoBundle| commands in
+		|neobundle#begin()| or |neobundle#append()| block.
 >
 	if has('vim_starting')
 	  if &compatible
@@ -168,9 +172,18 @@ neobundle#begin([{base-path}])			*neobundle#begin()*
 	filetype plugin indent on
 <
 
+neobundle#append()				*neobundle#append()*
+		Start neobundle bundles configuration block.
+		You can use multiple |neobundle#append()| / |neobundle#end()|
+		blocks in your .vimrc.
+		Note: It does not initialize neobundle.  You must call
+		|neobundle#begin()| at first.
+		Note: It executes ":filetype off" automatically.
+		Note: You must execute |:NeoBundle| commands in
+		|neobundle#begin()| or |neobundle#append()| block.
+
 neobundle#end()					*neobundle#end()*
-		Finalize neobundle.vim.  If you use |neobundle#begin()|, you
-		must call it after neobundle bundles configuration.
+		End neobundle bundles configuration block.
 
 neobundle#source({bundle-names})		*neobundle#source()*
 		Same as |:NeoBundleSource|.
@@ -238,6 +251,14 @@ neobundle#load_toml({filename}, [{options}])
 		filetypes = 'snippet'
 		unite_sources = [ 'neosnippet',
 		  'neosnippet/user', 'neosnippet/runtime']
+
+		  [[plugins.depends]]
+		  repository = 'honza/vim-snippet'
+		  name = 'honza-snippet'
+
+		[[plugins]]
+		repository = 'Shougo/neobundle.vim'
+		fetch = 1
 
 		[[plugins]]
 		repository = 'Shougo/vimproc.vim'
@@ -344,9 +365,6 @@ neobundle#load_cache([{vimrc}])			 *neobundle#load_cache()*
 
 		It returns 1, if the cache file is old or invalid or not
 		found.
-
-		You can optimize the .vimrc loading time by using it
-		together with |neobundle#load_cache()|.
 
 		The default cache location can be overridden through
 		|g:neobundle#cache_file|.
@@ -954,6 +972,11 @@ OPTIONS 					*neobundle-options*
 		If set to 1, neobundle doesn't add the path to user
 		runtimepath.
 
+						*neobundle-options-fetch*
+		fetch			(Number)
+		If set to 1, neobundle doesn't add the path to user
+		runtimepath, and doesn't load the bundle.
+
 						*neobundle-options-force*
 		force			(Number)
 		If set to 1, neobundle will load plugin files in the plugin
@@ -994,8 +1017,9 @@ OPTIONS 					*neobundle-options*
 		"7.3.885".
 
 						*neobundle-options-disabled*
-		disabled		(Number)
+		disabled		(Number) or (String)
 		If set to 1, neobundle will disable the plugin.
+		If it is string, neobundle will eval the string.
 		Note: Disabled plugins are not ignored when install/update
 		plugins.
 
@@ -1322,7 +1346,7 @@ OPTIONS 					*neobundle-options*
 EXAMPLES					*neobundle-examples*
 >
 	" Note: Skip initialization for vim-tiny or vim-small.
-	if !1 | finish | endif
+	if 0 | endif
 
 	if has('vim_starting')
 	  if &compatible
