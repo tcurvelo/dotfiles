@@ -43,8 +43,6 @@ function! neobundle#config#init() "{{{
     return
   endif
 
-  call s:filetype_off()
-
   for bundle in values(s:neobundles)
     if (!bundle.resettable && !bundle.lazy) ||
           \ (bundle.sourced && bundle.lazy
@@ -61,6 +59,33 @@ function! neobundle#config#init() "{{{
   augroup neobundle
     autocmd VimEnter * call s:on_vim_enter()
   augroup END
+
+  call s:filetype_off()
+
+  let s:within_block = 1
+  let s:lazy_rtp_bundles = []
+
+  " Load extra bundles configuration.
+  call neobundle#config#load_extra_bundles()
+endfunction"}}}
+function! neobundle#config#append() "{{{
+  if neobundle#config#within_block()
+    call neobundle#util#print_error(
+          \ '[neobundle] neobundle#begin()/neobundle#end() usage is invalid.')
+    call neobundle#util#print_error(
+          \ '[neobundle] Please check your .vimrc.')
+    return
+  endif
+
+  if neobundle#get_rtp_dir() == ''
+    call neobundle#util#print_error(
+          \ '[neobundle] You must call neobundle#begin() before.')
+    call neobundle#util#print_error(
+          \ '[neobundle] Please check your .vimrc.')
+    return
+  endif
+
+  call s:filetype_off()
 
   let s:within_block = 1
   let s:lazy_rtp_bundles = []
@@ -613,12 +638,17 @@ function! s:add_dummy_mappings(bundle) "{{{
         \   type(v:val) == type([]) ?
         \     [v:val[0], v:val[1:]] : ['nxo', [v:val]]
         \ ")
-    for mapping in mappings
-      if mapping ==# '<Plug>'
-        " Use plugin name.
-        let mapping = '<Plug>(' . a:bundle.normalized_name
+    if mappings ==# ['<Plug>']
+      " Use plugin name.
+      let mappings = ['<Plug>(' . a:bundle.normalized_name]
+      if stridx(a:bundle.normalized_name, '-') >= 0
+        " The plugin mappings may use "_" instead of "-".
+        call add(mappings, '<Plug>(' .
+              \ substitute(a:bundle.normalized_name, '-', '_', 'g'))
       endif
+    endif
 
+    for mapping in mappings
       " Define dummy mappings.
       for mode in filter(split(modes, '\zs'),
             \ "index(['n', 'v', 'x', 'o', 'i', 'c'], v:val) >= 0")
