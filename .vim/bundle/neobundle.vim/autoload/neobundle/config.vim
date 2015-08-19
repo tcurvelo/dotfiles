@@ -37,9 +37,9 @@ endif
 function! neobundle#config#init() "{{{
   if neobundle#config#within_block()
     call neobundle#util#print_error(
-          \ '[neobundle] neobundle#begin()/neobundle#end() usage is invalid.')
+          \ 'neobundle#begin()/neobundle#end() usage is invalid.')
     call neobundle#util#print_error(
-          \ '[neobundle] Please check your .vimrc.')
+          \ 'Please check your .vimrc.')
     return
   endif
 
@@ -71,17 +71,17 @@ endfunction"}}}
 function! neobundle#config#append() "{{{
   if neobundle#config#within_block()
     call neobundle#util#print_error(
-          \ '[neobundle] neobundle#begin()/neobundle#end() usage is invalid.')
+          \ 'neobundle#begin()/neobundle#end() usage is invalid.')
     call neobundle#util#print_error(
-          \ '[neobundle] Please check your .vimrc.')
+          \ 'Please check your .vimrc.')
     return
   endif
 
   if neobundle#get_rtp_dir() == ''
     call neobundle#util#print_error(
-          \ '[neobundle] You must call neobundle#begin() before.')
+          \ 'You must call neobundle#begin() before.')
     call neobundle#util#print_error(
-          \ '[neobundle] Please check your .vimrc.')
+          \ 'Please check your .vimrc.')
     return
   endif
 
@@ -96,9 +96,9 @@ endfunction"}}}
 function! neobundle#config#final() "{{{
   if !neobundle#config#within_block()
     call neobundle#util#print_error(
-          \ '[neobundle] neobundle#begin()/neobundle#end() usage is invalid.')
+          \ 'neobundle#begin()/neobundle#end() usage is invalid.')
     call neobundle#util#print_error(
-          \ '[neobundle] Please check your .vimrc.')
+          \ 'Please check your .vimrc.')
     return
   endif
 
@@ -182,9 +182,7 @@ function! neobundle#config#source(names, ...) "{{{
     return
   endif
 
-  redir => filetype_before
-  silent autocmd FileType
-  redir END
+  let filetype_before = neobundle#util#redir("autocmd FileType")
 
   let reset_ftplugin = 0
   for bundle in bundles
@@ -207,7 +205,7 @@ function! neobundle#config#source(names, ...) "{{{
         call s:on_source(bundle)
       catch
         call neobundle#util#print_error(
-              \ '[neobundle] Uncaught error while sourcing "' . bundle.name .
+              \ 'Uncaught error while sourcing "' . bundle.name .
               \ '": '.v:exception . ' in ' . v:throwpoint)
       endtry
     endif
@@ -219,9 +217,7 @@ function! neobundle#config#source(names, ...) "{{{
     endif
   endfor
 
-  redir => filetype_after
-  silent autocmd FileType
-  redir END
+  let filetype_after = neobundle#util#redir('autocmd FileType')
 
   if reset_ftplugin
     call s:reset_ftplugin()
@@ -413,7 +409,7 @@ function! neobundle#config#set(name, dict) "{{{
   let bundle = neobundle#config#get(a:name)
   if empty(bundle)
     call neobundle#util#print_error(
-          \ '[neobundle] Plugin name "' . a:name . '" is not defined.')
+          \ 'Plugin name "' . a:name . '" is not defined.')
     return
   endif
 
@@ -536,7 +532,7 @@ endfunction"}}}
 function! s:on_vim_enter() "{{{
   if !empty(s:lazy_rtp_bundles)
     call neobundle#util#print_error(
-          \ '[neobundle] neobundle#begin() was called without calling ' .
+          \ 'neobundle#begin() was called without calling ' .
           \ 'neobundle#end() in .vimrc.')
     " We're past the point of plugins being sourced, so don't bother
     " trying to recover.
@@ -566,7 +562,7 @@ function! s:add_lazy(bundle) "{{{
         \ 'filetypes', 'filename_patterns',
         \ 'commands', 'functions', 'mappings', 'unite_sources',
         \ 'insert', 'explorer', 'on_source',
-        \ 'function_prefix', 'command_prefix',
+        \ 'command_prefix',
         \ ], 'has_key(bundle, v:val)')
     let bundle.autoload[key] = bundle[key]
     call remove(bundle, key)
@@ -582,10 +578,6 @@ function! s:add_lazy(bundle) "{{{
     let bundle.autoload[key] = [bundle.autoload[key]]
   endfor
 
-  if !has_key(bundle.autoload, 'function_prefix')
-    let bundle.autoload.function_prefix =
-          \ neobundle#parser#_function_prefix(bundle.name)
-  endif
   if !has_key(bundle.autoload, 'command_prefix')
     let bundle.autoload.command_prefix =
           \ substitute(bundle.normalized_name, '[_-]', '', 'g')
@@ -747,9 +739,7 @@ function! s:reset_ftplugin() "{{{
 endfunction"}}}
 
 function! s:filetype_off() "{{{
-  redir => filetype_out
-  silent filetype
-  redir END
+  let filetype_out = neobundle#util#redir('filetype')
 
   if filetype_out =~# 'plugin:ON'
         \ || filetype_out =~# 'indent:ON'
