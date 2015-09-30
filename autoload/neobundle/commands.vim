@@ -42,9 +42,9 @@ function! neobundle#commands#install(bang, bundle_names) "{{{
   let bundle_names = split(a:bundle_names)
 
   let bundles = !a:bang ?
-        \ neobundle#get_not_installed_bundles(bundle_names) :
+        \ neobundle#get_force_not_installed_bundles(bundle_names) :
         \ empty(bundle_names) ?
-        \ neobundle#config#get_neobundles() :
+        \ neobundle#config#get_enabled_bundles() :
         \ neobundle#config#fuzzy_search(bundle_names)
 
   let reinstall_bundles =
@@ -219,11 +219,11 @@ function! neobundle#commands#clean(bang, ...) "{{{
     let all_dirs = filter(split(neobundle#util#substitute_path_separator(
           \ globpath(neobundle#get_neobundle_dir(), '*', 1)), "\n"),
           \ 'isdirectory(v:val)')
-    let bundle_dirs = map(copy(neobundle#config#get_neobundles()),
+    let bundle_dirs = map(copy(neobundle#config#get_enabled_bundles()),
           \ "(v:val.script_type != '') ?
           \  v:val.base . '/' . v:val.directory : v:val.path")
     let x_dirs = filter(all_dirs,
-          \ "!neobundle#config#is_installed(fnamemodify(v:val, ':t'))
+          \ "neobundle#config#is_disabled(fnamemodify(v:val, ':t'))
           \ && index(bundle_dirs, v:val) < 0 && v:val !~ '/neobundle.vim$'")
   else
     let x_dirs = map(neobundle#config#search_simple(a:000), 'v:val.path')
@@ -300,7 +300,7 @@ function! neobundle#commands#gc(bundle_names) "{{{
   let bundle_names = split(a:bundle_names)
   let number = 0
   let bundles = empty(bundle_names) ?
-        \ neobundle#config#get_neobundles() :
+        \ neobundle#config#get_enabled_bundles() :
         \ neobundle#config#search_simple(bundle_names)
   let max = len(bundles)
   for bundle in bundles
@@ -402,7 +402,7 @@ endfunction"}}}
 
 function! neobundle#commands#list() "{{{
   for bundle in neobundle#config#get_neobundles()
-    echo (neobundle#is_sourced(bundle.name) ? ' ' :
+    echo (bundle.sourced ? ' ' :
           \ neobundle#is_installed(bundle.name) ? '#' : 'X')
           \ . ' ' . bundle.name
   endfor
@@ -439,7 +439,7 @@ endfunction"}}}
 
 function! neobundle#commands#complete_lazy_bundles(arglead, cmdline, cursorpos) "{{{
   return filter(map(filter(neobundle#config#get_neobundles(),
-        \ "!neobundle#config#is_sourced(v:val.name) && v:val.rtp != ''"), 'v:val.name'),
+        \ "!v:val.sourced && v:val.rtp != ''"), 'v:val.name'),
         \ 'stridx(tolower(v:val), tolower(a:arglead)) == 0')
 endfunction"}}}
 
@@ -468,6 +468,11 @@ function! neobundle#commands#save_cache() "{{{
   endif
 
   let cache = neobundle#commands#get_cache_file()
+
+  " Set function prefixes before save cache
+  call neobundle#autoload#_set_function_prefixes(
+        \ neobundle#config#get_autoload_bundles())
+
   let bundles = deepcopy(neobundle#config#get_neobundles())
   " Clear hooks.  Because, VimL cannot save functions in JSON.
   for bundle in bundles
@@ -680,7 +685,7 @@ endfunction"}}}
 
 function! s:update_tags() "{{{
   let bundles = [{ 'rtp' : neobundle#get_runtime_dir()}]
-        \ + neobundle#config#get_neobundles()
+        \ + neobundle#config#get_enabled_bundles()
   call neobundle#util#copy_bundle_files(bundles, 'doc')
 
   call neobundle#util#writefile('tags_info',
@@ -706,7 +711,7 @@ function! s:cmp_vimproc(a, b) "{{{
 endfunction"}}}
 
 function! s:get_cache_version()"{{{
-  return str2nr(printf('%02d%02d', 2, 1))
+  return str2nr(printf('%02d%02d', 2, 2))
 endfunction "}}}
 
 let &cpo = s:save_cpo

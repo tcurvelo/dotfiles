@@ -105,6 +105,7 @@ function! neobundle#init#_bundle(bundle) "{{{
           \ 'install_rev' : '',
           \ 'install_process_timeout'
           \    : g:neobundle#install_process_timeout,
+          \ 'refcnt' : 1,
           \ }
   call extend(bundle, a:bundle)
 
@@ -165,10 +166,6 @@ function! neobundle#init#_bundle(bundle) "{{{
     let bundle.path .= '/' . bundle.script_type
   endif
 
-  if !has_key(bundle, 'resettable')
-    let bundle.resettable = !bundle.lazy
-  endif
-
   if !has_key(bundle, 'augroup')
     let bundle.augroup = bundle.name
   endif
@@ -176,10 +173,6 @@ function! neobundle#init#_bundle(bundle) "{{{
   " Parse depends.
   if !empty(bundle.depends)
     call s:init_depends(bundle)
-  endif
-
-  if get(neobundle#config#get(bundle.name), 'sourced', 0)
-    let bundle.sourced = 1
   endif
 
   if type(bundle.disabled) == type('')
@@ -209,7 +202,6 @@ function! s:init_depends(bundle) "{{{
     let depend_bundle = type(depend) == type({}) ?
           \ depend : neobundle#parser#bundle(depend, 1)
     let depend_bundle.lazy = bundle.lazy
-    let depend_bundle.resettable = bundle.resettable
     let depend_bundle.overwrite = 0
     call add(_, depend_bundle)
 
