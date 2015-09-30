@@ -21,7 +21,6 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 3.1, for Vim 7.2
 "=============================================================================
 
 let s:save_cpo = &cpo
@@ -130,7 +129,7 @@ command! -nargs=? -bang -bar
       \ call neobundle#commands#list()
 
 command! -bar NeoBundleDocs
-      \ call neobundle#commands#helptags(neobundle#config#get_neobundles())
+      \ call neobundle#commands#helptags(neobundle#config#get_enabled_bundles())
 
 command! -bar NeoBundleLog
       \ echo join(neobundle#installer#get_log(), "\n")
@@ -301,6 +300,21 @@ function! neobundle#get_not_installed_bundles(bundle_names) "{{{
   return filter(copy(bundles), "
         \  !v:val.disabled && v:val.path != '' && !v:val.local
         \  && !isdirectory(neobundle#util#expand(v:val.path))
+        \")
+endfunction"}}}
+
+function! neobundle#get_force_not_installed_bundles(bundle_names) "{{{
+  let bundles = empty(a:bundle_names) ?
+        \ neobundle#config#get_neobundles() :
+        \ neobundle#config#fuzzy_search(a:bundle_names)
+
+  call neobundle#installer#_load_install_info(bundles)
+
+  return filter(copy(bundles), "
+        \  !v:val.disabled && v:val.path != '' && !v:val.local
+        \  && (!isdirectory(neobundle#util#expand(v:val.path))
+        \   || v:val.install_rev !=#
+        \      neobundle#installer#get_revision_number(v:val))
         \")
 endfunction"}}}
 
