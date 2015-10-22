@@ -58,7 +58,11 @@ endfunction"}}}
 function! s:source_install.hooks.on_close(args, context) "{{{
   if !empty(a:context.source__processes)
     for process in a:context.source__processes
+<<<<<<< HEAD
       if has('nvim')
+=======
+      if has('neovim')
+>>>>>>> 8c346155b6fa1619af9860935b1df9c9bdeaf06a
         call jobstop(process.proc)
       else
         call process.proc.waitpid()
