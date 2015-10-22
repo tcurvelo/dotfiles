@@ -55,9 +55,9 @@ function! neobundle#commands#install(bang, bundle_names) "{{{
 
   if empty(bundles)
     call neobundle#installer#error(
-          \ '[neobundle/install] Target bundles not found.')
+          \ 'Target bundles not found.')
     call neobundle#installer#error(
-          \ '[neobundle/install] You may have used the wrong bundle name,'.
+          \ 'You may have used the wrong bundle name,'.
           \ ' or all of the bundles are already installed.')
     return
   endif
@@ -68,8 +68,8 @@ function! neobundle#commands#install(bang, bundle_names) "{{{
 
   call neobundle#installer#clear_log()
 
-  call neobundle#installer#error(
-        \ '[neobundle/install] Update started: ' .
+  call neobundle#installer#echomsg(
+        \ 'Update started: ' .
         \     strftime('(%Y/%m/%d %H:%M:%S)'))
 
   let [installed, errored] = s:install(a:bang, bundles)
@@ -79,23 +79,14 @@ function! neobundle#commands#install(bang, bundle_names) "{{{
 
   call neobundle#installer#update(installed)
 
-  call neobundle#installer#update_log(
-        \ "[neobundle/install] Installed/Updated bundles:\n".
-        \ join((empty(installed) ?
-        \   ['no new bundles installed'] :
-        \   map(copy(installed), 'v:val.name')),"\n"))
+  call neobundle#installer#echomsg(
+        \ neobundle#installer#get_updated_bundles_message(installed))
 
-  if !empty(errored)
-    call neobundle#installer#update_log(
-          \ "[neobundle/install] Error installing bundles:\n".join(
-          \ map(copy(errored), 'v:val.name')), "\n")
-    call neobundle#installer#update_log(
-          \ 'Please read the error message log with the :message command.')
-  endif
+  call neobundle#installer#echomsg(
+        \ neobundle#installer#get_errored_bundles_message(errored))
 
-  call neobundle#installer#error(
-        \ '[neobundle/install] Update done: ' .
-        \     strftime('(%Y/%m/%d %H:%M:%S)'))
+  call neobundle#installer#echomsg(
+        \ 'Update done: ' . strftime('(%Y/%m/%d %H:%M:%S)'))
 endfunction"}}}
 
 function! neobundle#commands#helptags(bundles) "{{{
@@ -111,8 +102,8 @@ function! neobundle#commands#helptags(bundles) "{{{
     try
       call s:update_tags()
       if !has('vim_starting')
-        call neobundle#installer#log(
-              \ '[neobundle/install] Helptags: done. '
+        call neobundle#installer#echomsg(
+              \ 'Helptags: done. '
               \ .len(help_dirs).' bundles processed')
       endif
     catch
@@ -237,8 +228,8 @@ function! neobundle#commands#clean(bang, ...) "{{{
 
   if empty(x_dirs)
     let message = a:0 == 0 ?
-          \ '[neobundle/install] All clean!' :
-          \ '[neobundle/install] ' . string(a:000) . ' is not found.'
+          \ 'All clean!' :
+          \ string(a:000) . ' is not found.'
     call neobundle#installer#log(message)
     return
   end
@@ -268,7 +259,7 @@ function! neobundle#commands#clean(bang, ...) "{{{
     endif
 
     for dir in x_dirs
-      call neobundle#config#rm(dir)
+      call neobundle#config#rmdir(dir)
     endfor
 
     try
@@ -287,9 +278,9 @@ function! neobundle#commands#reinstall(bundle_names) "{{{
 
   if empty(bundles)
     call neobundle#installer#error(
-          \ '[neobundle/install] Target bundles not found.')
+          \ 'Target bundles not found.')
     call neobundle#installer#error(
-          \ '[neobundle/install] You may have used the wrong bundle name.')
+          \ 'You may have used the wrong bundle name.')
     return
   endif
 
@@ -336,8 +327,8 @@ function! neobundle#commands#gc(bundle_names) "{{{
     endtry
 
     if status
-      call neobundle#installer#error(bundle.path, 0)
-      call neobundle#installer#error(result, 0)
+      call neobundle#installer#error(bundle.path)
+      call neobundle#installer#error(result)
     endif
   endfor
 endfunction"}}}
@@ -474,9 +465,10 @@ function! neobundle#commands#save_cache() "{{{
         \ neobundle#config#get_autoload_bundles())
 
   let bundles = deepcopy(neobundle#config#get_neobundles())
-  " Clear hooks.  Because, VimL cannot save functions in JSON.
   for bundle in bundles
+    " Clear hooks.  Because, VimL cannot save functions in JSON.
     let bundle.hooks = {}
+    let bundle.sourced = 0
   endfor
 
   let current_vim = neobundle#util#redir('version')
@@ -593,8 +585,7 @@ function! s:check_update_init(bundle, context, is_unite) "{{{
   let message = printf('(%'.len(max).'d/%d): |%s| %s',
         \ num, max, a:bundle.name, cmd)
 
-  call neobundle#installer#log(
-        \ '[neobundle/check] ' . message, a:is_unite)
+  call neobundle#installer#log(message, a:is_unite)
 
   let cwd = getcwd()
   try
@@ -661,13 +652,13 @@ function! s:check_update_process(context, process, is_unite) "{{{
   endtry
 
   if is_timeout || status
-    let message = printf('[neobundle/install] (%'.len(max).'d/%d): |%s| %s',
+    let message = printf('(%'.len(max).'d/%d): |%s| %s',
           \ num, max, bundle.name, 'Error')
     call neobundle#installer#log(message, a:is_unite)
-    call neobundle#installer#error(bundle.path, a:is_unite)
+    call neobundle#installer#error(bundle.path)
     call neobundle#installer#error(
           \ (is_timeout ? 'Process timeout.' :
-          \    split(a:process.output, '\n')), a:is_unite)
+          \    split(a:process.output, '\n')))
   elseif remote_rev != '' && remote_rev !=# rev
     call add(a:context.source__updated_bundles,
           \ bundle)

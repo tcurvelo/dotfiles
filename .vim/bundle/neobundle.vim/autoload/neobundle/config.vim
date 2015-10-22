@@ -175,10 +175,7 @@ function! neobundle#config#source(names, ...) "{{{
   let bundles = neobundle#config#search(
         \ neobundle#util#convert2list(a:names))
 
-  let rtps = neobundle#util#split_rtp(&runtimepath)
-  let bundles = filter(bundles, "!v:val.disabled
-        \ && (!v:val.sourced || (v:val.rtp != ''
-        \                        && index(rtps, v:val.rtp) < 0))")
+  let bundles = filter(bundles, "!v:val.disabled && !v:val.sourced")
   if empty(bundles)
     return
   endif
@@ -275,11 +272,14 @@ function! neobundle#config#is_installed(name) "{{{
   return isdirectory(get(neobundle#config#get(a:name), 'path', ''))
 endfunction"}}}
 
-function! neobundle#config#rm(path) "{{{
+function! neobundle#config#rm(bundle) "{{{
+  call neobundle#config#rtp_rm(a:bundle)
+  call remove(s:neobundles, a:bundle.name)
+endfunction"}}}
+function! neobundle#config#rmdir(path) "{{{
   for bundle in filter(neobundle#config#get_neobundles(),
         \ 'v:val.path ==# a:path')
-    call neobundle#config#rtp_rm(bundle)
-    call remove(s:neobundles, bundle.name)
+    call neobundle#config#rm(bundle)
   endfor
 endfunction"}}}
 
@@ -321,6 +321,9 @@ function! neobundle#config#rtp_rm(bundle) "{{{
   if isdirectory(a:bundle.rtp.'/after')
     execute 'set rtp-='.s:get_rtp_after(a:bundle)
   endif
+
+  " Remove from lazy runtimepath
+  call filter(s:lazy_rtp_bundles, "v:val.name !=# a:bundle.name")
 endfunction"}}}
 
 function! neobundle#config#rtp_add(bundle) abort "{{{
@@ -570,10 +573,11 @@ function! s:add_depends(bundle) "{{{
     if !has_key(s:neobundles, depend.name)
       call neobundle#config#add(depend)
     else
+      let depend_bundle = s:neobundles[depend.name]
       " Add reference count
-      let s:neobundles[depend.name].refcnt += 1
+      let depend_bundle.refcnt += 1
 
-      if !depend.lazy
+      if a:bundle.sourced && !depend_bundle.sourced
         " Load automatically.
         call neobundle#config#source(depend.name, depend.force)
       endif
@@ -698,8 +702,10 @@ function! s:on_source(bundle) "{{{
     endfor
   endfor
 
-  if !has('vim_starting') && exists('#'.a:bundle.augroup.'#VimEnter')
-    execute 'doautocmd' a:bundle.augroup 'VimEnter'
+  if !has('vim_starting')
+    if exists('#'.a:bundle.augroup.'#VimEnter')
+      execute 'doautocmd' a:bundle.augroup 'VimEnter'
+    endif
 
     if has('gui_running') && &term ==# 'builtin_gui'
           \ && exists('#'.a:bundle.augroup.'#GUIEnter')

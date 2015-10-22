@@ -53,6 +53,9 @@ function! s:source_install.hooks.on_syntax(args, context) "{{{
   syntax match uniteSource__NeoBundleInstall_Source /|.\{-}|/
         \ contained containedin=uniteSource__NeoBundleInstall_Progress
   highlight default link uniteSource__NeoBundleInstall_Source Type
+  syntax match uniteSource__NeoBundleInstall_URI /-> diff URI/
+        \ contained containedin=uniteSource__NeoBundleInstall
+  highlight default link uniteSource__NeoBundleInstall_URI Underlined
 endfunction"}}}
 
 function! s:source_install.hooks.on_close(args, context) "{{{
@@ -96,37 +99,26 @@ function! s:source_install.async_gather_candidates(args, context) "{{{
     " Filter eof processes.
     call filter(a:context.source__processes, '!v:val.eof')
   else
-    let messages = []
-
-    if empty(a:context.source__synced_bundles)
-      let messages += ['[neobundle/install] No new bundles installed.']
-    else
-      let messages += ['[neobundle/install] Installed/Updated bundles:']
-            \ + map(copy(a:context.source__synced_bundles),
-            \        'v:val.name')
-    endif
-
-    if !empty(a:context.source__errored_bundles)
-      let messages += ['[neobundle/install] Errored bundles:']
-            \ + map(copy(a:context.source__errored_bundles),
-            \        'v:val.name')
-      call neobundle#installer#error(
-            \ 'Please read error message log by :message command.')
-    endif
-
-    call neobundle#installer#update_log(messages, 1)
+    call neobundle#installer#update_log(
+          \ neobundle#installer#get_updated_bundles_message(
+          \ a:context.source__synced_bundles), 1)
+    call neobundle#installer#update_log(
+          \ neobundle#installer#get_errored_bundles_message(
+          \ a:context.source__errored_bundles), 1)
     call neobundle#installer#update(
           \ a:context.source__synced_bundles)
 
     " Finish.
-    call neobundle#installer#update_log('[neobundle/install] Completed.', 1)
+    call neobundle#installer#update_log('Completed.', 1)
 
     let a:context.is_async = 0
   endif
 
   return map(neobundle#installer#get_updates_log()[len(old_msgs) :], "{
-        \ 'word' : substitute(v:val, '^\\[.\\{-}\\]\\s*', '', ''),
+        \ 'word' : (v:val =~ '^\\s*\\h\\w*://' ? ' -> diff URI' : v:val),
         \ 'is_multiline' : 1,
+        \ 'kind' : (v:val =~ '^\\s*\\h\\w*://' ? 'uri' : 'word'),
+        \ 'action__uri' : substitute(v:val, '^\\s\\+', '', ''),
         \}")
 endfunction"}}}
 
@@ -168,7 +160,8 @@ function! s:init(context, bundle_names)
         \ a:context.source__bundles)
 
   let reinstall_bundles =
-        \ neobundle#installer#get_reinstall_bundles(a:context.source__bundles)
+        \ neobundle#installer#get_reinstall_bundles(
+        \   a:context.source__bundles)
   if !empty(reinstall_bundles)
     call neobundle#installer#reinstall(reinstall_bundles)
   endif
@@ -181,12 +174,10 @@ function! s:init(context, bundle_names)
   if empty(a:context.source__bundles)
     let a:context.is_async = 0
     call neobundle#installer#error(
-          \ '[neobundle/install] Target bundles not found.' .
-          \ ' You may use wrong bundle name.', 1)
+          \ 'Target bundles not found. You may use wrong bundle name.')
   else
     call neobundle#installer#update_log(
-          \ '[neobundle/install] Update started: ' .
-          \     strftime('(%Y/%m/%d %H:%M:%S)'))
+          \ 'Update started: ' . strftime('(%Y/%m/%d %H:%M:%S)'))
   endif
 endfunction
 

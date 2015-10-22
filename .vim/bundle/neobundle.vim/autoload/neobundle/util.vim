@@ -28,7 +28,7 @@ set cpo&vim
 
 let s:is_windows = has('win32')
 let s:is_cygwin = has('win32unix')
-let s:is_mac = !s:is_windows
+let s:is_mac = !s:is_windows && !s:is_cygwin
       \ && (has('mac') || has('macunix') || has('gui_macvim') ||
       \   (!isdirectory('/proc') && executable('sw_vers')))
 
@@ -209,28 +209,34 @@ function! neobundle#util#get_filetypes() "{{{
 endfunction"}}}
 
 function! neobundle#util#convert2list(expr) "{{{
-  return type(a:expr) ==# type([]) ? a:expr : [a:expr]
+  return type(a:expr) ==# type([]) ? a:expr :
+        \ type(a:expr) ==# type('') ?
+        \   (a:expr == '' ? [] : split(a:expr, '\r\?\n', 1))
+        \ : [a:expr]
 endfunction"}}}
 
 function! neobundle#util#print_error(expr) "{{{
-  return s:echo(a:expr, 1)
+  return s:echo(a:expr, 'error')
 endfunction"}}}
 
 function! neobundle#util#redraw_echo(expr) "{{{
-  return s:echo(a:expr, 0)
+  return s:echo(a:expr, 'echo')
 endfunction"}}}
 
-function! s:echo(expr, is_error) "{{{
+function! neobundle#util#redraw_echomsg(expr) "{{{
+  return s:echo(a:expr, 'echomsg')
+endfunction"}}}
+
+function! s:echo(expr, mode) "{{{
   let msg = map(neobundle#util#convert2list(a:expr),
         \ "'[neobundle] ' .  v:val")
+  if empty(msg)
+    return
+  endif
 
   if has('vim_starting')
     let m = join(msg, "\n")
-    if a:is_error
-      echohl WarningMsg | echomsg m | echohl None
-    else
-      echo m
-    endif
+    call s:echo_mode(m, a:mode)
     return
   endif
 
@@ -243,21 +249,29 @@ function! s:echo(expr, is_error) "{{{
     set noruler
 
     let height = max([1, &cmdheight])
+    echo ''
     for i in range(0, len(msg)-1, height)
       redraw
 
       let m = join(msg[i : i+height-1], "\n")
-      if a:is_error
-        echohl WarningMsg | echomsg m | echohl None
-      else
-        echo m
-      endif
+      call s:echo_mode(m, a:mode)
     endfor
   finally
     let &more = more_save
     let &showcmd = showcmd_save
     let &ruler = ruler_save
   endtry
+endfunction"}}}
+function! s:echo_mode(m, mode) "{{{
+  for m in split(a:m, '\r\?\n', 1)
+    if a:mode ==# 'error'
+      echohl WarningMsg | echomsg m | echohl None
+    elseif a:mode ==# 'echomsg'
+      echomsg m
+    else
+      echo m
+    endif
+  endfor
 endfunction"}}}
 
 function! neobundle#util#name_conversion(path) "{{{
@@ -355,6 +369,10 @@ endfunction"}}}
 function! s:_compare(a, b)
   return eval(s:expr)
 endfunction
+
+function! neobundle#util#print_bundles(bundles) "{{{
+  echomsg string(map(copy(a:bundles), 'v:val.name'))
+endfunction"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
