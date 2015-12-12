@@ -42,15 +42,6 @@ function! neobundle#config#init() "{{{
     return
   endif
 
-  for bundle in values(s:neobundles)
-    if !(bundle.lazy && bundle.sourced)
-      " Reset.
-      call neobundle#config#rtp_rm(bundle)
-
-      call remove(s:neobundles, bundle.name)
-    endif
-  endfor
-
   augroup neobundle
     autocmd VimEnter * call s:on_vim_enter()
   augroup END
@@ -203,7 +194,7 @@ function! neobundle#config#source(names, ...) "{{{
       endtry
     endif
 
-    call neobundle#autoload#source(bundle.name)
+    call neobundle#autoload#_source(bundle.name)
 
     if !reset_ftplugin
       let reset_ftplugin = s:is_reset_ftplugin(&filetype, bundle.rtp)
@@ -345,25 +336,26 @@ function! neobundle#config#rtp_add(bundle) abort "{{{
   if isdirectory(rtp.'/after')
     execute 'set rtp+='.s:get_rtp_after(a:bundle)
   endif
+  let a:bundle.sourced = 1
 
   call neobundle#call_hook('on_source', a:bundle)
 endfunction"}}}
 
 function! neobundle#config#search(bundle_names, ...) "{{{
-  if empty(a:bundle_names)
-    return []
-  endif
-
   " For infinite loop.
   let self = get(a:000, 0, [])
 
+  let bundle_names = filter(a:bundle_names, 'index(self, v:val) < 0')
+  if empty(bundle_names)
+    return []
+  endif
+
   let _ = []
-  let bundles = len(a:bundle_names) != 1 ?
+  let bundles = len(bundle_names) != 1 ?
         \ filter(neobundle#config#get_neobundles(),
-        \ 'index(a:bundle_names, v:val.name) >= 0 &&
-        \  (empty(self) || index(self, v:val.name) < 0)') :
-        \ has_key(s:neobundles, a:bundle_names[0]) ?
-        \     [s:neobundles[a:bundle_names[0]]] : []
+        \ 'index(a:bundle_names, v:val.name) >= 0') :
+        \ has_key(s:neobundles, bundle_names[0]) ?
+        \     [s:neobundles[bundle_names[0]]] : []
   for bundle in bundles
     call add(self, bundle.name)
 
@@ -436,29 +428,26 @@ function! neobundle#config#set(name, dict) "{{{
           \ 'Plugin name "' . a:name . '" is not defined.')
     return
   endif
-
-  let bundle = neobundle#init#_bundle(extend(bundle, a:dict))
-  if bundle.lazy && bundle.sourced
-    " Remove from runtimepath.
-    call neobundle#config#rtp_rm(bundle)
-    let bundle.sourced = 0
+  if bundle.sourced
+    return
+  endif
+  if !neobundle#config#within_block()
+    call neobundle#util#print_error(
+          \ 'You must call neobundle#config() '
+          \ .'within neobundle#begin()/neobundle#end() block.')
+    return
   endif
 
-  call neobundle#config#add(bundle, 1)
+  call neobundle#config#add(
+        \ neobundle#init#_bundle(extend(bundle, a:dict)))
 endfunction"}}}
 
-function! neobundle#config#add(bundle, ...) "{{{
+function! neobundle#config#add(bundle) "{{{
   if empty(a:bundle)
     return
   endif
 
   let bundle = a:bundle
-  let is_force = get(a:000, 0, bundle.local)
-
-  if !is_force && !bundle.overwrite &&
-        \     has_key(s:neobundles, bundle.name)
-    return
-  endif
 
   if !empty(bundle.depends)
     call s:add_depends(bundle)
@@ -491,8 +480,14 @@ function! neobundle#config#add(bundle, ...) "{{{
         runtime! plugin/**/*.vim
       endif
     endif
-  elseif bundle.lazy
-    call s:add_lazy(bundle)
+  elseif bundle.lazy && !bundle.sourced
+    if !empty(bundle.on_cmd)
+      call s:add_dummy_commands(bundle)
+    endif
+
+    if !empty(bundle.on_map)
+      call s:add_dummy_mappings(bundle)
+    endif
   endif
 endfunction"}}}
 
@@ -582,56 +577,9 @@ function! s:add_depends(bundle) "{{{
   endfor
 endfunction"}}}
 
-function! s:add_lazy(bundle) "{{{
-  let bundle = a:bundle
-
-  " Auto set autoload keys.
-  for key in filter([
-        \ 'filetypes', 'filename_patterns',
-        \ 'commands', 'functions', 'mappings', 'unite_sources',
-        \ 'insert', 'explorer', 'on_source',
-        \ 'command_prefix',
-        \ ], 'has_key(bundle, v:val)')
-    let bundle.autoload[key] = bundle[key]
-    call remove(bundle, key)
-  endfor
-
-  " Auto convert2list.
-  for key in filter([
-        \ 'filetypes', 'filename_patterns', 'on_source',
-        \ 'commands', 'functions', 'mappings', 'unite_sources',
-        \ ], "has_key(bundle.autoload, v:val)
-        \     && type(bundle.autoload[v:val]) != type([])
-        \")
-    let bundle.autoload[key] = [bundle.autoload[key]]
-  endfor
-
-  if !has_key(bundle.autoload, 'command_prefix')
-    let bundle.autoload.command_prefix =
-          \ substitute(bundle.normalized_name, '[_-]', '', 'g')
-  endif
-  if !has_key(bundle.autoload, 'unite_sources')
-        \ && bundle.name =~# '^\%(vim-\)\?unite-'
-    let unite_source = matchstr(bundle.name, '^\%(vim-\)\?unite-\zs.*')
-    if unite_source != ''
-      let bundle.autoload.unite_sources = [unite_source]
-    endif
-  endif
-
-  if !bundle.sourced
-    if has_key(bundle.autoload, 'commands')
-      call s:add_dummy_commands(bundle)
-    endif
-
-    if has_key(bundle.autoload, 'mappings')
-      call s:add_dummy_mappings(bundle)
-    endif
-  endif
-endfunction"}}}
-
 function! s:add_dummy_commands(bundle) "{{{
   let a:bundle.dummy_commands = []
-  for command in map(copy(a:bundle.autoload.commands), "
+  for command in map(copy(a:bundle.on_cmd), "
         \ type(v:val) == type('') ?
           \ { 'name' : v:val } : v:val
           \")
@@ -641,7 +589,7 @@ function! s:add_dummy_commands(bundle) "{{{
       silent! execute 'command ' . (get(command, 'complete', '') != '' ?
             \ ('-complete=' . command.complete) : '')
             \ . ' -bang -range -nargs=*' name printf(
-            \ "call neobundle#autoload#command(%s, %s, <q-args>,
+            \ "call neobundle#autoload#_command(%s, %s, <q-args>,
             \  expand('<bang>'), expand('<line1>'), expand('<line2>'))",
             \   string(name), string(a:bundle.name))
 
@@ -651,7 +599,7 @@ function! s:add_dummy_commands(bundle) "{{{
 endfunction"}}}
 function! s:add_dummy_mappings(bundle) "{{{
   let a:bundle.dummy_mappings = []
-  for [modes, mappings] in map(copy(a:bundle.autoload.mappings), "
+  for [modes, mappings] in map(copy(a:bundle.on_map), "
         \   type(v:val) == type([]) ?
         \     [v:val[0], v:val[1:]] : ['nxo', [v:val]]
         \ ")
@@ -673,7 +621,7 @@ function! s:add_dummy_mappings(bundle) "{{{
         silent! execute mode.'noremap <unique><silent>' mapping printf(
               \ (mode ==# 'c' ? "\<C-r>=" :
               \  (mode ==# 'i' ? "\<C-o>:" : ":\<C-u>")."call ").
-              \   "neobundle#autoload#mapping(%s, %s, %s)<CR>",
+              \   "neobundle#autoload#_mapping(%s, %s, %s)<CR>",
               \   string(mapping_str), string(a:bundle.name), string(mode))
 
         call add(a:bundle.dummy_mappings, [mode, mapping])
@@ -763,6 +711,9 @@ function! s:reset_ftplugin() "{{{
 
   " Reload filetype plugins.
   let &l:filetype = &l:filetype
+
+  " Recall FileType autocmd
+  execute 'doautocmd FileType' &filetype
 endfunction"}}}
 
 function! s:filetype_off() "{{{

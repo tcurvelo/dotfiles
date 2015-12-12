@@ -67,6 +67,13 @@ function! s:type.detect(path, opts) "{{{
           \ g:neobundle#types#git#default_protocol)
   endif
 
+  if protocol !=# 'https' && protocol !=# 'ssh'
+    call neobundle#util#print_error(
+          \ 'Path: ' . a:path . ' The protocol "' . protocol .
+          \ '" is unsecure and invalid.')
+    return {}
+  endif
+
   if a:path !~ '/'
     " www.vim.org Vim scripts.
     let name = split(a:path, ':')[-1]
@@ -177,6 +184,11 @@ function! s:type.get_revision_lock_command(bundle) "{{{
   endif
 
   let rev = a:bundle.rev
+  if rev ==# 'release'
+    " Use latest released tag
+    let rev = neobundle#installer#get_release_revision(a:bundle,
+          \ g:neobundle#types#git#command_path . ' tag')
+  endif
   if rev == ''
     " Fix detach HEAD.
     let rev = 'master'
@@ -213,7 +225,7 @@ function! s:parse_other_pattern(protocol, path, opts) "{{{
     let uri =  (a:protocol ==# 'ssh') ?
           \ 'git@gist.github.com:' . split(name, '/')[-1] :
           \ a:protocol . '://gist.github.com/'. split(name, '/')[-1]
-  elseif a:path =~# '\<\%(git@\|git://\)\S\+'
+  elseif a:path =~# '\<git@\S\+'
         \ || a:path =~# '\.git\s*$'
         \ || get(a:opts, 'type', '') ==# 'git'
     if a:path =~# '\<\%(bb\|bitbucket\):\S\+'
