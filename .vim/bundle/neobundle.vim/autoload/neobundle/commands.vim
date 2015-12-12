@@ -307,10 +307,8 @@ function! neobundle#commands#gc(bundle_names) "{{{
 
     let cwd = getcwd()
     try
-      if isdirectory(bundle.path)
-        " Cd to bundle path.
-        call neobundle#util#cd(bundle.path)
-      endif
+      " Cd to bundle path.
+      call neobundle#util#cd(bundle.path)
 
       redraw
       call neobundle#util#redraw_echo(
@@ -321,9 +319,7 @@ function! neobundle#commands#gc(bundle_names) "{{{
       call neobundle#util#redraw_echo(result)
       let status = neobundle#util#get_last_status()
     finally
-      if isdirectory(cwd)
-        call neobundle#util#cd(cwd)
-      endif
+      call neobundle#util#cd(cwd)
     endtry
 
     if status
@@ -384,14 +380,13 @@ function! neobundle#commands#rollback(bundle_name) "{{{
     call neobundle#util#cd(bundle.path)
     call neobundle#util#system(cmd)
   finally
-    if isdirectory(cwd)
-      call neobundle#util#cd(cwd)
-    endif
+    call neobundle#util#cd(cwd)
     let bundle.rev = revision_save
   endtry
 endfunction"}}}
 
 function! neobundle#commands#list() "{{{
+  call neobundle#util#redraw_echo('#: not sourced, X: not installed')
   for bundle in neobundle#config#get_neobundles()
     echo (bundle.sourced ? ' ' :
           \ neobundle#is_installed(bundle.name) ? '#' : 'X')
@@ -406,6 +401,19 @@ function! neobundle#commands#lock(name, rev) "{{{
   endif
 
   let bundle.install_rev = a:rev
+endfunction"}}}
+
+function! neobundle#commands#remote_plugins() "{{{
+  if !has('nvim')
+    return
+  endif
+
+  " Load not loaded neovim remote plugins
+  call neobundle#config#source(map(filter(
+        \ neobundle#config#get_autoload_bundles(),
+        \ "isdirectory(v:val.rtp . '/rplugin')"), 'v:val.name'))
+
+  UpdateRemotePlugins
 endfunction"}}}
 
 function! neobundle#commands#source(names, ...) "{{{
@@ -473,7 +481,7 @@ function! neobundle#commands#save_cache() "{{{
 
   let current_vim = neobundle#util#redir('version')
 
-  call writefile( [s:get_cache_version(),
+  call writefile( [neobundle#get_cache_version(),
         \ v:progname, current_vim, string(bundles)], cache)
 endfunction"}}}
 function! neobundle#commands#load_cache(...) "{{{
@@ -492,7 +500,7 @@ function! neobundle#commands#load_cache(...) "{{{
     let vim = get(list, 2, '')
 
     if len(list) != 4
-          \ || ver !=# s:get_cache_version()
+          \ || ver !=# neobundle#get_cache_version()
           \ || v:progname !=# prog
           \ || current_vim !=# vim
       call neobundle#commands#clear_cache()
@@ -612,9 +620,7 @@ function! s:check_update_init(bundle, context, is_unite) "{{{
       let process.status = neobundle#util#get_last_status()
     endif
   finally
-    if isdirectory(cwd)
-      call neobundle#util#cd(cwd)
-    endif
+    call neobundle#util#cd(cwd)
   endtry
 
   call add(a:context.source__processes, process)
@@ -700,10 +706,6 @@ endfunction"}}}
 function! s:cmp_vimproc(a, b) "{{{
   return !(a:a.name ==# 'vimproc' || a:a.name ==# 'vimproc.vim')
 endfunction"}}}
-
-function! s:get_cache_version()"{{{
-  return str2nr(printf('%02d%02d', 2, 2))
-endfunction "}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

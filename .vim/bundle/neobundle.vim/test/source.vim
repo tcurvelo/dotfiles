@@ -8,8 +8,7 @@ if isdirectory(path)
   call system(printf('%s "%s"', rm_command, path))
 endif
 
-let neobundle#types#git#default_protocol =
-      \ exists('$http_proxy') ? 'https' : 'git'
+let neobundle#types#git#default_protocol = 'https'
 
 call neobundle#begin(path)
 
@@ -62,9 +61,6 @@ NeoBundle 'https://raw.github.com/m2ym/rsense/master/etc/rsense.vim',
       \ {'script_type' : 'plugin', 'rev' : '0'}
 " NeoBundleReinstall rsense.vim
 
-NeoBundle 'http://www.vim.org/scripts/download_script.php?src_id=19619',
-      \ { 'type__filename' : 'python.vim', 'script_type' : 'syntax' }
-
 call neobundle#end()
 
 filetype plugin indent on       " required!
@@ -78,13 +74,13 @@ set wildignore+=.git/*
 set wildignore+=*/.git/*
 
 function! s:suite.pattern_a()
-  call s:assert.equals(neobundle#is_sourced('echodoc'), 1)
-  call s:assert.equals(neobundle#is_sourced('unite-build'), 1)
+  call s:assert.equals(neobundle#is_sourced('echodoc'), 0)
+  call s:assert.equals(neobundle#is_sourced('unite-build'), 0)
 endfunction
 
 function! s:suite.pattern_b()
-  call s:assert.equals(neobundle#is_sourced('unite-ssh'), 1)
-  call s:assert.equals(neobundle#is_sourced('unite-sudo'), 1)
+  call s:assert.equals(neobundle#is_sourced('unite-ssh'), 0)
+  call s:assert.equals(neobundle#is_sourced('unite-sudo'), 0)
 endfunction
 
 function! s:suite.pattern_c()
@@ -95,9 +91,5 @@ endfunction
 function! s:suite.pattern_d()
   call s:assert.equals(neobundle#is_sourced('vimshell'), 0)
   call s:assert.equals(neobundle#is_sourced('vinarise'), 0)
-endfunction
-
-function! s:suite.autoload()
-  call s:assert.equals(neobundle#get('unite.vim').autoload.commands, ['Unite'])
 endfunction
 
