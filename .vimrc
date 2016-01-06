@@ -40,6 +40,7 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'mfukar/robotframework-vim'
 NeoBundle 'rking/ag.vim'
+NeoBundle 'gorodinskiy/vim-coloresque'
 
 call neobundle#end()
 filetype plugin indent on
