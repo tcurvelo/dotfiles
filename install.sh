@@ -25,6 +25,9 @@ vim +NeoBundleInstall +qall
 
 if [ "$(find ~/.vim/bundle/YouCompleteMe -name 'ycm_client_support.so')" == "" ]
 then
-  cd ~/.vim/bundle/YouCompleteMe && ./install.sh && cd -
+  cd ~/.vim/bundle/YouCompleteMe \
+    && ./install.py \
+      --clang-completer \
+      --tern-completer \
+    && cd -
 fi
-
