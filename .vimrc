@@ -18,7 +18,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 
 " Bundles
-NeoBundle 'morhetz/gruvbox'
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'pld-linux/vim-syntax-vcl'
@@ -82,7 +82,7 @@ let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 "------------------------------------------------------------------------------
 syntax enable
 set background=light
-colorscheme gruvbox
+colorscheme solarized
 if has('gui_running')
   set guioptions-=T " remove toolbar
   set guioptions-=m " remove menubar
