@@ -91,6 +91,13 @@ function! neobundle#config#final() "{{{
   " Join to the tail in runtimepath.
   let rtps = neobundle#util#split_rtp(&runtimepath)
   let index = index(rtps, neobundle#get_rtp_dir())
+  if index < 0
+    call neobundle#util#print_error(
+          \ 'Invalid runtimepath is detected.')
+    call neobundle#util#print_error(
+          \ 'Please check your .vimrc.')
+    return
+  endif
   for bundle in filter(s:lazy_rtp_bundles,
         \ 'isdirectory(v:val.rtp) && !v:val.disabled')
     let bundle.sourced = 1
@@ -348,7 +355,7 @@ function! neobundle#config#search(bundle_names, ...) "{{{
   " For infinite loop.
   let self = get(a:000, 0, [])
 
-  let bundle_names = filter(a:bundle_names, 'index(self, v:val) < 0')
+  let bundle_names = filter(copy(a:bundle_names), 'index(self, v:val) < 0')
   if empty(bundle_names)
     return []
   endif
@@ -589,9 +596,10 @@ function! s:add_dummy_commands(bundle) "{{{
 
     for name in neobundle#util#convert2list(command.name)
       " Define dummy commands.
-      silent! execute 'command ' . (get(command, 'complete', '') != '' ?
-            \ ('-complete=' . command.complete) : '')
-            \ . ' -bang -range -nargs=*' name printf(
+      silent! execute 'command '
+            \ . ('-complete=' . get(command, 'complete',
+            \    'customlist,neobundle#autoload#_command_dummy_complete'))
+            \ . ' -bang -bar -range -nargs=*' name printf(
             \ "call neobundle#autoload#_command(%s, %s, <q-args>,
             \  expand('<bang>'), expand('<line1>'), expand('<line2>'))",
             \   string(name), string(a:bundle.name))

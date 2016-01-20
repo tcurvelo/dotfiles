@@ -47,7 +47,7 @@ call neobundle#util#set_default(
 call neobundle#util#set_default(
       \ 'g:neobundle#default_options', {})
 call neobundle#util#set_default(
-      \ 'g:neobundle#install_max_processes', 4,
+      \ 'g:neobundle#install_max_processes', 8,
       \ 'g:unite_source_neobundle_install_max_processes')
 call neobundle#util#set_default(
       \ 'g:neobundle#install_process_timeout', 120)
@@ -59,11 +59,13 @@ let s:neobundle_dir = ''
 let s:neobundle_runtime_dir = neobundle#util#substitute_path_separator(
       \ fnamemodify(expand('<sfile>'), ':p:h:h'))
 
-command! -nargs=+ NeoBundle
+command! -nargs=+
+      \ NeoBundle
       \ call neobundle#parser#bundle(
       \   substitute(<q-args>, '\s"[^"]\+$', '', ''))
 
-command! -bar NeoBundleCheck
+command! -bar
+      \ NeoBundleCheck
       \ call neobundle#commands#check()
 
 command! -nargs=? -bar
@@ -71,22 +73,27 @@ command! -nargs=? -bar
       \ NeoBundleCheckUpdate
       \ call neobundle#commands#check_update(<q-args>)
 
-command! -nargs=+ NeoBundleLazy
+command! -nargs=+
+      \ NeoBundleLazy
       \ call neobundle#parser#lazy(
       \   substitute(<q-args>, '\s"[^"]\+$', '', ''))
 
-command! -nargs=+ NeoBundleFetch
+command! -nargs=+
+      \ NeoBundleFetch
       \ call neobundle#parser#fetch(
       \   substitute(<q-args>, '\s"[^"]\+$', '', ''))
 
-command! -nargs=+ NeoBundleRecipe
+command! -nargs=+ -bar
+      \ NeoBundleRecipe
       \ call neobundle#parser#recipe(
       \   substitute(<q-args>, '\s"[^"]\+$', '', ''))
 
-command! -nargs=1 -complete=dir NeoBundleLocal
+command! -nargs=1 -complete=dir -bar
+      \ NeoBundleLocal
       \ call neobundle#local(<q-args>, {})
 
-command! -nargs=+ NeoBundleDirectInstall
+command! -nargs=+ -bar
+      \ NeoBundleDirectInstall
       \ call neobundle#parser#direct(
       \   substitute(<q-args>, '\s"[^"]\+$', '', ''))
 
@@ -103,11 +110,13 @@ command! -nargs=+ -bar
 command! -nargs=? -bang -bar
       \ -complete=customlist,neobundle#commands#complete_bundles
       \ NeoBundleInstall
-      \ call neobundle#commands#install('!' == '<bang>', <q-args>)
+      \ call neobundle#commands#install(
+      \   '!' == '<bang>', <q-args>)
 command! -nargs=? -bang -bar
       \ -complete=customlist,neobundle#commands#complete_bundles
       \ NeoBundleUpdate
-      \ call neobundle#commands#install(('!' == '<bang>' ? 2 : 1), <q-args>)
+      \ call neobundle#commands#install(
+      \  ('!' == '<bang>' ? 2 : 1), <q-args>)
 
 command! -nargs=* -bang -bar
       \ -complete=customlist,neobundle#commands#complete_deleted_bundles
@@ -128,32 +137,42 @@ command! -nargs=? -bang -bar
       \ NeoBundleList
       \ call neobundle#commands#list()
 
-command! -bar NeoBundleDocs
-      \ call neobundle#commands#helptags(neobundle#config#get_enabled_bundles())
+command! -bar
+      \ NeoBundleDocs
+      \ call neobundle#commands#helptags(
+      \   neobundle#config#get_enabled_bundles())
 
-command! -bar NeoBundleLog
+command! -bar
+      \ NeoBundleLog
       \ echo join(neobundle#installer#get_log(), "\n")
 
-command! -bar NeoBundleUpdatesLog
+command! -bar
+      \ NeoBundleUpdatesLog
       \ echo join(neobundle#installer#get_updates_log(), "\n")
 
-command! -bar NeoBundleExtraEdit
-      \ execute 'edit' fnameescape(neobundle#get_neobundle_dir()).'/extra_bundles.vim'
+command! -bar
+      \ NeoBundleExtraEdit
+      \ execute 'edit' fnameescape(
+      \   neobundle#get_neobundle_dir()).'/extra_bundles.vim'
 
-command! -bar NeoBundleCount
+command! -bar
+      \ NeoBundleCount
       \ echo len(neobundle#config#get_neobundles())
 
-command! -bar NeoBundleSaveCache
+command! -bar
+      \ NeoBundleSaveCache
       \ call neobundle#commands#save_cache()
-command! -bar NeoBundleLoadCache
+command! -bar
+      \ NeoBundleLoadCache
       \ call neobundle#util#print_error(
       \ 'NeoBundleLoadCache is deprecated command.') |
       \ call neobundle#util#print_error(
       \ 'It will be removed in the next version.') |
       \ call neobundle#util#print_error(
       \ 'Please use neobundle#load_cache() instead.') |
-      \ call neobundle#commands#load_cache()
-command! -bar NeoBundleClearCache
+      \ call neobundle#commands#load_cache([$MYVIMRC])
+command! -bar
+      \ NeoBundleClearCache
       \ call neobundle#commands#clear_cache()
 
 command! -nargs=1 -bar
@@ -161,10 +180,12 @@ command! -nargs=1 -bar
       \ NeoBundleRollback
       \ call neobundle#commands#rollback(<f-args>)
 
-command! -nargs=+ NeoBundleLock
+command! -nargs=+ -bar
+      \ NeoBundleLock
       \ call neobundle#commands#lock(<f-args>)
 
-command! -bar NeoBundleRemotePlugins
+command! -bar
+      \ NeoBundleRemotePlugins
       \ call neobundle#commands#remote_plugins()
 
 function! neobundle#rc(...) "{{{
@@ -185,7 +206,10 @@ function! neobundle#begin(...) "{{{
     if empty(paths)
       let rtps = neobundle#util#split_rtp(&runtimepath)
       if empty(rtps)
-        call neobundle#util#print_error('Your runtimepath is invalid.')
+        call neobundle#util#print_error(
+              \ 'Invalid runtimepath is detected.')
+        call neobundle#util#print_error(
+              \ 'Please check your .vimrc.')
         return 1
       endif
 
@@ -202,6 +226,19 @@ function! neobundle#append() "{{{
 endfunction"}}}
 function! neobundle#end() "{{{
   call neobundle#config#final()
+endfunction"}}}
+
+function! neobundle#add(repository, options) "{{{
+  let bundle = neobundle#parser#_init_bundle(
+        \ a:repository, [a:options])
+  if empty(bundle)
+    return {}
+  endif
+
+  let bundle.orig_arg = [a:repository, a:options]
+  call neobundle#config#add(bundle)
+
+  return bundle
 endfunction"}}}
 
 function! neobundle#set_neobundle_dir(path) "{{{
@@ -285,24 +322,8 @@ function! neobundle#has_cache() "{{{
 endfunction"}}}
 
 function! neobundle#load_cache(...) "{{{
-  let vimrc = get(a:000, 0, $MYVIMRC)
-  return neobundle#commands#load_cache(vimrc)
-endfunction"}}}
-
-function! neobundle#has_fresh_cache(...) "{{{
-  call neobundle#util#print_error(
-        \ 'neobundle#has_fresh_cache() is deprecated function.')
-  call neobundle#util#print_error(
-        \ 'It will be removed in the next version.')
-  call neobundle#util#print_error(
-        \ 'Please use neobundle#load_cache() instead.')
-
-  " Check if the cache file is newer than the vimrc file.
-  let vimrc = get(a:000, 0, $MYVIMRC)
-  let cache = neobundle#commands#get_cache_file()
-  return filereadable(cache)
-        \ && (!filereadable(vimrc)
-        \    || getftime(cache) >= getftime(vimrc))
+  let vimrcs = len(a:000) == 0 ? [$MYVIMRC] : a:000
+  return neobundle#commands#load_cache(vimrcs)
 endfunction"}}}
 
 function! neobundle#get_not_installed_bundle_names() "{{{

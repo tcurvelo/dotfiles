@@ -218,7 +218,10 @@ function! neobundle#parser#load_toml(filename, default) "{{{
 
   " Parse.
   for plugin in toml.plugins
-    if !has_key(plugin, 'repository')
+    if has_key(plugin, 'repository')
+      let plugin.repo = plugin.repository
+    endif
+    if !has_key(plugin, 'repo')
       call neobundle#util#print_error(
             \ 'No repository plugin data: ' . a:filename)
       return 1
@@ -230,13 +233,16 @@ function! neobundle#parser#load_toml(filename, default) "{{{
         if type(depend) == type('') || type(depend) == type([])
           call add(_, depend)
         elseif type(depend) == type({})
-          if !has_key(depend, 'repository')
+          if has_key(depend, 'repository')
+            let plugin.repo = plugin.repository
+          endif
+          if !has_key(depend, 'repo')
             call neobundle#util#print_error(
                   \ 'No repository plugin data: ' . a:filename)
             return 1
           endif
 
-          call add(_, [depend.repository, depend])
+          call add(_, [depend.repo, depend])
         endif
 
         unlet depend
@@ -246,9 +252,8 @@ function! neobundle#parser#load_toml(filename, default) "{{{
     endif
 
     let options = extend(plugin, a:default, 'keep')
-    " echomsg plugin.repository
     " echomsg string(options)
-    call neobundle#parser#bundle([plugin.repository, options])
+    call neobundle#parser#bundle([plugin.repo, options])
   endfor
 endfunction"}}}
 
