@@ -189,6 +189,11 @@ neobundle#append()				*neobundle#append()*
 neobundle#end()					*neobundle#end()*
 		End neobundle bundles configuration block.
 
+neobundle#add({repository}, {options})		*neobundle#add()*
+		The function version of |:NeoBundle|.
+		Note: You must call it in |neobundle#begin()| or
+		|neobundle#append()| block.
+
 neobundle#source({bundle-names})		*neobundle#source()*
 		Same as |:NeoBundleSource|.
 		{bundle-names} is a list of bundle names.
@@ -244,28 +249,28 @@ neobundle#load_toml({filename}, [{options}])
 		# TOML sample
 		[[plugins]]
 		# repository name is required.
-		repository = 'kana/vim-niceblock'
-		mappings = '<Plug>'
+		repo = 'kana/vim-niceblock'
+		on_map = '<Plug>'
 
 		[[plugins]]
-		repository = 'Shougo/neosnippet.vim'
+		repo = 'Shougo/neosnippet.vim'
 		depends = ['Shougo/neosnippet-snippets',
 		  'Shougo/context_filetype.vim']
-		insert = 1
-		filetypes = 'snippet'
-		unite_sources = [ 'neosnippet',
+		on_i = 1
+		on_ft = 'snippet'
+		on_unite = [ 'neosnippet',
 		  'neosnippet/user', 'neosnippet/runtime']
 
 		  [[plugins.depends]]
-		  repository = 'honza/vim-snippet'
+		  repo = 'honza/vim-snippet'
 		  name = 'honza-snippet'
 
 		[[plugins]]
-		repository = 'Shougo/neobundle.vim'
+		repo = 'Shougo/neobundle.vim'
 		fetch = 1
 
 		[[plugins]]
-		repository = 'Shougo/vimproc.vim'
+		repo = 'Shougo/vimproc.vim'
 
 		  [plugins.build]
 		  windows = 'tools\\update-dll-mingw'
@@ -364,7 +369,7 @@ neobundle#tap({bundle-name})			 *neobundle#tap()*
 		  " Define plugin mappings, commands, ...
 		  map f <Plug>(foo)
 		  command! FOO call foo#foo()
-		
+
 		  call neobundle#untap()
 		endif
 <
@@ -376,17 +381,11 @@ neobundle#has_cache()			 *neobundle#has_cache()*
 		Note: It is deprecated.  You should use
 		|neobundle#load_cache()| instead of it.
 
-neobundle#has_fresh_cache()	 *neobundle#has_fresh_cache()*
-		Similar to |neobundle#has_cache|, but compares the
-		modification time of the cache file to your configuration file
-		({vimrc} or |$MYVIMRC|).
-		Note: It is deprecated.  You should use
-		|neobundle#load_cache()| instead of it.
-
-neobundle#load_cache([{vimrc}])			 *neobundle#load_cache()*
+neobundle#load_cache([{vimrcs}])		 *neobundle#load_cache()*
 		Load plugin configuration from the cache file,
 		which is located in `neobundle#get_rtp_dir() . '/cache'`.
-		{vimrc} is compared .vimrc file.  The default is |$MYVIMRC|.
+		{vimrcs} is a list of compared .vimrc and/or other configuration
+		files. The default is |$MYVIMRC|.
 
 		It returns 1, if the cache file is old or invalid or not
 		found.
@@ -396,6 +395,14 @@ neobundle#load_cache([{vimrc}])			 *neobundle#load_cache()*
 >
 	if neobundle#load_cache()
 	  " My Bundles here:
+	  " ...
+	  NeoBundleSaveCache
+	endif
+<
+		If you use multiple configuration files,
+>
+	if neobundle#load_cache($MYVIMRC, 'plugin.vim', 'plugin.toml')
+	  " My Bundles here or other files spcified as arguments
 	  " ...
 	  NeoBundleSaveCache
 	endif
@@ -1117,12 +1124,10 @@ OPTIONS 					*neobundle-options*
 			Example: >
 		NeoBundle 'Shougo/vimfiler.vim', {
 		      \ 'depends' : 'Shougo/unite.vim',
-		      \ 'on_cmd' : [
-		      \ {'name' : ['VimFiler', 'Edit', 'Write'],
-		      \  'complete' : 'customlist,vimfiler#complete'},
-		      \ 'Read', 'Source'],
-		      \ 'mappings' : '<Plug>',
-		      \ 'explorer' : 1,
+		      \ 'on_cmd' : ['VimFiler', 'Edit',
+		      \             'Write','Read', 'Source'],
+		      \ 'on_map' : '<Plug>',
+		      \ 'on_path' : '.*',
 		      \ }
 <
 						*neobundle-options-commands*
@@ -1528,10 +1533,13 @@ neobundle/search
 		source names.
 
 		Following source names are available:
-		"neobundle-vim-recipes":
-			Search plugins settings from the |neobundle-recipe|.
+		"vim_scripts_org":
+			Search plugins settings from "http://vim-scripts.org".
 		"github":
 			Search plugins settings from "https://github.org/".
+		"metadata":
+			Search plugins settings from converted metadata in
+			"https://bitbucket.org/vimcommunity/vim-pi/".
 
 				*neobundle-unite-source-neobundle-lazy*
 neobundle/lazy
