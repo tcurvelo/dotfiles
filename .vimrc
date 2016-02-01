@@ -8,7 +8,7 @@ if !1 | finish | endif
 
 if has('vim_starting')
   if &compatible
-    set nocompatible               " Be iMproved
+    set nocompatible
   endif
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -18,29 +18,31 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 
 " Bundles
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'Valloric/MatchTagAlways'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'sheerun/vim-polyglot'
-NeoBundle 'pld-linux/vim-syntax-vcl'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'Valloric/MatchTagAlways'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'mfukar/robotframework-vim'
-NeoBundle 'rking/ag.vim'
 NeoBundle 'gorodinskiy/vim-coloresque'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'mfukar/robotframework-vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'pld-linux/vim-syntax-vcl'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'sheerun/vim-polyglot'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'wakatime/vim-wakatime'
+
 
 call neobundle#end()
 filetype plugin indent on
