@@ -92,7 +92,7 @@ if has('gui_running')
   set guioptions-=r " remove right-hand scrollbar
   set guioptions-=L " remove left-hand scrollbar
   if has('gui_gtk2')
-    set guifont=Ubuntu\ Mono\ derivative\ powerline\ 13
+    set guifont=Ubuntu\ Mono\ derivative\ powerline\ 14
   elseif has('gui_win32')
     set guifont=Ubuntu_Mono_Derivative_powerlin:h13:cANSI
   endif
