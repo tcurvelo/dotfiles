@@ -13,7 +13,7 @@ set $mod Mod4
 font pango:Ubuntu 11
 
 # background image
-exec --no-startup-id feh --bg-center ~/docs/wallpaper.jpg
+exec --no-startup-id feh --bg-fill ~/docs/wallpaper.jpg
 
 # applets
 exec --no-startup-id nm-applet
