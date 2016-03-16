@@ -78,8 +78,6 @@ set colorcolumn=80 " vertical line at column 80
 set wildignore+=*/tmp/*,*/data/*,/log/*,*/data/*,*.so,*.swp,*.zip
 set wildignore+=*/parts/*,*/py27/*,*.pyc,*pyo
 set wildignore+=*/node_modules/*,*/bower_components/*
-let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
-
 
 " Color scheme
 "------------------------------------------------------------------------------
@@ -107,6 +105,10 @@ au BufRead,BufNewFile *.robot set filetype=robot
 
 " shortcut for <esc>
 imap jj <Esc>
+
+" Leader mappings
+let mapleader=" "
+noremap <Leader>s :update<CR>
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
@@ -182,3 +184,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" NERDTree
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
+let NERDTreeShowHidden=1
