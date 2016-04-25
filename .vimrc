@@ -108,7 +108,14 @@ imap jj <Esc>
 
 " Leader mappings
 let mapleader=" "
-noremap <Leader>s :update<CR>
+nnoremap <Leader>w :w<CR>
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
