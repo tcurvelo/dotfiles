@@ -42,6 +42,7 @@ NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'wakatime/vim-wakatime'
+NeoBundle 'tpope/vim-surround'
 
 
 call neobundle#end()
@@ -75,9 +76,9 @@ set incsearch   " search as characters are entered
 set hlsearch    " highlight matches
 set colorcolumn=80 " vertical line at column 80
 
-set wildignore+=*/tmp/*,*/data/*,/log/*,*/data/*,*.so,*.swp,*.zip
+set wildignore+=*/tmp/*,*/data/*,/log/*,*.so,*.swp,*.zip
 set wildignore+=*/parts/*,*/py27/*,*.pyc,*pyo
-set wildignore+=*/node_modules/*,*/bower_components/*
+set wildignore+=*/node_modules/*
 
 " Color scheme
 "------------------------------------------------------------------------------
