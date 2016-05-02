@@ -116,6 +116,13 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
+" Reselect visual block after indent visual (@MasteringVim)
+vnoremap < <gv
+vnoremap > >gv
+
+" Move up/down on wrapped lines (@MasteringVim)
+nnoremap j gj
+nnoremap k gk
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
