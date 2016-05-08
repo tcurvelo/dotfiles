@@ -32,6 +32,7 @@ NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mfukar/robotframework-vim'
+NeoBundle 'morhetz/gruvbox'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'pld-linux/vim-syntax-vcl'
 NeoBundle 'rking/ag.vim'
@@ -83,8 +84,8 @@ set wildignore+=*/node_modules/*
 " Color scheme
 "------------------------------------------------------------------------------
 syntax enable
-set background=light
-colorscheme solarized
+set background=dark
+colorscheme gruvbox
 if has('gui_running')
   set guioptions-=T " remove toolbar
   set guioptions-=m " remove menubar
