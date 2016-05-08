@@ -4,52 +4,43 @@ filetype plugin on
 
 " Bundle management
 " ------------------------------------------------------------------------------
-if !1 | finish | endif
-
-if has('vim_starting')
-  if &compatible
-    set nocompatible
-  endif
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+if has('nvim')
+  call plug#begin('~/.config/nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-
 " Bundles
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'Valloric/MatchTagAlways'
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'edkolev/tmuxline.vim'
-NeoBundle 'gorodinskiy/vim-coloresque'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'mfukar/robotframework-vim'
-NeoBundle 'morhetz/gruvbox'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'pld-linux/vim-syntax-vcl'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'sheerun/vim-polyglot'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'wakatime/vim-wakatime'
-NeoBundle 'tpope/vim-surround'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/MatchTagAlways'
+Plug 'Yggdroot/indentLine'
+Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bling/vim-airline'
+Plug 'edkolev/tmuxline.vim'
+Plug 'gorodinskiy/vim-coloresque'
+Plug 'honza/vim-snippets'
+Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/emmet-vim'
+Plug 'mfukar/robotframework-vim'
+Plug 'morhetz/gruvbox'
+Plug 'pangloss/vim-javascript'
+Plug 'pld-linux/vim-syntax-vcl'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'sheerun/vim-polyglot'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'wakatime/vim-wakatime'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer'}
 
-
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
-
+" Add plugins to &runtimepath
+call plug#end()
+" ------------------------------------------------------------------------------
 
 " Basic settings
 " -----------------------------------------------------------------------------
