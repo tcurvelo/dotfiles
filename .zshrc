@@ -29,3 +29,4 @@ export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 export WORKON_HOME=~/.bin/envs
 source /usr/local/bin/virtualenvwrapper.sh 2> /dev/null
 
+export TERM=xterm-256color
