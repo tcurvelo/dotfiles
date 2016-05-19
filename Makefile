@@ -4,6 +4,7 @@ CONTEXT := $(abspath $(dir $(MAKEFILE_LIST)))
 all: submodules sync fonts vim
 
 submodules:
+	git submodule init
 	git submodule update --remote --rebase
 
 sync:
