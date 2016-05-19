@@ -9,6 +9,8 @@ alias l="ls --color=auto"
 alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
+which nvim > /dev/null && \
+  alias vim="nvim"
 alias gv="gvim"
 
 # Set to this to use case-sensitive completion
