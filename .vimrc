@@ -120,8 +120,9 @@ nnoremap k gk
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
 
-" sort lines
-vmap <F9> :sort<CR>
+" sort lines (case sensitive)
+vmap <F9> :!LC_COLLATE=C sort<CR>
+nmap  <F9> vip:!LC_COLLATE=C sort<CR>
 
 nmap <silent> <F4> :TagbarToggle<CR>
 noremap <F3> :NERDTreeToggle<CR>
