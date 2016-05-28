@@ -11,6 +11,7 @@ else
 endif
 
 " Bundles
+Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'Yggdroot/indentLine'
@@ -36,7 +37,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'wakatime/vim-wakatime'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --tern-completer'}
+Plug 'zchee/deoplete-jedi'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -182,16 +183,25 @@ let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 
 " ultisnips (avoiding conflicts with YouCompleteMe)
-let g:UltiSnipsExpandTrigger = "<c-b>"
+let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " ctrlp
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_completion=1
-nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" deoplete
+let g:deoplete#enable_at_startup = 1
+" close the preview window after completion is done.
+autocmd CompleteDone * pclose!
+
+" Multiple Cursors
+function g:Multiple_cursors_before()
+  let g:deoplete#disable_auto_complete = 1
+endfunction
+function g:Multiple_cursors_after()
+  let g:deoplete#disable_auto_complete = 0
+endfunction
 
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']

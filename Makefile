@@ -20,4 +20,4 @@ fonts:
 	fc-cache -vf ~/.fonts
 
 vim:
-	vim +PlugUpdate +qall
+	vim +PlugUpdate +UpdateRemotePlugins +qall
