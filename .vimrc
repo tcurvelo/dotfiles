@@ -104,7 +104,9 @@ imap jj <Esc>
 let mapleader=" "
 nnoremap <Leader>w :w<CR>
 vmap <Leader>y "+y
+nmap <Leader>y "+y
 vmap <Leader>d "+d
+nmap <Leader>d "+d
 nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
@@ -135,11 +137,6 @@ nnoremap <silent> <S-t> :tabnew<CR>
 
 " remove trailing spaces
 autocmd BufWritePre * :%s/\s\+$//e
-
-" clipboard's copy/cut/paste
-noremap YY "+y<CR>
-noremap P "+gP<CR>
-noremap XX "+x<CR>
 
 " Aliases
 cab Q! q!
