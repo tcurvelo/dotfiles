@@ -33,6 +33,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
+Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -115,6 +116,11 @@ vmap <Leader>P "+P
 " Reselect visual block after indent visual (@MasteringVim)
 vnoremap < <gv
 vnoremap > >gv
+
+" Use region expanding
+" "(https://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/)
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " Move up/down on wrapped lines (@MasteringVim)
 nnoremap j gj
