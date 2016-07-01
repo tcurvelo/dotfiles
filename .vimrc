@@ -63,6 +63,7 @@ autocmd FileType rst,txt setlocal noautoindent nocindent nosmartindent indentexp
 autocmd FileType rst,txt,po setlocal spell spelllang=en,pt
 
 set number      " show line numbers
+set relativenumber
 set cursorline  " have a line indicate the cursor location
 set ruler       " show the cursor position all the time
 set wildmenu    " visual autocomplete for command menu
@@ -122,9 +123,9 @@ vnoremap > >gv
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-" Move up/down on wrapped lines (@MasteringVim)
-nnoremap j gj
-nnoremap k gk
+" Move up/down on wrapped lines
+noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " sudo write this
 cmap W! w !sudo tee % >/dev/null
