@@ -191,7 +191,7 @@ let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " ctrlp
-let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+let g:ctrlp_user_command = 'ag %s -U -l --nocolor --hidden -g ""'
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
