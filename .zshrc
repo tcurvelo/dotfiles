@@ -26,9 +26,10 @@ source $ZSH/oh-my-zsh.sh
 source ~/.profile
 
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
-export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/.bin
-
-export WORKON_HOME=~/.bin/envs
-source /usr/local/bin/virtualenvwrapper.sh 2> /dev/null
-
 export TERM=xterm-256color
+export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/.bin:$HOME/.pyenv/bin
+export WORKON_HOME=~/.venvs
+export PROJECT_HOME=~/workspace
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"

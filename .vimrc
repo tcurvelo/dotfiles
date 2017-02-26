@@ -209,3 +209,7 @@ endfunction
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 let NERDTreeShowHidden=1
+
+" Python envs for neovim plugin
+let g:python_host_prog = $HOME.'/.pyenv/versions/2.7.13/envs/tools2/bin/python'
+let g:python3_host_prog = $HOME.'/.pyenv/versions/3.6.0/envs/tools3/bin/python'
