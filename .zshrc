@@ -1,6 +1,23 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="robbyrussell"
+source ~/.antigen/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle command-not-found
+antigen bundle git
+antigen bundle git-extras
+antigen bundle hlissner/zsh-autopair
+antigen bundle pip
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Load the theme.
+antigen theme robbyrussell
+
+# Tell antigen that you're done.
+antigen apply
 
 setopt nocheckjobs
 setopt nohup
@@ -9,22 +26,10 @@ alias l="ls --color=auto"
 alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
-which nvim > /dev/null && \
-  alias vim="nvim"
-alias gv="gvim"
+which nvim > /dev/null && alias vim="nvim"
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
-# Comment this out to disable weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
-
-plugins=(git git-extras)
-
-HISTFILE=~/.history
-source $ZSH/oh-my-zsh.sh
 source ~/.profile
-
+HISTFILE=~/.history
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
 export TERM=xterm-256color
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/.bin:$HOME/.pyenv/bin
