@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# generate a private key
+openssl genrsa -des3 -passout pass:foobar -out server.key 1024
+
+# generate a certificate signing request
+openssl req -new -passin pass:foobar -key server.key -out server.csr -subj "/"
+
+# remove passphrase from key
+cp server.key server.key.org
+openssl rsa -passin pass:foobar -in server.key.org -out server.key
+
+# generate a self-signed certificate
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.pem
+
+# remove temporary files
+rm -f server.key.org server.csr

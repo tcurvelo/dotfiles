@@ -1,0 +1,8 @@
+#!/bin/bash
+
+last_update=$(stat -c %X /var/lib/apt/lists/)
+last_repo_added=$(stat -c %Y /etc/apt/sources.list* | sort -n -r | head -1)
+now=$(date +%s)
+if [ $last_update -lt $last_repo_added ] || [ $(($now-$last_update)) -gt 3600 ] ; then
+    sudo apt-get -y update
+fi
