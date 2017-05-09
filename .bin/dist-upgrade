@@ -1,6 +1,6 @@
 #!/bin/sh
 
-apt_update \
+apt-update \
     && sudo apt-get -y dist-upgrade \
     && sudo apt-get autoremove \
     && sudo apt-get clean\
