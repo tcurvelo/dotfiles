@@ -81,7 +81,9 @@ set wildignore+=*/node_modules/*
 "------------------------------------------------------------------------------
 syntax enable
 set background=dark
+let g:gruvbox_italic=1
 colorscheme gruvbox
+
 if has('gui_running')
   set guioptions-=T " remove toolbar
   set guioptions-=m " remove menubar
