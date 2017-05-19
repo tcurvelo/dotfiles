@@ -50,6 +50,10 @@ call plug#end()
 " -----------------------------------------------------------------------------
 set encoding=utf-8
 
+" Undo history
+set undofile
+set undodir=~/.vim/undodir
+
 " Indent
 set cindent
 set tabstop=2     " an hard TAB displays as 2 columns

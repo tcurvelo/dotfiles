@@ -11,6 +11,7 @@ sync:
 	rsync -av \
 		--exclude '.git/' \
 		--exclude '.gitignore' \
+		--exclude '.gitkeep' \
 		--exclude '*.swp' \
 		--exclude 'README.md' \
 		--exclude 'Makefile' \
