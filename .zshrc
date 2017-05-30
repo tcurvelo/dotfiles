@@ -35,6 +35,7 @@ export TERM=xterm-256color
 export PATH=/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/.bin:$HOME/.pyenv/bin
 export WORKON_HOME=~/.venvs
 export PROJECT_HOME=~/workspace
+export HOMEBREW_NO_GITHUB_API=true
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
