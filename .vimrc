@@ -204,7 +204,12 @@ let g:UltiSnipsJumpForwardTrigger = "<c-b>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " ctrlp
-let g:ctrlp_user_command = 'ag %s -U -l --nocolor --hidden -g ""'
+let g:ctrlp_use_caching = 0
+if executable('rg')
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+elseif executable('ag')
+  let g:ctrlp_user_command = 'ag %s -U -l --nocolor --hidden -g ""'
+endif
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
