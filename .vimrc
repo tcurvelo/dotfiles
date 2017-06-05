@@ -41,6 +41,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'wakatime/vim-wakatime'
 Plug 'zchee/deoplete-jedi'
+Plug 'ryanoasis/vim-devicons'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -94,7 +95,7 @@ if has('gui_running')
   set guioptions-=r " remove right-hand scrollbar
   set guioptions-=L " remove left-hand scrollbar
   if has('gui_gtk2')
-    set guifont=Ubuntu\ Mono\ derivative\ powerline\ 14
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 14
   elseif has('gui_win32')
     set guifont=Ubuntu_Mono_Derivative_powerlin:h13:cANSI
   endif
@@ -173,6 +174,10 @@ else
   let g:airline_powerline_fonts = 0
   let g:tmuxline_powerline_separators = 0
 endif
+" testing rounded separators (extra-powerline-symbols):
+let g:airline_left_sep = "\uE0B4"
+let g:airline_right_sep = "\uE0B6"
+
 
 set laststatus=2
 set t_Co=256
