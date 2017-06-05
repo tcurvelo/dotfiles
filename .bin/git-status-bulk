@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for repo in $(ls */ -d); do
+for repo in $(ls -d */); do
     if [ -d $repo/.git ]; then
         changes=$(git --git-dir=$repo/.git --work-tree=$repo/ status --porcelain)
         if [ "$changes" != "" ]; then
