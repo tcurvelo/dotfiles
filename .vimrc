@@ -82,7 +82,7 @@ set wildignore+=*/tmp/*,*/data/*,/log/*,*.so,*.swp,*.zip
 set wildignore+=*/parts/*,*/py27/*,*.pyc,*pyo
 set wildignore+=*/node_modules/*
 
-" Color scheme
+" Color scheme and font settings
 "------------------------------------------------------------------------------
 syntax enable
 set background=dark
@@ -101,15 +101,28 @@ if has('gui_running')
   endif
 endif
 
+" FileType / Extensions Mapping
+" -----------------------------------------------------------------------------
+
 au BufRead,BufNewFile *.zcml set filetype=xml
 au BufRead,BufNewFile *.conf set filetype=nginx
 au BufRead,BufNewFile *.robot set filetype=robot
+
+" Vimrc Editing
+" -----------------------------------------------------------------------------
+augroup autosourcing
+    autocmd!
+    autocmd BufWritePost .vimrc source %
+augroup END
 
 " Mappings
 " ------------------------------------------------------------------------------
 
 " shortcut for <esc>
-imap jj <Esc>
+inoremap jj <Esc>
+
+" no need for shift to enter vim commands
+nnoremap ; :
 
 " Leader mappings
 let mapleader=" "
@@ -217,10 +230,10 @@ let g:deoplete#enable_at_startup = 1
 autocmd CompleteDone * pclose!
 
 " Multiple Cursors
-function g:Multiple_cursors_before()
+function! g:Multiple_cursors_before()
   let g:deoplete#disable_auto_complete = 1
 endfunction
-function g:Multiple_cursors_after()
+function! g:Multiple_cursors_after()
   let g:deoplete#disable_auto_complete = 0
 endfunction
 
