@@ -213,6 +213,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 " ctrlp
 let g:ctrlp_use_caching = 0
+let g:ctrlp_match_window_reversed = 0
 if executable('rg')
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
 elseif executable('ag')
