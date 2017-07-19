@@ -15,7 +15,6 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -206,10 +205,6 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_style_error_symbol = '✗'
 let g:syntastic_style_warning_symbol = '⚠'
 let g:syntastic_warning_symbol='⚠'
-
-" indentLine
-let g:indentLine_char = '┊'
-let g:indentLine_faster = 1
 
 " ultisnips (avoiding conflicts with YouCompleteMe)
 let g:UltiSnipsExpandTrigger = "<tab>"
