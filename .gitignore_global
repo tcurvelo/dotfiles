@@ -19,7 +19,6 @@
 *.zip
 
 *.log
-*.sql
 *.sqlite
 
 .DS_Store
@@ -38,7 +37,6 @@ Thumbs.db
 bower_components
 env-*/
 node_modules/
-env-*/
 py2.6/
 py2.7/
 py26/
