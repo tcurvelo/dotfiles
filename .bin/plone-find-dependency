@@ -4,6 +4,5 @@ if [ $# -ne 1 ]; then
   echo -e "Usage:\n    $0 my.dependency.package"
 fi
 
-find . -name 'requires.txt' -exec \
-  grep -l '$1' {} \; \
-  | sed 's/.*\/\([^/]*\)\.egg-info.*/\1/g'
+find . -name 'requires.txt' -exec grep -l "$1" {} \; \
+  | sed -r 's/.*?\/([^/]*?)\.egg(-info)?.*$/\1/g'
