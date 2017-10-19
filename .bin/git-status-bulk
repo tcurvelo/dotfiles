@@ -1,11 +1,10 @@
 #!/bin/bash
-
 for repo in $(ls -d */); do
     if [ -d $repo/.git ]; then
-        changes=$(git --git-dir=$repo/.git --work-tree=$repo/ status --porcelain)
-        if [ "$changes" != "" ]; then
-            echo $repo
-        fi
+        git="git --git-dir=$repo/.git --work-tree=$repo/"
+        $git fetch --all --quiet
+        changes=$($git status --porcelain)
+         [ "$changes" != "" ] && echo $repo
     fi
 done
 
