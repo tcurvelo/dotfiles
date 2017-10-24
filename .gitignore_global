@@ -34,6 +34,7 @@ Thumbs.db
 *.egg/
 .anaconda
 .codeintel/
+.vagrant/
 .vscode/
 bower_components
 env-*/
