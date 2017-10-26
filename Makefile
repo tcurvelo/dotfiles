@@ -18,8 +18,8 @@ sync:
 		"$(CONTEXT)/" ~/
 
 fonts:
-	$(CONTEXT)/.fonts/download.sh
-	fc-cache -vf ~/.fonts
+	$(CONTEXT)/.local/share/fonts/download.sh
+	fc-cache -f
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
