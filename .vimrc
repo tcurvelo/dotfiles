@@ -163,6 +163,10 @@ nnoremap <Tab> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
 
+" Show matched strings at the center of screen
+nnoremap n nzz
+nnoremap N Nzz
+
 " remove trailing spaces
 autocmd BufWritePre * :%s/\s\+$//e
 
