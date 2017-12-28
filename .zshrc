@@ -37,5 +37,7 @@ export WORKON_HOME=~/.venvs
 export PROJECT_HOME=~/workspace
 export HOMEBREW_NO_GITHUB_API=true
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ -d "$(which pyenv)" ]; then
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
