@@ -1,6 +1,10 @@
 #!/bin/bash
 
 for type in Bold Light Medium Regular Retina; do
-  wget --no-check-certificate -cqO ~/.local/share/fonts/FiraCode-${type}.ttf \
-  "https://raw.githubusercontent.com/tonsky/FiraCode/master/distr/ttf/FiraCode-${type}.ttf"
+  wget \
+    -cq \
+    --no-check-certificate \
+    --directory-prefix=$(dirname $0) \
+    "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/${type}/complete/Fura%20Code%20${type}%20Nerd%20Font%20Complete%20Mono.otf"
+
 done

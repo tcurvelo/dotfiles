@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=DarkPastels
-Font=Fira Code,12,-1,5,57,0,0,0,0,0
+Font=FiraCode Nerd Font Mono,12,-1,5,57,0,0,0,0,0,Medium
 
 [General]
 Command=/usr/bin/zsh
