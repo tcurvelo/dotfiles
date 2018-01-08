@@ -32,12 +32,12 @@ source ~/.profile
 HISTFILE=~/.history
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
 export TERM=xterm-256color
-export PATH=$PATH:$HOME/.bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
 export WORKON_HOME=~/.venvs
 export PROJECT_HOME=~/workspace
 export HOMEBREW_NO_GITHUB_API=true
 
-if [ -d "$(which pyenv)" ]; then
+if which pyenv > /dev/null; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
