@@ -1,10 +1,9 @@
 #!/bin/bash
+context=$(dirname $0)
+file="FiraCode.zip"
 
-for type in Bold Light Medium Regular Retina; do
-  wget \
-    -cq \
-    --no-check-certificate \
-    --directory-prefix=$(dirname $0) \
-    "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/${type}/complete/Fura%20Code%20${type}%20Nerd%20Font%20Complete%20Mono.otf"
+wget \
+  -cq --no-check-certificate --directory-prefix=$context \
+  "https://github.com/ryanoasis/nerd-fonts/releases/download/v1.2.0/FiraCode.zip" && \
+    unzip -x $context/$file -d $context
 
-done
