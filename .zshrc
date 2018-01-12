@@ -37,8 +37,7 @@ export WORKON_HOME=~/.venvs
 export PROJECT_HOME=~/workspace
 export HOMEBREW_NO_GITHUB_API=true
 
-if which pyenv; then
-  echo PYENV
+if which pyenv > /dev/null; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
