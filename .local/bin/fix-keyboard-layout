@@ -1,3 +1,4 @@
 #!/bin/bash
 
 setxkbmap -layout us -variant intl
+# setxkbmap -model abnt2 -layout br -variant abnt2
