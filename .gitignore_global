@@ -34,6 +34,7 @@ Thumbs.db
 *.egg/
 .anaconda
 .codeintel/
+.ipynb_checkpoints/
 .vagrant/
 .vscode/
 bower_components
