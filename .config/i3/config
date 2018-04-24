@@ -10,7 +10,7 @@
 set $mod Mod1
 
 # default default
-font pango:FiraCode Nerd Font Medium 11
+font pango:FiraCode Nerd Font 12
 
 # background image
 exec --no-startup-id feh --bg-fill ~/docs/wallpaper.jpg
@@ -87,6 +87,8 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+for_window [class="Firefox"]  move container to workspace 10
 
 # switch to workspace
 bindsym $mod+1 workspace 1
