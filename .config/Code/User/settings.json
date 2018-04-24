@@ -4,5 +4,6 @@
     "workbench.startupEditor": "newUntitledFile",
     "editor.fontSize": 15,
     "editor.fontWeight": "500",
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "files.trimTrailingWhitespace": true
 }
