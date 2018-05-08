@@ -38,7 +38,6 @@ Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'wakatime/vim-wakatime'
 Plug 'zchee/deoplete-jedi'
 Plug 'ryanoasis/vim-devicons'
 
