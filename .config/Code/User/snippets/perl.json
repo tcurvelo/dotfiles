@@ -3,7 +3,7 @@
 		"prefix": "dump",
 		"body": [
 			"use Data::Dumper;",
-			"$Self->{LogObject}->Log(Priority => 'error',  Message => '[${1:label}] '.Dumper(${2:message}));",
+			"$$Self->{LogObject}->Log(Priority => 'error',  Message => '[${1:label}] '.Dumper(${2:message}));",
 			"$0"
 		],
 		"description": "Logging Objects/Hashes on OTRS"
