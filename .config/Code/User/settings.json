@@ -6,6 +6,13 @@
     "editor.fontWeight": "500",
     "explorer.confirmDelete": false,
     "files.trimTrailingWhitespace": true,
-    "workbench.editor.enablePreviewFromQuickOpen": false
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "emmet.syntaxProfiles": {
+        "javascript": "jsx"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "[javascript]": {
+        "editor.tabSize": 2
+    }
 
 }
