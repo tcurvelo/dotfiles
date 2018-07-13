@@ -1,0 +1,6 @@
+esbenp.prettier-vscode
+ms-python.python
+peterjausovec.vscode-docker
+pnp.polacode
+sldobri.daily
+

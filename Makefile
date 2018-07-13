@@ -1,7 +1,8 @@
 CONTEXT := $(abspath $(dir $(MAKEFILE_LIST)))
 
+.PHONY: all submodules sync fonts vim code
 
-all: submodules sync fonts vim
+all: submodules sync fonts vim vscode
 
 submodules:
 	git submodule init
@@ -23,3 +24,8 @@ fonts:
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
+
+vscode:
+	for plugin in `cat ~/.config/Code/User/my-plugins.txt`; do \
+		code --install-extension $$plugin ; \
+	done
