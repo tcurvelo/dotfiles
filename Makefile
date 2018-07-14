@@ -1,6 +1,15 @@
 CONTEXT := $(abspath $(dir $(MAKEFILE_LIST)))
+OS := $(shell uname -s)
 
-.PHONY: all submodules sync fonts vim code
+ifeq ($(OS), Darwin)
+	fonts_dir = /Library/Fonts
+else
+	fonts_dir = ~/.local/share/fonts
+endif
+myfont = Fura\ Code\ Regular\ Nerd\ Font\ Complete.ttf
+
+
+.PHONY: submodules sync fonts vim code
 
 all: submodules sync fonts vim vscode
 
@@ -18,9 +27,12 @@ sync:
 		--exclude 'Makefile' \
 		"$(CONTEXT)/" ~/
 
-fonts:
-	~/.local/share/fonts/download.sh
-	fc-cache -f
+fonts: $(fonts_dir)/$(myfont)
+
+$(fonts_dir)/$(myfont):
+	wget -cq --no-check-certificate --directory-prefix=/tmp \
+		https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraCode.zip \
+	&& unzip /tmp/FiraCode.zip $(myfont) -d $(fonts_dir)
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
