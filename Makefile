@@ -32,7 +32,8 @@ fonts: $(fonts_dir)/$(myfont)
 $(fonts_dir)/$(myfont):
 	wget -cq --no-check-certificate --directory-prefix=/tmp \
 		https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraCode.zip \
-	&& unzip /tmp/FiraCode.zip $(myfont) -d $(fonts_dir)
+	&& unzip /tmp/FiraCode.zip $(myfont) -d $(fonts_dir) \
+	&& which fc-cache > /dev/null && fc-cache -vf
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall

@@ -1,6 +1,6 @@
 [Appearance]
 ColorScheme=Gruvbox_dark
-Font=FiraCode Nerd Font Mono,12,-1,5,57,0,0,0,0,0,Medium
+Font=FuraCode Nerd Font,12,-1,5,57,0,0,0,0,0,Medium
 
 [General]
 Command=/usr/bin/zsh
