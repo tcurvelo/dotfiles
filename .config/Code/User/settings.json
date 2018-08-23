@@ -15,4 +15,10 @@
         "editor.tabSize": 2
     },
     "python.formatting.provider": "black",
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    }
 }
