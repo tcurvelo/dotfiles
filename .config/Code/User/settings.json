@@ -1,20 +1,26 @@
 {
     "editor.fontFamily": "'FuraCode Nerd Font', 'Droid Sans', 'monospace'",
     "editor.fontLigatures": true,
-    "workbench.startupEditor": "newUntitledFile",
     "editor.fontSize": 16,
     "editor.fontWeight": "500",
+    "editor.minimap.enabled": false,
     "explorer.confirmDelete": false,
     "files.trimTrailingWhitespace": true,
     "workbench.editor.enablePreviewFromQuickOpen": false,
-    "emmet.syntaxProfiles": {
-        "javascript": "jsx"
-    },
+    "workbench.startupEditor": "newUntitledFile",
+    "emmet.syntaxProfiles": { "javascript": "jsx" },
     "emmet.triggerExpansionOnTab": true,
+
+    "python.formatting.provider": "black",
+    "python.autoComplete.extraPaths": [
+        "~/.pyenv/versions/tools",
+        "~/.pyenv/versions/tools/bin",
+        "~/.pyenv/versions/tools/lib"
+    ],
+
     "[javascript]": {
         "editor.tabSize": 2
     },
-    "python.formatting.provider": "black",
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
