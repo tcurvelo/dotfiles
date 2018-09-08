@@ -8,6 +8,7 @@ lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(blue)(%ar)
 [core]
 editor = vim
 excludesfile = ~/.gitignore_global
+pager = diff-so-fancy | less --tabs=4 -RFX
 
 [push]
 default = simple
@@ -15,6 +16,23 @@ default = simple
 [credential]
 helper = cache
 
-[http]
-verifySSL = false
+[diff-so-fancy]
+stripLeadingSymbols = false
+markEmptyLines = false
 
+[color]
+ui = true
+
+[color "diff-highlight"]
+oldNormal = red bold
+oldHighlight = red bold 52
+newNormal = green bold
+newHighlight = green bold 22
+
+[color "diff"]
+meta = yellow
+frag = magenta bold
+commit = yellow bold
+old = red bold
+new = green bold
+whitespace = red reverse
