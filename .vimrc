@@ -16,6 +16,7 @@ Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
+Plug 'ambv/black'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'edkolev/tmuxline.vim'
@@ -30,6 +31,7 @@ Plug 'morhetz/gruvbox'
 Plug 'pangloss/vim-javascript'
 Plug 'pld-linux/vim-syntax-vcl'
 Plug 'rking/ag.vim'
+Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
@@ -39,7 +41,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'zchee/deoplete-jedi'
-Plug 'ryanoasis/vim-devicons'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -242,3 +243,8 @@ let NERDTreeShowHidden=1
 
 " Python envs for neovim plugin
 let g:python3_host_prog = $HOME.'/.pyenv/versions/tools/bin/python'
+
+" format python files on save
+let g:black_skip_string_normalization = 1
+autocmd BufWritePre *.py execute ':Black'
+

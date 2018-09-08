@@ -12,6 +12,9 @@
     "emmet.triggerExpansionOnTab": true,
 
     "python.formatting.provider": "black",
+    "python.formatting.blackArgs":[
+        "--skip-string-normalization"
+    ],
     "python.autoComplete.extraPaths": [
         "~/.pyenv/versions/tools",
         "~/.pyenv/versions/tools/bin",
