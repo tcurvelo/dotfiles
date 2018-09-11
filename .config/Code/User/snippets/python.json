@@ -1,0 +1,18 @@
+{
+	"pdb": {
+		"prefix": "pdb",
+		"body": [
+			"__import__('pdb').set_trace()"
+		],
+		"description": "Set pdb breakpoint"
+	},
+
+	"[Scrapy] Inspect Response": {
+		"prefix": "insp",
+	 	"body": [
+	 		"from scrapy.shell import inspect_response",
+	 		"inspect_response(response, self)"
+	 	],
+	 	"description": "[Scrapy] Inspect Response"
+	}
+}
