@@ -3,4 +3,6 @@ ms-python.python
 peterjausovec.vscode-docker
 pnp.polacode
 sldobri.daily
+dotjoshjohnson.xml
+bierner.emojisense
 
