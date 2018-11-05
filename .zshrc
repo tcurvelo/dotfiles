@@ -30,12 +30,15 @@ which nvim > /dev/null && alias vim="nvim"
 
 source ~/.profile
 HISTFILE=~/.history
+
+export BROWSER=/usr/bin/firefox
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
 export TERM=xterm-256color
 export PATH=$PATH:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
 export PROJECT_HOME=~/workspace
 export WORKON_HOME=~/.venvs
 export HOMEBREW_NO_GITHUB_API=true
+
 eval "$(direnv hook zsh)"
 
 if which pyenv > /dev/null; then
