@@ -10,8 +10,9 @@
 	"[Scrapy] Inspect Response": {
 		"prefix": "insp",
 	 	"body": [
-	 		"from scrapy.shell import inspect_response",
-	 		"inspect_response(response, self)"
+			 "from scrapy.utils.response import open_in_browser as view",
+			 "__import__('pdb').set_trace()",
+			 "view(response)",
 	 	],
 	 	"description": "[Scrapy] Inspect Response"
 	}
