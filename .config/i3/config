@@ -10,7 +10,7 @@
 set $mod Mod1
 
 # default default
-font pango:FuraCode Nerd Font 12
+font pango:FuraCode Nerd Font 16
 
 # background image
 exec --no-startup-id feh --bg-fill ~/docs/wallpaper.jpg
