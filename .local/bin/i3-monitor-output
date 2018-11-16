@@ -1,6 +1,6 @@
 #!/bin/bash
-EXTERNAL_OUTPUT="VGA-1"
-INTERNAL_OUTPUT="LVDS-1"
+EXTERNAL_OUTPUT="HDMI-1-1"
+INTERNAL_OUTPUT="eDP-1-1"
 
 # if we don't have a file, start at zero
 if [ ! -f "/tmp/monitor_mode.dat" ] ; then
@@ -24,7 +24,7 @@ case "$monitor_mode" in
     ;;
   *)
     monitor_mode="all"
-    xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --left-of $INTERNAL_OUTPUT
+    xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --auto --right-of $INTERNAL_OUTPUT
     ;;
 esac
 
