@@ -6,8 +6,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-# alt key
-set $mod Mod1
+# win key
+set $mod Mod4
 
 # default default
 font pango:FuraCode Nerd Font 16
