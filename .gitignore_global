@@ -38,6 +38,7 @@ Thumbs.db
 .codeintel/
 .ipynb_checkpoints/
 .vagrant/
+.venv/
 .vscode/
 bower_components
 env-*/

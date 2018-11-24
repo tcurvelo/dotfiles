@@ -36,7 +36,7 @@ export CHROME_BIN=$(which chromium-browser 2> /dev/null)
 export TERM=xterm-256color
 export PATH=$PATH:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
 export PROJECT_HOME=~/workspace
-export WORKON_HOME=~/.venvs
+export PIPENV_VENV_IN_PROJECT=1
 export HOMEBREW_NO_GITHUB_API=true
 
 eval "$(direnv hook zsh)"
