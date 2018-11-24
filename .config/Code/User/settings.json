@@ -20,6 +20,8 @@
         "~/.pyenv/versions/tools/bin",
         "~/.pyenv/versions/tools/lib"
     ],
+    "python.linting.pylintPath": "~/.pyenv/versions/tools/bin/pylint",
+    "python.formatting.blackPath": "~/.pyenv/versions/tools/bin/black",
 
     "[javascript]": {
         "editor.tabSize": 2
@@ -29,5 +31,6 @@
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
         }
-    }
+    },
+    "window.zoomLevel": 1
 }
