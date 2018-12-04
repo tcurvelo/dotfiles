@@ -41,6 +41,7 @@ Thumbs.db
 .venv/
 .vscode/
 bower_components
+dist/
 env-*/
 node_modules/
 py2.6/
