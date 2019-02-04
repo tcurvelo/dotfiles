@@ -26,7 +26,10 @@ alias l="ls --color=auto"
 alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
-which nvim > /dev/null && alias vim="nvim"
+
+if ! which rg > /dev/null; then
+  which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
+fi
 
 source ~/.profile
 HISTFILE=~/.history
