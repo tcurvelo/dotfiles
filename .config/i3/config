@@ -10,7 +10,7 @@
 set $mod Mod4
 
 # default default
-font pango:FuraCode Nerd Font 16
+font pango:FuraCode Nerd Font 14
 
 # background image
 exec --no-startup-id feh --bg-fill ~/docs/wallpaper.jpg
@@ -35,6 +35,10 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# lock screen
+exec xautolock -time 5 -locker i3lock -c 000000
+bindsym $mod+Shift+o exec i3lock -c 000000
 
 # change focus
 bindsym $mod+h focus left
