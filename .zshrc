@@ -27,20 +27,15 @@ alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
 
-if ! which rg > /dev/null; then
-  which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
-fi
-
-source ~/.profile
-HISTFILE=~/.history
-
 export BROWSER=/usr/bin/firefox
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
-export TERM=xterm-256color
-export PATH=$PATH:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
-export PROJECT_HOME=~/workspace
-export PIPENV_VENV_IN_PROJECT=1
+export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
+export PATH=$PATH:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
+export PIPENV_VENV_IN_PROJECT=1
+export PROJECT_HOME=~/workspace
+export TERM=xterm-256color
+export TERMINAL=~/.local/bin/kitty
 
 eval "$(direnv hook zsh)"
 
@@ -48,3 +43,9 @@ if which pyenv > /dev/null; then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
+
+if ! which rg > /dev/null; then
+  which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
+fi
+
+source ~/.profile
