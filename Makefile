@@ -40,5 +40,5 @@ vim:
 
 vscode:
 	for plugin in `cat ~/.config/Code/User/my-plugins.txt`; do \
-		code --install-extension $$plugin ; \
+		(code --install-extension $$plugin &); \
 	done
