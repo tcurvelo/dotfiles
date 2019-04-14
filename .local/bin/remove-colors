@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Remove colors from shell outputs
+# Got here: https://stackoverflow.com/a/18000433/408951
+
+sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"
