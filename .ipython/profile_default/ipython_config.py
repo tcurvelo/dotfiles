@@ -5,7 +5,7 @@ from IPython.terminal.prompts import Token
 
 class CustomPrompt(Prompts):
     def in_prompt_tokens(self, cli=None):
-        return [(Token.Prompt, '>>> ')]
+        return [(Token.Prompt, '\n>>> ')]
 
     def out_prompt_tokens(self, cli=None):
         return [(Token.Prompt, '')]
