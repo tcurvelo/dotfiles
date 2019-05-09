@@ -10,18 +10,30 @@ def main(archive):
     with open(archive) as f:
         log = json.load(f)["log"]
         for index, entry in enumerate(log["entries"]):
+            headers = body = None
+
+            method = entry["request"]["method"]
+            if method == "POST":
+                postdata = entry.get("request").get("postData")
+                headers = json.dumps({"Content-Type": postdata.get("mimeType")})
+                body = postdata.get("text")
+
             print_scrapy_request(
                 entry["request"]["url"],
                 entry["request"]["method"],
                 callback_name=f"parse_{index}",
+                headers=headers,
+                body=body,
             )
 
 
-def print_scrapy_request(url, method, callback_name):
+def print_scrapy_request(url, method, callback_name, headers=None, body=None):
     print(
         f"scrapy.Request(\n"
         + f'    url="{url}",\n'
         + (f'    method="{method}",\n' if method == "POST" else "")
+        + (f"    headers={headers},\n" if headers else "")
+        + (f"    body={body},\n" if body else "")
         + f"    callback=self.{callback_name},\n"
         f")\n"
     )
