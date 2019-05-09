@@ -6,7 +6,8 @@ import json
 
 @click.command()
 @click.argument("archive")
-def main(archive):
+@click.option("--callback/--no-callback", default=True)
+def main(archive, callback):
     with open(archive) as f:
         log = json.load(f)["log"]
         for index, entry in enumerate(log["entries"]):
@@ -21,7 +22,7 @@ def main(archive):
             print_scrapy_request(
                 entry["request"]["url"],
                 entry["request"]["method"],
-                callback_name=f"parse_{index}",
+                callback_name=f"parse_{index}" if callback else None,
                 headers=headers,
                 body=body,
             )
@@ -30,12 +31,11 @@ def main(archive):
 def print_scrapy_request(url, method, callback_name, headers=None, body=None):
     print(
         f"scrapy.Request(\n"
-        + f'    url="{url}",\n'
         + (f'    method="{method}",\n' if method == "POST" else "")
         + (f"    headers={headers},\n" if headers else "")
         + (f"    body={body},\n" if body else "")
-        + f"    callback=self.{callback_name},\n"
-        f")\n"
+        + (f"    callback={callback_name},\n" if callback_name else "")
+        + f")\n"
     )
 
 
