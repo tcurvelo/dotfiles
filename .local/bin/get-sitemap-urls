@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ $# -ne 1 ]; then
+  echo -e "usage: \n    $0 http://example.com/sitemap.xml" 2> /dev/null
+  exit -1
+fi
+
+url=$1
+xmllint --shell  <<< 'cat //*[name()="loc"]/text()' <(curl -s $url) \
+  | grep -e '^https\?://.*'
