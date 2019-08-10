@@ -31,6 +31,7 @@ def main(archive, callback):
 def print_scrapy_request(url, method, callback_name, headers=None, body=None):
     print(
         f"scrapy.Request(\n"
+        + f'    url="{url}",\n'
         + (f'    method="{method}",\n' if method == "POST" else "")
         + (f"    headers={headers},\n" if headers else "")
         + (f"    body={body},\n" if body else "")

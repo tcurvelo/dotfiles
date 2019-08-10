@@ -1,6 +1,6 @@
 #!/bin/bash
 if [ $# -ne 1 ]; then
-  echo -e "usage: \n    $0 http://example.com/sitemap.xml" 2> /dev/null
+  echo -e "usage: \n    $0 http://example.com/sitemap.xml" > /dev/stderr
   exit -1
 fi
 
