@@ -4,12 +4,24 @@
     "editor.fontSize": 16,
     "editor.fontWeight": "500",
     "editor.minimap.enabled": false,
+
     "explorer.confirmDelete": false,
     "files.trimTrailingWhitespace": true,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.startupEditor": "newUntitledFile",
     "emmet.syntaxProfiles": { "javascript": "jsx" },
     "emmet.triggerExpansionOnTab": true,
+
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.eggs": true,
+        "**/.ipynb_checkpoints": true,
+        "**/.pytest_cache": true,
+        "**/.scrapy": true,
+        "**/.tox": true,
+        "**/.venv": true,
+        "**/*.egg-info": true
+    },
 
     "python.formatting.provider": "black",
     "python.formatting.blackArgs":[
