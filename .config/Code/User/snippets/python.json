@@ -2,7 +2,7 @@
 	"pdb": {
 		"prefix": "pdb",
 		"body": [
-			"__import__('pdb').set_trace()"
+			"__import__('ipdb').set_trace()"
 		],
 		"description": "Set pdb breakpoint"
 	},
