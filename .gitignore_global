@@ -30,12 +30,15 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
+*.doctrees/
 *.egg-info/
 *.egg/
 *.eggs/
 .anaconda
-.envrc
 .codeintel/
+.envrc
+.tox/
+_build/
 .ipynb_checkpoints/
 .vagrant/
 .venv/
