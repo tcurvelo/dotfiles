@@ -48,4 +48,22 @@ if ! which rg > /dev/null; then
   which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
 fi
 
+if [ -f ~/.fzf.zsh ]; then
+  source ~/.fzf.zsh
+
+  alias k='kubectl'
+  # Get current context
+  alias krc='k config current-context'
+  # List all contexts
+  alias klc='k config get-contexts -o name | sed "s/^/  /;\|^  $(krc)$|s/ /*/"'
+  # Change current context
+  alias kcc='k config use-context "$(klc | fzf -e | sed "s/^..//")"'
+  # Get current namespace
+  alias krn='k config get-contexts --no-headers "$(krc)" | awk "{print \$5}" | sed "s/^$/default/"'
+  # List all namespaces
+  alias kln='k get -o name ns | sed "s|^.*/|  |;\|^  $(krn)$|s/ /*/"'
+  # Change current namespace
+  alias kcn='k config set-context --current --namespace "$(kln | fzf -e | sed "s/^..//")"'
+fi
+
 source ~/.profile
