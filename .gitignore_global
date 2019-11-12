@@ -31,23 +31,24 @@ ehthumbs.db
 Thumbs.db
 
 *.doctrees/
-*.egg-info/
-*.egg/
-*.eggs/
 .anaconda
 .codeintel/
+.direnv/
 .envrc
 .tox/
 _build/
-.ipynb_checkpoints/
 .vagrant/
-.venv/
 .vscode/
 bower_components
 dist/
-env-*/
 node_modules/
-py2.6/
-py2.7/
-py26/
-py27/
+
+# Python dirs
+*.egg-info/
+*.egg/
+*.eggs/
+.ipynb_checkpoints/
+.mypy_cache/
+.venv/
+__pycache__/
+env-*/
