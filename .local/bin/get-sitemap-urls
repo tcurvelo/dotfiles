@@ -19,4 +19,4 @@ _curl() {
 
 url=$1
 xmllint --shell  <<< 'cat //*[name()="loc"]/text()' <(_curl $url) \
-  | rg --color never '^\s*(https?://.*)' -r '$1'
+  | rg --color never '^(?:\s|<!\[CDATA\[)*(https?://.*)(?:\]\]>)?' -r '$1'
