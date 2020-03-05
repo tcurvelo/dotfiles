@@ -6,7 +6,7 @@ email = tcurvelo@gmail.com
 lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(blue)(%ar)%C(reset) %C(bold blue)%s%C(reset) %C(bold)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 
 [core]
-editor = vim
+editor = code --wait
 excludesfile = ~/.gitignore_global
 pager = diff-so-fancy | less --tabs=4 -RFX
 
