@@ -1,0 +1,21 @@
+{
+    "shortcuts": [
+           {
+            "command": "kernelmenu:restart",
+            "keys": [
+                "0",
+                "0"
+            ],
+            "selector": "[data-jp-kernel-user]:focus",
+            "disabled": true,
+        },        
+        {
+            "command": "runmenu:restart-and-run-all",
+            "keys": [
+                "0",
+                "0"
+            ],
+            "selector": "[data-jp-code-runner]"
+        },
+    ]
+}
