@@ -1,8 +1,8 @@
 {
-    "editor.fontFamily": "'FuraCode Nerd Font', 'Droid Sans', 'monospace'",
+    "editor.fontFamily": "'Victor Mono', 'FuraCode Nerd Font', 'Droid Sans', 'monospace'",
     "editor.fontLigatures": true,
     "editor.fontSize": 16,
-    "editor.fontWeight": "500",
+    "editor.fontWeight": "700",
     "editor.minimap.enabled": false,
 
     "explorer.confirmDelete": false,
@@ -44,5 +44,7 @@
             "source.organizeImports": true
         }
     },
+    "workbench.colorTheme": "Bear Theme",
+    "terminal.integrated.fontSize": 13,
     "window.zoomLevel": 1
 }
