@@ -4,14 +4,16 @@
     "editor.fontSize": 16,
     "editor.fontWeight": "700",
     "editor.minimap.enabled": false,
+    "editor.wordWrap": "on",
 
     "explorer.confirmDelete": false,
-    "files.trimTrailingWhitespace": true,
-    "workbench.editor.enablePreviewFromQuickOpen": false,
-    "workbench.startupEditor": "newUntitledFile",
-    "emmet.syntaxProfiles": { "javascript": "jsx" },
-    "emmet.triggerExpansionOnTab": true,
 
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.colorTheme": "Bear Theme",
+    "workbench.startupEditor": "newUntitledFile",
+
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 5000,
     "files.exclude": {
         "**/__pycache__": true,
         "**/.eggs": true,
@@ -22,6 +24,7 @@
         "**/.venv": true,
         "**/*.egg-info": true
     },
+    "files.trimTrailingWhitespace": true,
 
     "python.formatting.provider": "black",
     "python.formatting.blackArgs":[
@@ -34,17 +37,19 @@
     ],
     "python.linting.pylintPath": "~/.pyenv/versions/tools/bin/pylint",
     "python.formatting.blackPath": "~/.pyenv/versions/tools/bin/black",
-
-    "[javascript]": {
-        "editor.tabSize": 2
-    },
     "[python]": {
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
         }
     },
-    "workbench.colorTheme": "Bear Theme",
+
+    "emmet.syntaxProfiles": { "javascript": "jsx" },
+    "emmet.triggerExpansionOnTab": true,
+    "[javascript]": {
+        "editor.tabSize": 2
+    },
+
     "terminal.integrated.fontSize": 13,
     "window.zoomLevel": 1
 }
