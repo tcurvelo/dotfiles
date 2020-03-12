@@ -9,9 +9,9 @@ endif
 myfont = Fura\ Code\ Regular\ Nerd\ Font\ Complete.ttf
 
 
-.PHONY: submodules sync fonts vim code
+.PHONY: submodules sync fonts vim vscode
 
-all: submodules sync fonts vim vscode
+all: submodules sync vscode
 
 submodules:
 	git submodule init
