@@ -51,5 +51,8 @@
     },
 
     "terminal.integrated.fontSize": 13,
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "telemetry.enableCrashReporter": false,
+    "gitlens.advanced.telemetry.enabled": false,
+    "telemetry.enableTelemetry": false
 }
