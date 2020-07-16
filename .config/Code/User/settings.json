@@ -9,13 +9,31 @@
     "explorer.confirmDelete": false,
 
     "workbench.editor.enablePreviewFromQuickOpen": false,
-    "workbench.colorTheme": "Bear Theme",
+    "workbench.colorTheme": "ƒ - Monokai - Operator Mono/Italic",
     "workbench.startupEditor": "newUntitledFile",
 
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 5000,
     "files.exclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
         "**/__pycache__": true,
+        "**/.direnv": true,
+        "**/.eggs": true,
+        "**/.ipynb_checkpoints": true,
+        "**/.pytest_cache": true,
+        "**/.scrapy": true,
+        "**/.tox": true,
+        "**/.venv": true,
+        "**/*.egg-info": true
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/__pycache__": true,
+        "**/.direnv": true,
         "**/.eggs": true,
         "**/.ipynb_checkpoints": true,
         "**/.pytest_cache": true,
@@ -51,8 +69,10 @@
     },
 
     "terminal.integrated.fontSize": 13,
-    "window.zoomLevel": 1,
     "telemetry.enableCrashReporter": false,
     "gitlens.advanced.telemetry.enabled": false,
-    "telemetry.enableTelemetry": false
+    "telemetry.enableTelemetry": false,
+    "python.languageServer": "Pylance",
+    "window.zoomLevel": 1,
+    "vsicons.dontShowNewVersionMessage": true
 }

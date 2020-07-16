@@ -7,6 +7,7 @@ esbenp.prettier-vscode
 ms-azuretools.vscode-docker
 ms-kubernetes-tools.vscode-kubernetes-tools
 ms-python.python
+ms-python.vscode-pylance
 ms-vscode-remote.vscode-remote-extensionpack
 ms-vsliveshare.vsliveshare
 peterjausovec.vscode-docker
