@@ -1,6 +1,6 @@
 #!/bin/bash
-if [ $# -ne 1 ]; then
-  echo -e "usage: \n    $0 http://example.com/sitemap.xml" > /dev/stderr
+if [ "$#" -ne 1 ]; then
+  echo -e "usage: \n    $0 (http://example.com/sitemap.xml|-)" > /dev/stderr
   exit -1
 fi
 
@@ -16,7 +16,15 @@ _curl() {
     $1
 }
 
+_extract() {
+  sed 's/<loc>/<loc>\n/g' \
+    | xmllint --nocdata --xpath '//*[name()="loc"]/text()' - \
+    | rg --color never '^(?:\s)*(https?://.*)' -r '$1'
+}
 
-url=$1
-xmllint --shell  <<< 'cat //*[name()="loc"]/text()' <(_curl $url) \
-  | rg --color never '^(?:\s|<!\[CDATA\[)*(https?://.*)(?:\]\]>)?' -r '$1'
+if [ "$1" == "-" ]; then
+  cat /dev/stdin | _extract
+else
+  _curl $1 | _extract
+fi
+
