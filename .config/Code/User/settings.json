@@ -62,6 +62,19 @@
         }
     },
 
+    "cSpell.ignoreWords": [
+        "canonicalize",
+        "apikey",
+        "dont_",
+        "ipdb",
+    ],
+
+    "cSpell.userWords": [
+        "scrapy",
+        "incapsula",
+        "proxy",
+    ],
+
     "emmet.syntaxProfiles": { "javascript": "jsx" },
     "emmet.triggerExpansionOnTab": true,
 
