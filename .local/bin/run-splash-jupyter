@@ -5,8 +5,9 @@ docker run \
     -e DISPLAY=unix$DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $XAUTHORITY:$XAUTHORITY \
-    -v $(pwd):/notebooks \
+    -v /tmp:/notebooks \
     -e XAUTHORITY=$XAUTHORITY \
     -p 8888:8888 \
+    -p 8050:8050 \
     --rm \
     -it scrapinghub/splash-jupyter --disable-xvfb
