@@ -64,9 +64,6 @@
 
     "emmet.syntaxProfiles": { "javascript": "jsx" },
     "emmet.triggerExpansionOnTab": true,
-    "[javascript]": {
-        "editor.tabSize": 2
-    },
 
     "terminal.integrated.fontSize": 13,
     "telemetry.enableCrashReporter": false,
@@ -74,5 +71,21 @@
     "telemetry.enableTelemetry": false,
     "python.languageServer": "Pylance",
     "window.zoomLevel": 1,
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+
+    // ESLint settings
+    "[javascript]": {
+        "editor.tabSize": 2,
+        "editor.formatOnSave": false
+    },
+    "[javascriptreact]": {
+        "editor.formatOnSave": false
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "prettier.disableLanguages": [
+        "javascript",
+        "javascriptreact"
+    ],
 }

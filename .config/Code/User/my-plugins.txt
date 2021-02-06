@@ -10,6 +10,10 @@ ms-python.python
 ms-python.vscode-pylance
 ms-vscode-remote.vscode-remote-extensionpack
 ms-vsliveshare.vsliveshare
-peterjausovec.vscode-docker
+ms-azuretools.vscode-docker
 pnp.polacode
 sldobri.daily
+dbaeumer.vscode-eslint
+formulahendry.auto-rename-tag
+graphql.vscode-graphql
+jpoissonnier.vscode-styled-components
