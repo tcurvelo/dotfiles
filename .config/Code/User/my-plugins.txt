@@ -4,8 +4,10 @@ davidanson.vscode-markdownlint
 dotjoshjohnson.xml
 eamodio.gitlens
 esbenp.prettier-vscode
+littlefoxteam.vscode-python-test-adapter
 ms-azuretools.vscode-docker
 ms-kubernetes-tools.vscode-kubernetes-tools
+ms-pyright.pyright
 ms-python.python
 ms-python.vscode-pylance
 ms-vscode-remote.vscode-remote-extensionpack
