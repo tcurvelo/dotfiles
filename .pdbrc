@@ -1,1 +1,12 @@
 alias Q __import__('os')._exit(-1)
+
+import atexit
+import os
+import readline
+
+history_path = os.path.expanduser("~/.pyhistory")
+def save_history(history_path): import readline; readline.write_history_file(history_path)
+
+if os.path.exists(history_path): readline.read_history_file(history_path)
+
+atexit.register(save_history, history_path=history_path)
