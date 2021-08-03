@@ -37,8 +37,3 @@ $(fonts_dir)/$(myfont):
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
-
-vscode:
-	for plugin in `cat ~/.config/Code/User/my-plugins.txt`; do \
-		(code --install-extension $$plugin &); \
-	done
