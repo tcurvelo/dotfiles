@@ -9,7 +9,7 @@ endif
 myfont = JetBrainsMono-Medium.ttf
 
 
-.PHONY: submodules sync fonts vim vscode
+.PHONY: submodules sync fonts vim
 
 all: submodules sync vscode
 
