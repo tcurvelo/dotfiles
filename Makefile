@@ -6,7 +6,7 @@ ifeq ($(OS), Darwin)
 else
 	fonts_dir = ~/.local/share/fonts
 endif
-myfont = Fura\ Code\ Regular\ Nerd\ Font\ Complete.ttf
+myfont = JetBrainsMono-Medium.ttf
 
 
 .PHONY: submodules sync fonts vim vscode
@@ -30,9 +30,11 @@ sync:
 fonts: $(fonts_dir)/$(myfont)
 
 $(fonts_dir)/$(myfont):
+	mkdir -p $(fonts_dir); \
+	fontfile="JetBrainsMono-2.242.zip"; \
 	wget -cq --no-check-certificate --directory-prefix=/tmp \
-		https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraCode.zip \
-	&& unzip /tmp/FiraCode.zip $(myfont) -d $(fonts_dir) \
+		https://download.jetbrains.com/fonts/$$fontfile \
+	&& unzip -j /tmp/$$fontfile 'fonts/ttf/*' -d $(fonts_dir) \
 	&& which fc-cache > /dev/null && fc-cache -vf
 
 vim:
