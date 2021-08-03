@@ -32,7 +32,7 @@ export BROWSER=/usr/bin/firefox
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
-export PATH=$PATH:$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin
+export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$PATH
 export PIPENV_VENV_IN_PROJECT=1
 export PROJECT_HOME=~/workspace
 export TERM=xterm-256color
@@ -42,6 +42,7 @@ eval "$(direnv hook zsh)"
 
 if which pyenv > /dev/null; then
   eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
