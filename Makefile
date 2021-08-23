@@ -11,7 +11,7 @@ myfont = JetBrainsMono-Medium.ttf
 
 .PHONY: submodules sync fonts vim
 
-all: submodules sync vscode
+all: submodules sync fonts
 
 submodules:
 	git submodule init
