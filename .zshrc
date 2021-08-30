@@ -50,8 +50,8 @@ if ! which rg > /dev/null; then
   which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
 fi
 
-if [ -f ~/.fzf.zsh ]; then
-  source ~/.fzf.zsh
+if which fzf > /dev/null; then
+  # source ~/.fzf.zsh
 
   alias k='kubectl'
   # Get current context
