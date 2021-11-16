@@ -27,6 +27,7 @@ alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
 alias icat="kitty +kitten icat"
+alias c="code ."
 
 export BROWSER=/usr/bin/firefox
 export CHROME_BIN=$(which chromium-browser 2> /dev/null)
