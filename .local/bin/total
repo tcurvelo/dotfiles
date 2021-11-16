@@ -1,0 +1,11 @@
+#!/bin/awk -f
+
+BEGIN {
+    acc = 0;
+}
+{
+    acc += $1;
+}
+END {
+    print acc;
+}
