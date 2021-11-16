@@ -29,8 +29,8 @@ alias vi="vim"
 alias icat="kitty +kitten icat"
 alias c="code ."
 
-export BROWSER=/usr/bin/firefox
-export CHROME_BIN=$(which chromium-browser 2> /dev/null)
+export CHROME_BIN=$(which google-chrome 2> /dev/null)
+export BROWSER=$CHROME_BIN
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
 export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$PATH
