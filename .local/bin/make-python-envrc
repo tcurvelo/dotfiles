@@ -5,12 +5,9 @@
 
 VERSION=$1
 
-cat <<EOF
-## Python virtualenv ##
-version=$VERSION
-
-venv=\$(basename \$PWD)
-use python \${version}
-layout virtualenv \${version} \${venv}
-layout activate \${venv}-\${version}
+cat <<EOF >> .envrc
+layout pyenv $VERSION
 EOF
+
+direnv allow .
+direnv exec . pip install -U pip
