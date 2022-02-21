@@ -1,13 +1,6 @@
 #!/bin/bash
-[ $# -lt 1 ] \
-    && echo -ne "Usage:\n\t "$(basename $0)" <python version>\n" 2> /dev/stderr \
-    && exit 1
+[[ $# -ne 1 ]] && >&2 echo "Usage: $0 <python version>" && exit 1
 
-VERSION=$1
-
-cat <<EOF >> .envrc
-layout pyenv $VERSION
-EOF
-
+echo "layout pyenv $1" >> .envrc
 direnv allow .
 direnv exec . pip install -U pip
