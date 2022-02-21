@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AUTHOR="Thiago Curvelo"
+AUTHOR=$(git config --get user.name)
 EXCLUDE_HASHES_RE='(d809a5e|ea6e02e53362ce1daca7a1f515e60cf9a997b3c5|e68b5876cf1ebdcd34fe0408d1540124fd2e29c|74ab9bb0cc9efcdc1c9085118f6d0ca1a6a0c893)'
 
 function filter_hashes {
