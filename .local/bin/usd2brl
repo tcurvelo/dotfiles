@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+curl -s \
+       'https://www.remessaonline.com.br/api/simulator?amount=1.00&inputCurrencyISOCode=USD&operationType=inbound&outputCurrencyISOCode=BRL&targetCustomerType=business' \
+       | jq '.simulation.tradingQuotation'
