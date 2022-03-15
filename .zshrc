@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 source ~/.antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -14,7 +21,7 @@ antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme robbyrussell
+antigen theme romkatv/powerlevel10k
 
 # Tell antigen that you're done.
 antigen apply
@@ -31,6 +38,7 @@ alias c="code ."
 
 export CHROME_BIN=$(which google-chrome 2> /dev/null)
 export BROWSER=$CHROME_BIN
+# export BROWSER=$(which firefox 2> /dev/null)
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
 export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$PATH
@@ -70,3 +78,12 @@ if which fzf > /dev/null; then
 fi
 
 source ~/.profile
+
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+fpath+=~/.zfunc
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source <(kubectl completion zsh)
