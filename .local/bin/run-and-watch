@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# based on https://stackoverflow.com/a/34672970/408951
+int_handler()
+{
+  kill $PID
+  exit
+}
+
+trap int_handler INT
+
+while true; do
+  $@ &
+  PID=$!
+  inotifywait -e modify,move,create,delete,attrib -r `pwd`
+  kill $PID
+done
