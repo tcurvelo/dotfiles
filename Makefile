@@ -9,7 +9,7 @@ endif
 myfont = JetBrainsMono-Medium.ttf
 
 
-.PHONY: submodules sync fonts vim
+.PHONY: submodules sync fonts powerlevel vim
 
 all: submodules sync fonts
 
@@ -39,3 +39,8 @@ $(fonts_dir)/$(myfont):
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
+
+powerlevel:
+	$(eval ZSH_CUSTOM ?= $(HOME)/.oh-my-zsh/custom)
+	$(eval target := $$(ZSH_CUSTOM)/themes/powerlevel10k)
+	@if [ -d $(target) ]; then cd $(target) && git pull && cd - lse git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $(target); fi
