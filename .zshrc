@@ -5,26 +5,25 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.antigen/antigen.zsh
+export ZSH="$HOME/.oh-my-zsh"
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+plugins=(
+  docker
+  docker-compose
+  git
+  git-extras
+  httpie
+  kubectl
+  pip
+  ripgrep
+)
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle command-not-found
-antigen bundle git
-antigen bundle git-extras
-antigen bundle hlissner/zsh-autopair
-antigen bundle pip
+ZSH_THEME="powerlevel10k/powerlevel10k"
+source $ZSH/oh-my-zsh.sh
 
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Load the theme.
-antigen theme romkatv/powerlevel10k
-
-# Tell antigen that you're done.
-antigen apply
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
+zstyle ':completion:*' menu select
 
 setopt nocheckjobs
 setopt nohup
@@ -80,10 +79,11 @@ fi
 source ~/.profile
 
 autoload -Uz compinit
-zstyle ':completion:*' menu select
 fpath+=~/.zfunc
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-source <(kubectl completion zsh)
+if which kubectl > /dev/null; then
+  source <(kubectl completion zsh)
+fi
