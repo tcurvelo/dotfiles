@@ -43,4 +43,4 @@ vim:
 powerlevel:
 	$(eval ZSH_CUSTOM ?= $(HOME)/.oh-my-zsh/custom)
 	$(eval target := $$(ZSH_CUSTOM)/themes/powerlevel10k)
-	@if [ -d $(target) ]; then cd $(target) && git pull && cd - lse git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $(target); fi
+	@if [ -d $(target) ]; then cd $(target) && git pull && cd - else git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $(target); fi
