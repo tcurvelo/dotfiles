@@ -33,6 +33,7 @@ alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
 alias icat="kitty +kitten icat"
+alias kdiff="kitty +kitten diff"
 alias c="code ."
 
 export CHROME_BIN=$(which google-chrome 2> /dev/null)
@@ -78,8 +79,8 @@ fi
 
 source ~/.profile
 
-autoload -Uz compinit
 fpath+=~/.zfunc
+autoload -Uz compinit && compinit
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
