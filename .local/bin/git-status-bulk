@@ -1,10 +1,17 @@
 #!/bin/bash
 for repo in $(ls -d */); do
     if [ -d $repo/.git ]; then
-        git="git --git-dir=$repo/.git --work-tree=$repo/"
-        $git fetch --all --quiet
-        changes=$($git status --porcelain)
-         [ "$changes" != "" ] && echo $repo
+        printf "* %-20s" "$repo"
+
+        git_cmd="git --git-dir=$repo/.git --work-tree=$repo/"
+        changes=$(
+            $git_cmd fetch --all --quiet 2>&1;
+            $git_cmd status --porcelain;
+            $git_cmd stash list;
+        )
+        [ "$changes" != "" ] \
+            && echo "has uncommitted changes" \
+            || echo "[OK]"
     fi
 done
 
