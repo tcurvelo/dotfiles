@@ -33,7 +33,6 @@ alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
 alias icat="kitty +kitten icat"
-alias kdiff="kitty +kitten diff"
 alias c="code ."
 
 export CHROME_BIN=$(which google-chrome 2> /dev/null)
@@ -41,7 +40,7 @@ export BROWSER=$CHROME_BIN
 # export BROWSER=$(which firefox 2> /dev/null)
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
-export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:/usr/local/go/bin:$HOME/.cargo/bin:$PATH
 export PIPENV_VENV_IN_PROJECT=1
 export PROJECT_HOME=~/workspace
 export TERM=xterm-256color
@@ -79,8 +78,8 @@ fi
 
 source ~/.profile
 
+autoload -Uz compinit
 fpath+=~/.zfunc
-autoload -Uz compinit && compinit
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -88,3 +87,6 @@ autoload -Uz compinit && compinit
 if which kubectl > /dev/null; then
   source <(kubectl completion zsh)
 fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /home/curvelo/.local/bin/nomad nomad
