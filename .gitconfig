@@ -1,42 +1,54 @@
 [user]
-name = Thiago Curvelo
-email = tcurvelo@gmail.com
+	name = Thiago Curvelo
+	email = tcurvelo@gmail.com
 
 [alias]
-lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(blue)(%ar)%C(reset) %C(bold blue)%s%C(reset) %C(bold)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+	lg = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(blue)(%ar)%C(reset) %C(bold blue)%s%C(reset) %C(bold)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 
 [core]
-editor = code --wait
-excludesfile = ~/.gitignore_global
-pager = diff-so-fancy | less --tabs=4 -RFX
+	editor = code --wait
+	excludesfile = ~/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [push]
-default = simple
+	default = current
 
 [credential]
-helper = cache
+	helper = cache
 
 [diff-so-fancy]
-stripLeadingSymbols = false
-markEmptyLines = false
+	stripLeadingSymbols = false
+	markEmptyLines = false
 
 [color]
-ui = true
+	ui = true
 
 [color "diff-highlight"]
-oldNormal = red bold
-oldHighlight = red bold 52
-newNormal = green bold
-newHighlight = green bold 22
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
 
 [color "diff"]
-meta = yellow
-frag = magenta bold
-commit = yellow bold
-old = red bold
-new = green bold
-whitespace = red reverse
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+
 [pull]
 	ff = only
+	rebase = true
+
 [init]
 	defaultBranch = main
+
+[rebase]
+	autostash = true
+
+[commit]
+	verbose = true
+
+[diff]
+	algorithm = histogram
