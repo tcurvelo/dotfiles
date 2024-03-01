@@ -41,6 +41,7 @@ export BROWSER=$CHROME_BIN
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
 export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:/usr/local/go/bin:$HOME/.cargo/bin:$PATH
+export GOPATH=~/workspace/go
 export PIPENV_VENV_IN_PROJECT=1
 export PROJECT_HOME=~/workspace
 export TERM=xterm-256color
