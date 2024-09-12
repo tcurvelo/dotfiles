@@ -11,12 +11,10 @@ else
 endif
 
 " Bundles
-Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/MatchTagAlways'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
-Plug 'ambv/black'
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'edkolev/tmuxline.vim'
@@ -243,8 +241,4 @@ let NERDTreeShowHidden=1
 
 " Python envs for neovim plugin
 let g:python3_host_prog = $HOME.'/.pyenv/versions/tools/bin/python'
-
-" format python files on save
-let g:black_skip_string_normalization = 1
-autocmd BufWritePre *.py execute ':Black'
 
