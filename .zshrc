@@ -91,3 +91,6 @@ fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /home/curvelo/.local/bin/nomad nomad
+
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
