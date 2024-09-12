@@ -1,6 +1,15 @@
 #!/bin/bash
 
-
-curl -s \
-       'https://www.remessaonline.com.br/api/simulator?amount=1.00&inputCurrencyISOCode=USD&operationType=inbound&outputCurrencyISOCode=BRL&targetCustomerType=business' \
+curl -s --http1.1 'https://simulator-api.remessaonline.com.br/v1/simulator' \
+  -H 'authority: simulator-api.remessaonline.com.br' \
+  -H 'accept: application/json, text/plain, */*' \
+  -H 'accept-language: pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'authorization: 5b50b3f1cadc2f622d286a85da9ab85d' \
+  -H 'content-type: application/json;charset=UTF-8' \
+  -H 'origin: https://www.remessaonline.com.br' \
+  -H 'referer: https://www.remessaonline.com.br/' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' \
+  --data-raw '{"targetCustomerType":"business","amount":1000,"operationType":"outbound","inputCurrencyISOCode":"BRL","outputCurrencyISOCode":"USD","requestor":"www.remessaonline.com.br"}' \
+  --compressed \
        | jq '.simulation.tradingQuotation'
