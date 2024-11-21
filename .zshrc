@@ -41,19 +41,13 @@ export BROWSER=$CHROME_BIN
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
 export GOPATH=~/workspace/go
-export PATH=$HOME/.local/bin:$HOME/.pyenv/bin:/usr/local/go/bin:$HOME/.cargo/bin:$GOPATH/bin:$PATH
+export PATH=$HOME/.local/bin:/usr/local/go/bin:$HOME/.cargo/bin:$GOPATH/bin:$PATH
 export PIPENV_VENV_IN_PROJECT=1
 export PROJECT_HOME=~/workspace
 export TERM=xterm-256color
 export TERMINAL=~/.local/bin/kitty
 
 eval "$(direnv hook zsh)"
-
-if which pyenv > /dev/null; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv init --path)"
-  eval "$(pyenv virtualenv-init -)"
-fi
 
 if ! which rg > /dev/null; then
   which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
