@@ -15,7 +15,6 @@ plugins=(
   httpie
   kubectl
   pip
-  ripgrep
 )
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
