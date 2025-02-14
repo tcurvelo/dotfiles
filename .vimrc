@@ -25,7 +25,6 @@ Plug 'majutsushi/tagbar'
 Plug 'mattn/emmet-vim'
 Plug 'mfukar/robotframework-vim'
 Plug 'mhinz/vim-startify'
-Plug 'morhetz/gruvbox'
 Plug 'pangloss/vim-javascript'
 Plug 'pld-linux/vim-syntax-vcl'
 Plug 'rking/ag.vim'
@@ -83,8 +82,6 @@ set wildignore+=*/node_modules/*
 "------------------------------------------------------------------------------
 syntax enable
 set background=dark
-let g:gruvbox_italic=1
-colorscheme gruvbox
 
 if has('gui_running')
   set guioptions-=T " remove toolbar
@@ -238,7 +235,3 @@ endfunction
 " NERDTree
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 let NERDTreeShowHidden=1
-
-" Python envs for neovim plugin
-let g:python3_host_prog = $HOME.'/.pyenv/versions/tools/bin/python'
-
