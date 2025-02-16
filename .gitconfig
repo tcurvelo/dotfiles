@@ -8,7 +8,15 @@
 [core]
 	editor = code --wait
 	excludesfile = ~/.gitignore_global
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+	features = line-numbers hyperlinks decorations
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+	navigate = true
 
 [push]
 	default = current
@@ -16,26 +24,8 @@
 [credential]
 	helper = cache
 
-[diff-so-fancy]
-	stripLeadingSymbols = false
-	markEmptyLines = false
-
 [color]
 	ui = true
-
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-
-[color "diff"]
-	meta = yellow
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
 
 [pull]
 	ff = only
