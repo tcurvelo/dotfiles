@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(
@@ -36,7 +29,6 @@ alias c="code ."
 
 export CHROME_BIN=$(which google-chrome 2> /dev/null)
 export BROWSER=$CHROME_BIN
-# export BROWSER=$(which firefox 2> /dev/null)
 export HISTFILE=~/.history
 export HOMEBREW_NO_GITHUB_API=true
 export GOPATH=~/workspace/go
