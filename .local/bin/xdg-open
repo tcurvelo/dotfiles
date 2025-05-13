@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# fix for obsidian opening URLs in wrong browser
+if [[ $SNAP_INSTANCE_NAME == "obsidian" && $1 =~ ^(https?://) ]]; then
+        unset XDG_DATA_HOME
+        unset XDG_CONFIG_HOME
+fi
+
+exec /usr/bin/xdg-open "$@"
