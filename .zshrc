@@ -10,7 +10,7 @@ plugins=(
   pip
 )
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 
 zstyle ':completion:*:*:docker:*' option-stacking yes
