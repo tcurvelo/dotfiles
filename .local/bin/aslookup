@@ -1,0 +1,61 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [ "httpx" ]
+# ///
+"""Resolve IP addresses to their Autonomous System (AS) info via ipinfo.io."""
+
+import sys
+import asyncio
+import httpx
+
+DEFAULT_CONCURRENCY = 10
+
+
+async def lookup(client: httpx.AsyncClient, sem: asyncio.Semaphore, ip: str):
+    async with sem:
+        try:
+            resp = await client.get(f"https://ipinfo.io/{ip}/json", timeout=10)
+            resp.raise_for_status()
+            return ip, resp.json(), None
+        except Exception as e:
+            return ip, None, str(e)
+
+
+def format_result(data: dict) -> str:
+    org = data.get("org", "N/A")
+    return f"{data.get('ip', '?')}\t{org}"
+
+
+async def run(ips: list, concurrency: int):
+    sem = asyncio.Semaphore(concurrency)
+    async with httpx.AsyncClient() as client:
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(lookup(client, sem, ip)) for ip in ips]
+
+    for task in tasks:
+        ip, data, error = task.result()
+        if error:
+            print(f"{ip}\tERROR: {error}", file=sys.stderr)
+        else:
+            print(format_result(data))
+
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Resolve IPs to their AS org via ipinfo.io")
+    parser.add_argument("ips", nargs="*", metavar="IP", help="IPs to resolve (reads stdin if omitted)")
+    parser.add_argument("-c", "--concurrency", type=int, default=DEFAULT_CONCURRENCY,
+                        help=f"max parallel requests (default: {DEFAULT_CONCURRENCY})")
+    args = parser.parse_args()
+
+    ips = args.ips or [line.strip() for line in sys.stdin if line.strip()]
+    if not ips:
+        parser.print_usage(sys.stderr)
+        sys.exit(1)
+
+    asyncio.run(run(ips, args.concurrency))
+
+
+if __name__ == "__main__":
+    main()
