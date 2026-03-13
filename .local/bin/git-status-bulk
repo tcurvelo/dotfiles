@@ -1,17 +1,63 @@
 #!/bin/bash
-for repo in $(ls -d */); do
-    if [ -d $repo/.git ]; then
-        printf "* %-20s" "$repo"
 
-        git_cmd="git --git-dir=$repo/.git --work-tree=$repo/"
-        changes=$(
-            $git_cmd fetch --all --quiet 2>&1;
-            $git_cmd status --porcelain;
-            $git_cmd stash list;
-        )
-        [ "$changes" != "" ] \
-            && echo "has uncommitted changes" \
-            || echo "[OK]"
+_repo_status() {
+    local repo="${1%/}"
+    local git_cmd="git --git-dir=${repo}/.git --work-tree=${repo}"
+
+    $git_cmd fetch --all --quiet 2>/dev/null || :
+
+    local branch
+    branch=$($git_cmd rev-parse --abbrev-ref HEAD 2>/dev/null) || branch="(detached)"
+
+    local modified=0 untracked=0
+    while IFS= read -r line; do
+        [[ -z "$line" ]] && continue
+        case "${line:0:2}" in
+            "??") (( untracked++ )) ;;
+            *)    (( modified++  )) ;;
+        esac
+    done < <($git_cmd status --porcelain 2>/dev/null)
+
+    local stashes
+    stashes=$(( $($git_cmd stash list 2>/dev/null | wc -l) ))
+
+    local ahead=0 behind=0
+    if $git_cmd rev-parse --abbrev-ref '@{u}' &>/dev/null; then
+        local ab
+        ab=$($git_cmd rev-list --left-right --count "HEAD...@{u}" 2>/dev/null) || ab="0	0"
+        read -r ahead behind <<< "$ab"
     fi
+
+    local details=""
+    (( modified  > 0 )) && details+=" ${modified} modified"
+    (( untracked > 0 )) && details+=" ${untracked} untracked"
+    (( stashes   > 0 )) && details+=" ${stashes} stashed"
+    (( ahead     > 0 )) && details+=" ↑${ahead}"
+    (( behind    > 0 )) && details+=" ↓${behind}"
+
+    printf "* %-25s  %-20s  %s\n" "${repo}/" "${branch}" "${details:-[OK]}"
+}
+
+export -f _repo_status
+
+repos=()
+for dir in */; do
+    [[ -d "${dir}.git" ]] && repos+=("$dir")
 done
 
+if (( ${#repos[@]} == 0 )); then
+    echo "No git repositories found in $(pwd)"
+    exit 0
+fi
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+
+for i in "${!repos[@]}"; do
+    _repo_status "${repos[$i]}" > "$tmpdir/$i" &
+done
+wait
+
+for i in "${!repos[@]}"; do
+    cat "$tmpdir/$i"
+done
