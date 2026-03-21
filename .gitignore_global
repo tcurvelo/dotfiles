@@ -32,6 +32,7 @@ Thumbs.db
 
 *.doctrees/
 .anaconda
+.claude/
 .codeintel/
 .direnv/
 .envrc
