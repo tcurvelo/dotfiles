@@ -20,6 +20,10 @@
 	features = line-numbers hyperlinks decorations
 	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
 	navigate = true
+	plus-style                    = syntax "#002b36"
+	plus-non-emph-style           = syntax "#002b36"
+	plus-emph-style               = bold white "#005f87"
+	line-numbers-plus-style       = "#00afff"
 
 [push]
 	default = current
