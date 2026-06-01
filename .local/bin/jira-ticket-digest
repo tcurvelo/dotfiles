@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: jira-ticket-digest ISSUE-KEY
+
+Fetch a Jira work item with acli and print a compact Markdown digest.
+
+Environment:
+  JIRA_TICKET_DIGEST_FIELDS  Override the Jira fields requested from acli.
+EOF
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if [[ $# -ne 1 ]]; then
+  usage >&2
+  exit 2
+fi
+
+if ! command -v acli >/dev/null 2>&1; then
+  echo "jira-ticket-digest: acli is required and was not found on PATH" >&2
+  exit 127
+fi
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "jira-ticket-digest: jq is required and was not found on PATH" >&2
+  exit 127
+fi
+
+key="$1"
+fields="${JIRA_TICKET_DIGEST_FIELDS:-key,issuetype,summary,status,assignee,reporter,priority,labels,created,updated,description,comment,parent,subtasks,issuelinks}"
+
+acli jira workitem view "$key" --fields "$fields" --json |
+  jq -r '
+    def trim_text:
+      gsub("[ \t]+\n"; "\n")
+      | gsub("\n[ \t]+"; "\n")
+      | gsub("\n{3,}"; "\n\n")
+      | gsub("^[ \t\n]+"; "")
+      | gsub("[ \t\n]+$"; "");
+
+    def jira_date:
+      if . == null or . == "" then "" else sub("T.*$"; "") end;
+
+    def user_name:
+      if . == null then
+        "Unassigned"
+      else
+        (.displayName // .emailAddress // .name // "Unknown")
+      end;
+
+    def scalar:
+      (. // "" | tostring | gsub("^[ 	]+"; "") | gsub("[ 	]+$"; ""));
+
+    def yaml_string:
+      (. // "" | tostring | @json);
+
+    def yaml_list:
+      if length == 0 then " []" else "\n" + (map("  - " + (. | yaml_string)) | join("\n")) end;
+
+    def inline:
+      if . == null then
+        ""
+      elif .type? == "text" then
+        (.text // "") as $text
+        | if ((.marks // []) | any(.type == "code")) then
+            "`\($text)`"
+          elif ((.marks // []) | any(.type == "strong")) then
+            "**\($text)**"
+          elif ((.marks // []) | any(.type == "em")) then
+            "*\($text)*"
+          else
+            $text
+          end
+      elif .type? == "hardBreak" then
+        "\n"
+      elif .type? == "mention" then
+        (.attrs.text // .attrs.id // "")
+      elif .type? == "emoji" then
+        (.attrs.shortName // "")
+      elif .type? == "status" then
+        (.attrs.text // "")
+      elif .content? then
+        ([.content[] | inline] | join(""))
+      else
+        ""
+      end;
+
+    def table_cell:
+      ([.content[]? | inline] | join(" ") | gsub("\n"; " ") | gsub("\\|"; "\\|"));
+
+    def table_md:
+      ([.content[]? | [.content[]? | table_cell]]) as $rows
+      | if ($rows | length) == 0 then
+          ""
+        else
+          [
+            ($rows[0] | "| " + join(" | ") + " |"),
+            ($rows[0] | map("---") | "| " + join(" | ") + " |"),
+            ($rows[1:][]? | "| " + join(" | ") + " |")
+          ] | join("\n")
+        end;
+
+    def block:
+      if . == null then
+        ""
+      elif .type? == "doc" then
+        ([.content[] | block] | map(select(. != "")) | join("\n\n"))
+      elif .type? == "heading" then
+        ((.attrs.level // 2) as $level | ("#" * $level) + " " + inline)
+      elif .type? == "paragraph" then
+        inline
+      elif .type? == "bulletList" then
+        ([.content[] | "- " + (block | gsub("\n"; "\n  "))] | join("\n"))
+      elif .type? == "orderedList" then
+        ([.content[] | (block | gsub("\n"; "\n  "))] | to_entries | map("\(.key + 1). \(.value)") | join("\n"))
+      elif .type? == "listItem" then
+        ([.content[] | block] | map(select(. != "")) | join("\n"))
+      elif .type? == "blockquote" then
+        ([.content[] | block] | join("\n") | split("\n") | map("> " + .) | join("\n"))
+      elif .type? == "codeBlock" then
+        "```" + (.attrs.language // "") + "\n" + ([.content[]? | inline] | join("")) + "\n```"
+      elif .type? == "panel" then
+        ([.content[] | block] | map(select(. != "")) | join("\n"))
+      elif .type? == "rule" then
+        "---"
+      elif .type? == "table" then
+        table_md
+      elif .content? then
+        ([.content[] | block] | map(select(. != "")) | join("\n"))
+      else
+        inline
+      end;
+
+    def issue_title:
+      .key + (if .fields.summary? then " - " + .fields.summary else "" end);
+
+    def comments_md:
+      (.fields.comment.comments // []) as $comments
+      | if ($comments | length) == 0 then
+          "None"
+        else
+          $comments
+          | map("### " + (.author | user_name) + " - " + (.created | jira_date) + "\n" + (.body | block | trim_text))
+          | join("\n\n")
+        end;
+
+    def subtasks_md:
+      (.fields.subtasks // []) as $items
+      | if ($items | length) == 0 then
+          empty
+        else
+          "## Subtasks\n" + ($items | map("- " + issue_title) | join("\n"))
+        end;
+
+    def links_md:
+      (.fields.issuelinks // []) as $links
+      | [
+          $links[]
+          | if .outwardIssue? then
+              "- " + (.type.outward // "relates to") + " " + (.outwardIssue | issue_title)
+            elif .inwardIssue? then
+              "- " + (.type.inward // "relates to") + " " + (.inwardIssue | issue_title)
+            else
+              empty
+            end
+        ] as $items
+      | if ($items | length) == 0 then empty else "## Links\n" + ($items | join("\n")) end;
+
+    .fields as $f
+    | ($f.summary | scalar) as $summary
+    | (if $summary == "" then .key else $summary end) as $title
+    | [
+        "---",
+        "key: " + (.key | yaml_string),
+        "title: " + ($summary | yaml_string),
+        "type: " + ($f.issuetype.name | yaml_string),
+        "status: " + ($f.status.name | yaml_string),
+        "priority: " + ($f.priority.name | yaml_string),
+        "assignee: " + (($f.assignee | user_name) | yaml_string),
+        "reporter: " + (($f.reporter | user_name) | yaml_string),
+        "labels:" + (($f.labels // []) | yaml_list),
+        "created: " + (($f.created | jira_date) | yaml_string),
+        "updated: " + (($f.updated | jira_date) | yaml_string),
+        (if $f.parent? then "parent: " + (($f.parent | issue_title) | yaml_string) else empty end),
+        "---",
+        "",
+        "# " + $title,
+        "",
+        "## Description",
+        (($f.description | block | trim_text) as $description | if $description == "" then "None" else $description end),
+        "",
+        "## Comments",
+        comments_md,
+        "",
+        subtasks_md,
+        links_md
+      ]
+      | map(select(. != null))
+      | join("\n")
+  '
