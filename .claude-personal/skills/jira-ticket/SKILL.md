@@ -38,6 +38,54 @@ It should print Markdown with YAML front matter, followed by a heading whose tex
 
   Convert the result into a compact digest before reasoning over it.
 
+## Writing rich text (ADF)
+
+Only when explicitly asked to edit a description or add a comment.
+
+`acli` accepts the body as **plain text or Atlassian Document Format (ADF)** — it
+does **not** interpret Jira wiki markup (`h2.`, `||`, `{{}}`) or Markdown. Pasting
+those leaves literal characters in the field. To render rich text (headings, tables,
+code, lists), supply an ADF JSON document via the `--*-file` flag.
+
+1. Build an ADF `doc` and write it to a temp JSON file. Skeleton:
+
+   ```json
+   {
+     "version": 1,
+     "type": "doc",
+     "content": [
+       { "type": "heading", "attrs": { "level": 3 }, "content": [ { "type": "text", "text": "Title" } ] },
+       { "type": "paragraph", "content": [
+         { "type": "text", "text": "Bold lead: ", "marks": [{ "type": "strong" }] },
+         { "type": "text", "text": "and " },
+         { "type": "text", "text": "inline-code", "marks": [{ "type": "code" }] }
+       ] }
+     ]
+   }
+   ```
+
+   Common nodes: `heading` (`attrs.level` 1–6), `paragraph`, `bulletList`/`orderedList`
+   → `listItem` → `paragraph`, `codeBlock` (`attrs.language`), and tables
+   (`table` → `tableRow` → `tableHeader`/`tableCell` → `paragraph`). Inline `marks`:
+   `strong`, `em`, `code`, `link` (`attrs.href`).
+
+2. Validate the JSON before sending: `python3 -m json.tool file.json >/dev/null`.
+
+3. Apply it:
+
+   ```bash
+   # Description (replaces existing — read it first if you might clobber content)
+   acli jira workitem edit --key ISSUE-KEY --description-file file.json --yes
+
+   # Comment (appends; does not touch the description)
+   acli jira workitem comment create --key ISSUE-KEY --body-file file.json
+   ```
+
+4. Delete the temp file afterward.
+
+`acli ... view` flattens ADF to plain text in the terminal, so it is not a reliable
+render check — confirm formatting in the Jira web UI.
+
 ## Safety
 
 - Do not assign, transition, edit, comment, archive, delete, or otherwise mutate Jira issues unless explicitly asked.
