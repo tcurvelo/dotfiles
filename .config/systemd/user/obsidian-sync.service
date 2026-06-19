@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync Obsidian vault with Google Drive (rclone bisync)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/sync-obsidian.sh
