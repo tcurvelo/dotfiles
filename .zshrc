@@ -25,7 +25,6 @@ alias gstb="git-status-bulk"
 alias tmux="tmux -2"
 alias vi="vim"
 alias icat="kitty +kitten icat"
-alias c="code ."
 
 export CHROME_BIN=$(which google-chrome 2> /dev/null)
 export BROWSER=$CHROME_BIN
@@ -44,25 +43,7 @@ if ! which rg > /dev/null; then
   which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
 fi
 
-if which fzf > /dev/null; then
-  # source ~/.fzf.zsh
-
-  alias k='kubectl'
-  # Get current context
-  alias krc='k config current-context'
-  # List all contexts
-  alias klc='k config get-contexts -o name | sed "s/^/  /;\|^  $(krc)$|s/ /*/"'
-  # Change current context
-  alias kcc='k config use-context "$(klc | fzf -e | sed "s/^..//")"'
-  # Get current namespace
-  alias krn='k config get-contexts --no-headers "$(krc)" | awk "{print \$5}" | sed "s/^$/default/"'
-  # List all namespaces
-  alias kln='k get -o name ns | sed "s|^.*/|  |;\|^  $(krn)$|s/ /*/"'
-  # Change current namespace
-  alias kcn='k config set-context --current --namespace "$(kln | fzf -e | sed "s/^..//")"'
-fi
-
-source ~/.profile
+source ~/.profile.d/*
 
 autoload -Uz compinit
 fpath+=~/.zfunc
@@ -70,12 +51,7 @@ fpath+=~/.zfunc
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if which kubectl > /dev/null; then
-  source <(kubectl completion zsh)
-fi
-
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /home/curvelo/.local/bin/nomad nomad
 
 for _zsh_plugin in \
   "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
