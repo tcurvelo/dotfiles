@@ -43,7 +43,7 @@ if ! which rg > /dev/null; then
   which ripgrep.rg > /dev/null && alias rg="ripgrep.rg";
 fi
 
-source ~/.profile.d/*
+for _f in $HOME/.profile.d/**/*(.N); do source "$_f"; done; unset _f
 
 autoload -Uz compinit
 fpath+=~/.zfunc
