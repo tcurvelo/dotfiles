@@ -4,15 +4,22 @@ set -euo pipefail
 LOCAL="$HOME/notas"
 REMOTE="notas:notas"
 
-# Skip sync if Obsidian is running (avoids conflicts mid-write)
-if pgrep -fi obsidian > /dev/null; then
+if pgrep -i obsidian > /dev/null; then
     echo "Obsidian is running — skipping sync."
     exit 0
 fi
 
 mkdir -p "$HOME/.local/state"
 
+RESYNC_FLAG=()
+if [ ! -d "$LOCAL" ]; then
+    echo "First run on this host — doing an initial --resync."
+    mkdir -p "$LOCAL"
+    RESYNC_FLAG=(--resync)
+fi
+
 rclone bisync "$LOCAL" "$REMOTE" \
+    "${RESYNC_FLAG[@]}" \
     --conflict-resolve newer \
     --conflict-suffix conflict \
     --max-delete 25 \
