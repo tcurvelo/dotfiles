@@ -11,7 +11,7 @@ myfont = JetBrainsMono-Medium.ttf
 
 .PHONY: submodules sync fonts powerlevel vim systemd
 
-all: submodules sync fonts
+all: sync systemd
 
 submodules:
 	git submodule init
