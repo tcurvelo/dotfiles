@@ -9,7 +9,7 @@ endif
 myfont = JetBrainsMono-Medium.ttf
 
 
-.PHONY: submodules sync fonts powerlevel vim
+.PHONY: submodules sync fonts powerlevel vim systemd
 
 all: submodules sync fonts
 
@@ -39,6 +39,15 @@ $(fonts_dir)/$(myfont):
 
 vim:
 	vim +PlugClean +PlugUpdate +UpdateRemotePlugins +qall
+
+# Reload and enable user systemd units (Linux only)
+systemd:
+ifeq ($(OS), Linux)
+	systemctl --user daemon-reload
+	systemctl --user enable --now obsidian-sync.timer
+else
+	@echo "systemd: skipped (not Linux)"
+endif
 
 powerlevel:
 	$(eval ZSH_CUSTOM ?= $(HOME)/.oh-my-zsh/custom)
