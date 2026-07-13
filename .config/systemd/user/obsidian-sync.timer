@@ -2,8 +2,7 @@
 Description=Run Obsidian sync periodically
 
 [Timer]
-OnBootSec=2min
-OnUnitActiveSec=15min
+OnCalendar=*:0/15
 Persistent=true
 
 [Install]
