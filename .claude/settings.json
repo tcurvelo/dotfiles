@@ -1,0 +1,29 @@
+{
+  "enabledPlugins": {
+    "claude-md-management@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": {
+      "source": {
+        "repo": "anthropics/claude-plugins-official",
+        "source": "github"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Bash(go test *)",
+      "Bash(make lint)",
+      "Bash(obsidian files *)",
+      "Bash(obsidian folders*)",
+      "Bash(obsidian search *)",
+      "Bash(obsidian vault *)",
+      "Bash(python3 -m json.tool *)"
+    ]
+  },
+  "theme": "dark-daltonized",
+  "tui": "fullscreen"
+}
