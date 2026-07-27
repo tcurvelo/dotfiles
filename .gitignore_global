@@ -32,7 +32,7 @@ Thumbs.db
 
 *.doctrees/
 .anaconda
-.claude/
+.claude/settings.local.json
 .codeintel/
 .direnv/
 .envrc

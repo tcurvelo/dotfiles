@@ -25,6 +25,7 @@ sync:
 		--exclude '*.swp' \
 		--exclude 'README.md' \
 		--exclude 'Makefile' \
+		--exlucde '.claude/settings.local.json \
 		"$(CONTEXT)/" ~/
 
 fonts: $(fonts_dir)/$(myfont)
