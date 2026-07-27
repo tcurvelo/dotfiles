@@ -22,7 +22,8 @@
       "Bash(obsidian folders*)",
       "Bash(obsidian search *)",
       "Bash(obsidian vault *)",
-      "Bash(python3 -m json.tool *)"
+      "Bash(jq *)",
+      "Bash(yq *)"
     ],
     "deny": [
       "Read(./**/.env)",

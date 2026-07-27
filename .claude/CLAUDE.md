@@ -9,6 +9,7 @@
 
 ## Code style
 
+- Use `jq` for JSON and `yq` for YAML validation/parsing/editing, not Python or ad-hoc scripts.
 - Comments: keep concise. Prefer one-liners; push depth into docs rather than inline blocks. Match the comment density of the surrounding code.
 - Same em dash rule applies to prose and comments.
 - Question whether new code is necessary. Prefer removing over adding; flag speculative code and abstractions proactively.
