@@ -17,4 +17,3 @@
 ## Git
 
 - Commit messages: concise, one-liner preferred.
-- Do not add agents as co-authors unless explicitly requested.

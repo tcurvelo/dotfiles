@@ -13,6 +13,7 @@
       }
     }
   },
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(go test *)",
@@ -22,6 +23,13 @@
       "Bash(obsidian search *)",
       "Bash(obsidian vault *)",
       "Bash(python3 -m json.tool *)"
+    ],
+    "deny": [
+      "Read(./**/.env)",
+      "Read(./**/.env.*)",
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Read(~/.ssh/**)"
     ]
   },
   "theme": "dark-daltonized",
