@@ -69,7 +69,7 @@ code, lists), supply an ADF JSON document via the `--*-file` flag.
    (`table` → `tableRow` → `tableHeader`/`tableCell` → `paragraph`). Inline `marks`:
    `strong`, `em`, `code`, `link` (`attrs.href`).
 
-2. Validate the JSON before sending: `python3 -m json.tool file.json >/dev/null`.
+2. Validate the JSON before sending: `jq empty file.json`.
 
 3. Apply it:
 
